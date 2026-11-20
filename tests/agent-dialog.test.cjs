@@ -1,0 +1,53 @@
+// Settings > AI Agent: Connect shows the exact change and backup path first; nothing is written until Apply.
+// Screenshot: tests/artifacts/agent-dialog.png.
+const {chromium}=require('playwright');
+const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const artifacts=path.join(__dirname,'artifacts');fs.mkdirSync(artifacts,{recursive:true});
+const root=path.resolve(__dirname,'../ui');
+const type=n=>n.endsWith('.js')?'text/javascript':n.endsWith('.css')?'text/css':n.endsWith('.svg')?'image/svg+xml':n.endsWith('.woff2')?'font/woff2':'text/html';
+const server=http.createServer((req,res)=>{const name=req.url.split('?')[0]==='/'?'settings.html':req.url.split('?')[0].slice(1);const file=path.join(root,name);if(!file.startsWith(root)||!fs.existsSync(file)){res.writeHead(404);return res.end()}res.setHeader('Content-Type',type(name));res.end(fs.readFileSync(file))});
+(async()=>{
+  await new Promise(r=>server.listen(18769,'127.0.0.1',r));
+  const browser=await chromium.launch({channel:process.env.PW_CHANNEL||'chrome',headless:true});
+  const sw=await browser.newPage({viewport:{width:900,height:620}});const errors=[];sw.on('pageerror',e=>errors.push(e.message));
+  await sw.addInitScript(()=>{window.__calls=[];
+   window.__TAURI__={event:{listen:async()=>()=>{}},core:{invoke:async(name,args={})=>{window.__calls.push({name,args});
+    if(name==='agent_hooks')return{claude_code:false,gemini:false,codex:false,antigravity:false};
+    if(name==='agent_hooks_preview')return{path:String.raw`C:\Users\me\.claude\settings.json`,backup:String.raw`C:\Users\me\.claude\settings.json.sora-backup`,removed:[],added:['    "Stop": [','      "command": "\\"C:\\Sora\\sora.exe\\" --hook --agent claude-code"']};
+    if(name==='agent_hooks_set')return{claude_code:true,gemini:false,codex:false,antigravity:false};
+    if(name==='desktop_preferences')return{preferences:{shortcut:'None',feature_agents:true},shortcut_active:false};
+    if(name==='agent_capabilities')return[{agent:'claude-code',name:'Claude Code',activity:'YES',approval:'YES',questions:'YES',changes:'YES',note:'Hooks.'},{agent:'gemini',name:'Gemini CLI',activity:'PARTIAL',approval:'NO',questions:'NO',changes:'PARTIAL',note:'View only.'}];
+    if(name==='agent_pipe_status')return{running:true,error:''};
+    if(name==='notch_displays')return[];
+    if(name==='meeting_list')return{items:[],folder:'C:\Recordings'};
+    if(name==='ai_status')return{on:false,parts:['whisper-engine','llama-engine','whisper-base','qwen35-0.8b','whisper-small','qwen35-2b','whisper-turbo','qwen35-4b'].map(id=>({part:{id,name:id,size:1e8},installed:false})),recommend:{tier:'Lite'},job:null};
+    if(name==='set_desktop_preferences')return{preferences:args.preferences,shortcut_active:false};
+    return null}}}});
+  await sw.goto('http://127.0.0.1:18769/settings.html');await sw.waitForTimeout(400);
+  await sw.locator('.tab[data-section=agent]').click();await sw.waitForTimeout(400);
+  assert.equal(await sw.locator('#lab-agents').isChecked(),true,'the switch shows the saved state');
+  assert.equal(await sw.locator('#agent-caps').count(),0,'no capability table');
+  await sw.screenshot({path:path.join(artifacts,'settings-labs.png')});
+  assert(await sw.locator('#agent-dialog').isHidden(),'dialog closed at start');
+  await sw.locator('button[data-agent="claude-code"]').click();
+  await sw.waitForSelector('#agent-dialog:not([hidden])');
+  assert.match(await sw.locator('#ad-title').textContent(),/Install hooks for Claude Code/);
+  assert.match(await sw.locator('#ad-backup').textContent(),/sora-backup/);
+  assert.equal(await sw.locator('#ad-diff .add').count(),2);
+  assert.equal(await sw.evaluate(()=>window.__calls.some(c=>c.name==='agent_hooks_set')),false,'nothing written before Apply');
+  await sw.screenshot({path:path.join(artifacts,'agent-dialog.png')});
+  await sw.keyboard.press('Escape');assert(await sw.locator('#agent-dialog').isHidden(),'Esc cancels');
+  assert.equal(await sw.evaluate(()=>window.__calls.some(c=>c.name==='agent_hooks_set')),false,'cancel writes nothing');
+  await sw.locator('button[data-agent="claude-code"]').click();await sw.waitForSelector('#agent-dialog:not([hidden])');
+  await sw.locator('#ad-ok').click();await sw.waitForSelector('#agent-dialog',{state:'hidden'});
+  assert.deepEqual(await sw.evaluate(()=>window.__calls.find(c=>c.name==='agent_hooks_set').args),{agent:'claude-code',on:true});
+  assert.equal(await sw.locator('button[data-agent="claude-code"]').textContent(),'Disconnect');
+  assert.equal(await sw.locator('#agent-dialog select, #agent-dialog input').count(),0,'no classic controls');
+  // Switching a module saves it with every other preference (none is reset).
+  await sw.locator('.tab[data-section=meeting]').click();await sw.waitForTimeout(200);
+  await sw.locator('label:has(#lab-meeting)').click();await sw.waitForTimeout(200);
+  const saved=await sw.evaluate(()=>window.__calls.filter(c=>c.name==='set_desktop_preferences').pop()?.args.preferences);
+  assert.equal(saved.feature_meeting,true);assert.equal(saved.feature_agents,true,'other switches kept');
+  assert.deepEqual(errors,[],JSON.stringify(errors));
+  console.log('PASS agent-dialog');await browser.close();server.close();
+})().catch(e=>{console.error(e);process.exit(1)});

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Merged into the macOS app's Info.plist by Tauri. Sora lives at the top of the screen, not in the Dock (as skip_taskbar on Windows). -->
+<plist version="1.0">
+<dict>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Sora shows what Spotify or Music is playing and lets you pause or skip from the notch, and opens AI agent sessions in Terminal.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Sora sends files to your phone and receives files from it with LocalSend, on your own network.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Sora shows the weather where you are.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Sora shows the weather where you are.</string>
+</dict>
+</plist>

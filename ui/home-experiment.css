@@ -1,0 +1,573 @@
+/* Home hierarchy accepted by the user. Final alignment refinements in 1.10.2. */
+.home-view .weather,.home-view .timer{padding-top:3px}
+.home-view .weather .eyebrow,.home-view .timer-label{font-size:13px;font-weight:500;color:#a8a1a4;line-height:20px}
+.home-view .weather .eyebrow{margin-bottom:14px}
+.home-view #temp{font-size:75px;font-weight:500;letter-spacing:-4px}
+.home-view .weather .degree{font-size:32px}
+.home-view .weather .units{font-size:11px;line-height:1.65;color:#a49a9a}
+.home-view .location{font-size:17px;font-weight:500;letter-spacing:-.2px}
+.home-view .calendar h1{font-size:25px;font-weight:600;letter-spacing:-.7px}
+.home-view .calendar .day span{color:#948b91;font-size:10px}
+.home-view .calendar .agenda-empty{font-size:12px;color:#a49a9f}
+.home-view .calendar .event{font-size:13px;font-weight:500}
+.home-view .calendar .event time{font-size:11px;font-weight:400;color:#aaaaaa}
+.home-view .calendar .add-event{font-size:13px;font-weight:500;color:#bfbfbf}
+.home-view .timer-display{margin-top:3px}
+.home-view #minutes,.home-view #seconds{font-size:47px;font-weight:500;letter-spacing:-1.5px}
+.home-view .timer-display small{font-size:15px;color:#a69ba0}
+.home-view .timer-controls{margin-top:7px}
+
+/* Shared baseline: location, Add event and timer controls. */
+.home-view .weather .location,.home-view .timer-controls{height:30px;min-height:30px;flex:0 0 30px;margin-top:auto;margin-bottom:0}
+.home-view .timer-controls{align-items:center}
+.home-view .calendar .add-event{height:30px;min-height:30px;flex:0 0 30px;margin-top:auto;margin-bottom:0}
+.home-view .calendar .agenda{height:56px;flex:0 0 56px;scroll-snap-type:y mandatory;scroll-padding:0;overscroll-behavior:contain;scrollbar-width:thin}
+.home-view .calendar .event{height:28px;min-height:28px;margin:0;scroll-snap-align:start;scroll-snap-stop:always}
+.home-view .calendar .agenda:focus-visible{outline:1px solid #ffffff40;outline-offset:2px;border-radius:3px}
+
+/* Revision: one shared section boundary and a grouped weather summary. */
+.home-view{align-items:stretch;height:168px}
+.home-view .weather,.home-view .calendar,.home-view .timer{box-sizing:border-box;height:168px;min-height:0;display:flex;flex-direction:column;padding-bottom:0}
+.home-view .weather-summary{display:flex;flex-direction:column;min-width:0}
+.home-view .weather .eyebrow{margin-bottom:6px}
+.home-view .weather .location{margin-top:2px;height:26px;min-height:26px;flex:0 0 26px}
+.home-view .timer-display{flex:1;min-height:0;margin:0;align-items:center}
+.home-view #timer-edit{line-height:1;min-width:106px}
+.home-view #minutes,.home-view #seconds{font-size:42px;line-height:1}
+.home-view .timer-controls{margin-top:0;height:30px;min-height:30px;flex:0 0 30px}
+.home-view .timer-controls .pill-button{height:30px;min-height:30px;padding-top:0;padding-bottom:0}
+.home-view .timer-controls .icon-button{height:28px;width:28px}
+
+/* 1.10.4: weather lands on the calendar baseline; timer has more top space. */
+.home-view .weather-summary{margin-top:auto}
+.home-view .weather .location{height:30px;min-height:30px;flex-basis:30px}
+.home-view .timer{padding-top:0}
+.home-view .timer-label{height:24px;flex:0 0 24px}
+.home-view .timer-display{align-items:flex-start;padding-top:3px}
+.home-view .timer-ring{align-self:center;margin-top:-8px}
+.home-view .timer-controls{align-items:flex-end}
+
+/* 1.10.5: sketch layout; optical bottom alignment is measured from text ink. */
+.home-view .weather{padding-inline:10px;align-items:center}
+.home-view .weather>.eyebrow{width:100%;justify-content:flex-start;transform:none}
+.home-view .weather-summary{width:100%;flex:none;gap:0;margin-top:auto;transform:translateY(var(--weather-guide-offset,0px))}
+.home-view .weather .temperature{height:auto;min-height:0;flex:none;display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:normal}
+.home-view .celsius{display:flex;align-items:flex-start;flex:none}
+.home-view .weather #temp{font-size:75px;line-height:1;font-weight:500;letter-spacing:-4px}
+.home-view .weather .degree{font-size:29px;line-height:1;margin:2px 0 0 4px;align-self:flex-start}
+.home-view .weather .units{margin:0;flex:1;min-width:0;letter-spacing:0;line-height:1.5;font-size:10px;text-align:right}
+.home-view .weather .location{height:24px;min-height:24px;flex:0 0 24px;margin:-2px 0 0;gap:5px;align-items:center}
+.home-view #city-name{font-size:17px;font-weight:500;line-height:24px;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.home-view .timer{padding:0 8px;justify-content:flex-end;align-items:center}
+.home-view .timer-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.home-view .timer-stack{width:100%;display:flex;flex-direction:column;align-items:center;gap:8px;transform:translateY(var(--timer-guide-offset,0px))}
+.home-view .timer-display{flex:none;width:100%;padding:0;margin:0;gap:8px;align-items:center;justify-content:center}
+.home-view .timer-display #timer-edit{min-width:0;flex:none;line-height:1.04;padding:0;text-align:left}
+.home-view #timer-edit #minutes,.home-view #timer-edit #seconds{font-size:49px;line-height:1.04;font-weight:400;letter-spacing:-1.7px}
+.home-view #timer-edit.long-time #minutes,.home-view #timer-edit.long-time #seconds{font-size:39px}
+.home-view #timer-edit small{font-size:16px;margin-left:4px}
+.home-view .timer-ring{width:46px;height:46px;margin:0;align-self:center;border-radius:50%;background:#ffffff0b;display:grid;place-items:center}
+.home-view #hourglass .sandglass{width:23px;height:33px}
+.home-view .timer-controls{height:28px;min-height:28px;flex:0 0 28px;margin:0;gap:17px;align-items:center;justify-content:center}
+.home-view .timer-controls .pill-button{width:32px;height:28px;min-height:28px;background:transparent}
+.home-view .timer-controls .pill-button:hover{background:#ffffff16}
+.home-view .timer-controls .icon-button{width:28px;height:28px;padding:3px}
+.home-view .timer-controls .icon-button svg{width:22px;height:22px}
+/* Match sketch proportions, with secondary readings vertically centered. */
+.home-view .weather #temp{font-size:90px;line-height:.94}
+.home-view .weather .units{align-self:center;padding:0;margin:0;font-size:10px}
+.home-view #timer-edit #minutes,.home-view #timer-edit #seconds{font-size:54px;line-height:1}
+.home-view .timer-display #timer-edit{line-height:1}
+
+/* 1.10.6: inset secondary readings, aligned with Celsius ink bottom. */
+.home-view .weather>.eyebrow{transform:translateY(6px)}
+.home-view .weather .units{transform:translate(-8px,var(--units-guide-offset,0px))}
+
+/* 1.10.7: readable weather details and visible timer state. */
+.home-view .weather #temp{font-size:82px}
+.home-view .weather .temperature{gap:12px;padding-right:8px}
+.home-view .weather .units{font-size:11.5px;line-height:1.7;color:#b9adb0;text-align:left;transform:translateY(var(--units-guide-offset,0px))}
+.home-view .timer-label{position:static;width:100%;height:20px;flex:0 0 20px;overflow:visible;clip-path:none;justify-content:center;font-size:12px;line-height:20px;margin:0 0 3px}
+.home-view #timer-edit #minutes,.home-view #timer-edit #seconds{font-size:49px}
+.home-view .timer-stack{gap:4px}
+.home-view .timer-label{height:18px;flex:0 0 18px;line-height:18px;margin:0}
+
+/* 1.10.8: slightly tighter secondary readings, aligned right. */
+.home-view .weather .units{font-size:11px;line-height:1.55;text-align:right}
+.home-view .weather .temperature{gap:10px}
+
+/* 1.10.9: local clock and stable timer columns. */
+.home-view .weather .units{font-size:10.5px;line-height:1.55}
+.home-view .weather>.eyebrow{gap:6px;font-size:12px;white-space:nowrap}
+#condition{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.home-view .timer-display{gap:12px}
+.home-view .timer-display #timer-edit{display:grid;grid-template-columns:80px 28px;column-gap:4px;row-gap:0;align-items:baseline;min-width:112px;width:112px;height:100px;line-height:1.08}
+.home-view #timer-edit #minutes,.home-view #timer-edit #seconds,.home-view #timer-edit.long-time #minutes,.home-view #timer-edit.long-time #seconds{width:80px;display:block;font-size:46px;line-height:50px;text-align:right;letter-spacing:-1.7px;font-variant-numeric:tabular-nums}
+.home-view #timer-edit small{display:block;width:28px;margin:0;font-size:16px;line-height:20px;text-align:left}
+.home-view .timer-ring{width:44px;height:52px;margin:0;background:none;border:0;border-radius:6px;padding:0;pointer-events:auto;cursor:pointer}
+.home-view .timer-ring:hover{background:#ffffff08}
+.home-view #hourglass .sandglass{width:30px;height:44px}
+
+/* 1.10.10: one compact timer group centered on the playback controls. */
+.home-view .timer-display{width:max-content;align-self:center;gap:10px}
+.home-view .timer-display #timer-edit{grid-template-columns:58px 28px;width:90px;min-width:90px}
+.home-view #timer-edit #minutes,.home-view #timer-edit #seconds,.home-view #timer-edit.long-time #minutes,.home-view #timer-edit.long-time #seconds{width:58px;white-space:nowrap;overflow:visible}
+.home-view .timer-ring{width:32px;flex:0 0 32px}
+
+/* 1.10.11: room around the hourglass, with a shared control center. */
+.home-view .timer-display{gap:20px}
+.home-view .weather .temperature{transform:translateY(-10px)}
+
+/* Keep the location button above the temperature's overflowing font hit box. */
+.home-view .weather .location{position:relative;z-index:1}
+
+/* 1.10.12: nudge digits and their units left together. */
+.home-view .timer-display #timer-edit{position:relative;left:-5px}
+
+
+/* Each digit owns a stable slot, including proportional-font numerals. */
+.home-view #timer-edit #minutes,.home-view #timer-edit #seconds,.home-view #timer-edit.long-time #minutes,.home-view #timer-edit.long-time #seconds{display:flex;justify-content:flex-end;letter-spacing:0}
+.home-view #timer-edit .timer-digit{display:block;flex:0 0 29px;width:29px;text-align:center;font-size:46px;line-height:50px;font-weight:400;letter-spacing:0;font-variant-numeric:tabular-nums}
+
+/* Notch anchors to the top-centre of the window so size changes grow downward, never sideways */
+.notch{position:absolute;top:0;left:50%;margin:0;transform:translateX(-50%) scale(var(--scale));transform-origin:50% 0;transition:height .38s cubic-bezier(.22,1,.36,1),width .22s cubic-bezier(.22,1,.36,1),border-radius .3s}
+/* Hide every scrollbar and spinner; scrolling stays on the wheel/trackpad */
+*{scrollbar-width:none!important}
+*::-webkit-scrollbar{display:none}
+input[type=number]{-moz-appearance:textfield;appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+/* Game Mode segmented control (replaces the native dropdown) */
+#game-mode[hidden]{display:none!important}
+.seg{display:inline-flex;gap:2px;padding:2px;border-radius:10px;background:#ffffff0d}
+.seg button{font-size:12px;padding:5px 11px;border-radius:8px;color:#a3a3a3}
+.seg button.on{background:#ffffff1f;color:#fff}
+#game-mode:disabled+.seg{opacity:.4;pointer-events:none}
+
+/* Feather only the synced viewport. The clear middle follows the whole active cue. */
+.lyric-stage { position:relative; width:100%; min-width:0; }
+.lyric-stage:has(> .synced)::after {
+ content:''; position:absolute; inset:0; pointer-events:none;
+ backdrop-filter:blur(3.2px); -webkit-backdrop-filter:blur(3.2px);
+ mask-image:linear-gradient(to bottom,
+   #000, #000f calc(.16 * var(--feather-top,0px)), #000d calc(.38 * var(--feather-top,0px)),
+   #0008 calc(.60 * var(--feather-top,0px)), #0003 calc(.79 * var(--feather-top,0px)),
+   transparent var(--feather-top,0px), transparent calc(100% - var(--feather-bottom,0px)),
+   #0003 calc(100% - .79 * var(--feather-bottom,0px)), #0008 calc(100% - .60 * var(--feather-bottom,0px)),
+   #000d calc(100% - .38 * var(--feather-bottom,0px)), #000f calc(100% - .16 * var(--feather-bottom,0px)), #000);
+}
+/* Alpha belongs to the lyric text. The Music panel shows through at both edges. */
+.lyrics #lyrics-lines.synced {
+ --fade-top:min(23%,var(--feather-top,0px));
+ --fade-bottom:min(23%,var(--feather-bottom,0px));
+ mask-image:linear-gradient(to bottom,
+   transparent 0, transparent calc(.10 * var(--fade-top)),
+   rgb(0 0 0 / 9%) calc(.27 * var(--fade-top)), rgb(0 0 0 / 40%) calc(.50 * var(--fade-top)),
+   rgb(0 0 0 / 78%) calc(.72 * var(--fade-top)), rgb(0 0 0 / 96%) calc(.90 * var(--fade-top)),
+   black var(--fade-top), black calc(100% - var(--fade-bottom)),
+   rgb(0 0 0 / 96%) calc(100% - .90 * var(--fade-bottom)), rgb(0 0 0 / 78%) calc(100% - .72 * var(--fade-bottom)),
+   rgb(0 0 0 / 40%) calc(100% - .50 * var(--fade-bottom)), rgb(0 0 0 / 9%) calc(100% - .27 * var(--fade-bottom)),
+   transparent calc(100% - .10 * var(--fade-bottom)), transparent 100%);
+}
+#lyrics-lines.synced .lyric-line.edge-line,#lyrics-lines.synced .lyric-line.edge-line:hover,#lyrics-lines.synced .lyric-line.edge-line:focus-visible { filter:none; mask-image:none; }
+#lyrics-lines.synced .lyric-line.edge-line[data-slot="0"],#lyrics-lines.synced .lyric-line.edge-line[data-slot="4"] { mask-image:none; }
+#lyrics-lines.synced .lyric-line:not(.current):not(.edge-line) { opacity:.58; }
+.lyrics #lyrics-lines.synced .lyric-line:not(.current):not(:focus-visible) { filter:blur(var(--cue-defocus,0px)); }
+
+/* Editors (location, event, timer): one shared layout. Intro + Back on the left, controls top-aligned on the right, actions pinned to the bottom edge. */
+.editor-view{align-items:stretch;gap:36px;padding:8px 26px 14px 30px;height:168px}
+.editor-view .editor-intro{width:172px;align-self:stretch;display:flex;flex-direction:column;padding-top:10px}
+.editor-view h2{font-size:22px;line-height:1.2;margin:0 0 6px}
+.editor-view p{font-size:12px;color:#a2979c}
+.editor-view .editor-back{margin-top:auto;align-self:flex-start;font-size:12px;color:#b8b8b8;padding:4px 0}
+.editor-view .editor-back:hover{color:#fff}
+.editor-view input{height:38px;border-radius:12px;font-size:13px;padding:0 13px}
+.editor-view input::selection{background:#ffffff26}
+.editor-view .primary-action,.editor-view .small-button.primary-action{height:36px;padding:0 18px;border-radius:12px;font-size:12px}
+.editor-view .field-label{gap:6px;font-size:11px;color:#9d9d9d}
+.editor-view input[type=date]::-webkit-calendar-picker-indicator,.editor-view input[type=time]::-webkit-calendar-picker-indicator{opacity:.45;cursor:pointer}
+#event-form,#timer-form:not([hidden]),.location-editor .location-search{flex:1;min-width:0;align-self:stretch;display:flex;flex-direction:column;gap:10px}
+#event-form .event-fields{margin:0;gap:12px}
+#event-form .event-actions,#timer-form>div{margin-top:auto;justify-content:flex-end}
+#event-error:empty,#timer-error:empty{display:none}
+.timer-editor #timer-form:not([hidden]){display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto 1fr;gap:6px 14px;align-content:start}
+.timer-editor #timer-form>div{align-self:end;grid-column:1/3}
+.timer-editor #timer-form input{height:68px;font-size:36px;border-radius:14px}
+.location-search form{gap:8px}
+.location-search form .small-button{height:38px;padding:0 18px;border-radius:12px}
+.location-search #city-results{height:auto;flex:1;min-height:0;margin-top:0;border-top:0;padding:0;overflow-y:auto;font-size:12px;color:#a2979c}
+.location-search #city-results .city-result{padding:6px 10px;border-radius:10px}
+.location-search #city-results .city-result:hover,.location-search #city-results .city-result:focus-visible{background:#ffffff12}
+.location-credit{font-size:9px;color:#6f6a73;margin-top:0}
+/* Settings: more breathing room under the tab bar */
+.settings-title{margin:4px 0 10px}
+.settings-view .preference-row{min-height:42px}
+.editor-view{padding-bottom:20px}
+.editor-view input{height:36px}
+/* Event: title on the first row; date, time and Save share the second row so everything fits the panel */
+#event-form{display:grid;grid-template-columns:1.25fr 1fr auto;column-gap:12px;row-gap:10px;align-content:start}
+#event-form .event-fields{display:contents}
+#event-form>.field-label{grid-column:1/4}
+#event-form .event-fields .field-label:first-child{grid-column:1;grid-row:2}
+#event-form .event-fields .field-label:last-child{grid-column:2;grid-row:2}
+#event-form .event-actions{grid-column:3;grid-row:2;align-self:end;margin:0}
+#event-form #event-error{grid-column:1/4;grid-row:3;margin:0}
+.timer-editor #timer-form>div{grid-row:3}
+.timer-editor #timer-form input{height:64px}
+.location-search #city-results .city-result{flex-direction:row;align-items:baseline;gap:8px;padding:5px 10px}
+.location-search #city-results .city-result span{flex:1;min-width:0}
+
+
+
+/* Location: one search field with an inline button, then a tidy two-column result list */
+.location-editor .location-search{gap:8px}
+.location-search #city-form{position:relative;display:block!important}
+.location-search #city-form input{width:100%;height:40px;padding:0 48px 0 14px;border-radius:14px;font-size:13px}
+.city-go{position:absolute;top:5px;right:5px;width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:#cdcdcd;color:#211b17}
+.city-go:hover{background:#dedede}
+.city-go svg{width:16px;height:16px;stroke-width:2}
+.location-search #city-results{display:flex;flex-direction:column;gap:2px;height:auto;flex:1;min-height:0;padding:0;overflow-y:auto;font-size:12px;color:#a2979c;line-height:1.4}
+.location-search #city-results .city-result{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:12px;flex:0 0 34px;height:34px;padding:0 12px;border-radius:10px}
+.location-search #city-results .city-result strong{font-size:13px;font-weight:500;white-space:nowrap}
+.location-search #city-results .city-result span{flex:0 1 auto;text-align:right;font-size:11px;color:#8d838b}
+.location-search #city-results .city-result:hover,.location-search #city-results .city-result:focus-visible{background:#ffffff14}
+
+/* Unsynced lyrics scroll with the wheel only; a soft fade hints that there is more */
+#lyrics-lines.plain{overflow-y:auto;-webkit-mask-image:linear-gradient(transparent,#000 8%,#000 88%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 88%,transparent)}
+
+/* Lyric rows glide (position, size, opacity, colour, blur) via WAAPI in renderLyrics; scale is anchored top-left */
+#lyrics-lines.synced .lyric-line{transform-origin:0 0}
+
+/* Tray: soft aurora while a file is being dragged over / offered */
+@property --aurora{syntax:'<angle>';inherits:false;initial-value:0deg}
+.dropzone{position:relative;overflow:hidden;transition:background .6s ease,border-color .6s ease,box-shadow .6s ease}
+.dropzone::before,.dropzone::after{content:'';position:absolute;pointer-events:none;opacity:0;transition:opacity .6s ease}
+.dropzone::before{inset:0;border-radius:inherit;padding:1px;background:#6fc7ff59;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);}
+.dropzone::after{display:none}
+.dropzone>*{position:relative;z-index:1}
+.dragging .dropzone{border-color:transparent;background:#4ab6f512;box-shadow:inset 0 0 36px rgba(96,190,255,.14),0 0 24px rgba(96,190,255,.10)}
+.dragging .dropzone::before{opacity:1;animation:aurora-spin 3.6s linear infinite}
+.dragging .dropzone::after{opacity:1;animation:aurora-breathe 2.6s ease-in-out infinite}
+#shelf-empty{transition:transform .5s cubic-bezier(.22,.8,.25,1),opacity .5s}
+.dragging #shelf-empty{transform:translateY(-3px) scale(1.04)}
+@keyframes aurora-spin{to{--aurora:360deg}}
+@keyframes aurora-breathe{0%,100%{opacity:.55}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.dragging .dropzone::before,.dragging .dropzone::after{animation:none}}
+
+/* ===== Polish pass (Home + hidden menus). Sizes and positions of the accepted Home layout are untouched. ===== */
+:root{--accent:#81baff;--ease-out:cubic-bezier(.22,.8,.25,1)}
+
+/* Calendar: event dots, friendlier arrows, tidy event rows */
+.calendar .day{position:relative;transition:background .25s var(--ease-out),color .2s}
+.calendar .day.has-events::after{content:'';position:absolute;left:50%;bottom:3px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--accent);box-shadow:0 0 7px #81baff88}
+.calendar-heading .icon-button{border-radius:50%;color:#a39a9f;transition:background .2s,color .2s,transform .2s var(--ease-out)}
+.calendar-heading .icon-button:hover{background:#ffffff14;color:#fff}
+.calendar-heading .icon-button:active{transform:scale(.9)}
+.calendar .event{transition:background .2s}
+.calendar .event .event-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.calendar .event time{flex:none;font-variant-numeric:tabular-nums}
+
+/* Weather: location row hints that it is clickable */
+.location::after{content:'';flex:none;width:12px;height:12px;margin-left:8px;background:#fff;opacity:0;transform:translateX(-4px);transition:opacity .25s,transform .25s var(--ease-out);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center/contain no-repeat}
+.location:hover::after,.location:has(#city-name:focus-visible)::after{opacity:.55;transform:none}
+#city-name:hover{text-decoration:none}
+
+/* Timer: play reads as the primary control; hourglass reacts to the pointer */
+.home-view .timer-controls .pill-button{background:#ffffff12;border-radius:999px;transition:background .2s,transform .2s var(--ease-out)}
+.home-view .timer-controls .pill-button:hover{background:#ffffff22}
+.home-view .timer-controls .icon-button{border-radius:50%;transition:background .2s,transform .2s var(--ease-out),opacity .2s}
+.home-view .timer-controls .icon-button:hover{background:#ffffff10}
+#timer-restart{transition:transform .35s var(--ease-out),opacity .2s}
+#timer-restart:hover{transform:scale(1.07)}
+#timer-restart:active{transform:rotate(25deg) scale(.95)}
+
+/* Header navigation */
+header .nav{transition:background .25s var(--ease-out),color .2s,transform .2s var(--ease-out)}
+header .nav:not(.active):hover{background:#ffffff0d}
+
+/* Location editor: current city row */
+.city-current{display:flex;align-items:center;gap:10px;height:38px;flex:0 0 38px;padding:0 13px;border-radius:12px;background:#cdcdcd12;border:1px solid #cdcdcd2c;color:#dfdfdf}
+.city-current svg{width:15px;height:15px;color:#cdcdcd;stroke-width:2}
+.city-current strong{flex:1;min-width:0;font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.city-current span{font-size:11px;color:#9e9e9e}
+
+/* Timer editor: quick durations */
+.timer-presets{display:flex;gap:6px;margin-right:auto}
+.timer-presets button{height:32px;padding:0 12px;border-radius:11px;font-size:12px;color:#b9aeb2;background:#ffffff0b;border:1px solid #ffffff12;transition:background .2s,color .2s,border-color .2s}
+.timer-presets button:hover{background:#ffffff16;color:#fff}
+.timer-presets button.on{background:#cdcdcd24;border-color:#cdcdcd66;color:#e8e8e8}
+
+/* Settings: calmer rhythm */
+.settings-view .preference-row{min-height:46px}
+.settings-group h3+.preference-row{border-top:0}
+.settings-group .preference-row+.preference-row{border-top:1px solid #ffffff0b}
+.preference-row input{transition:background .25s}
+.preference-row input:before{transition:transform .3s var(--ease-out)}
+
+/* Tray cards and toast */
+.file{transition:transform .3s var(--ease-out),opacity .2s}
+.file:hover{transform:translateY(-2px)}
+#toast{-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-radius:14px}
+
+/* ===== Edge handle: a flat black capsule floating below the top edge. Hovering morphs it, in place, into the mini notch (no shadows). =====
+   --p: capsule -> mini notch (0..1).  --q: mini notch -> tray (0..1).  The body, the corner radii and the notch's little "wings"
+   are all computed from these two numbers, so they can never come apart; app.js only animates --p and --q. */
+@property --p{syntax:'<number>';inherits:true;initial-value:0}
+@property --q{syntax:'<number>';inherits:true;initial-value:0}
+#edge{position:fixed;inset:0;pointer-events:none;display:none;--spring:cubic-bezier(.34,1.56,.5,1)}
+body.edge #edge,#edge.handoff{display:block}
+body.edge #notch{visibility:hidden}
+#edge .edge-pill{
+ /* One reversible timeline: swell as a pill, touch the edge, then form the flat seam. */
+ --grow:calc(var(--p)*var(--p)*(3 - 2*var(--p)));
+ --rise:clamp(0,(var(--p) - .32)/.38,1);
+ --contact:calc(var(--rise)*var(--rise)*(3 - 2*var(--rise)));
+ --dock:clamp(0,(var(--p) - .70)/.24,1);
+ --seam:calc(var(--dock)*var(--dock)*(3 - 2*var(--dock)));
+ --wing:clamp(0,(var(--p) - .94)/.06,1);
+ --e:calc(var(--wing)*var(--wing)*(3 - 2*var(--wing)));
+ --h:calc(10px + (64px*var(--scale) - 10px)*var(--grow) + 170px*var(--scale)*var(--q));
+ --round:calc(var(--h)/2);
+ --tr:calc(var(--round)*(1 - var(--seam)));
+ --br:calc(var(--tr) + (20px + 10px*var(--q))*var(--scale)*var(--seam));
+ position:absolute;left:50%;top:calc(8px*(1 - var(--contact)));box-sizing:border-box;
+ width:calc(64px + (292px*var(--scale) - 64px)*var(--grow) + 428px*var(--scale)*var(--q));
+ height:var(--h);
+ border-radius:var(--tr) var(--tr) var(--br) var(--br);background:#050506;border:0;
+ transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:18px;
+
+ animation:edge-breathe 4.4s ease-in-out infinite}
+@keyframes edge-breathe{0%,100%{scale:1}50%{scale:1.07 1}}
+/* eyes appear only while the pointer wakes the capsule */
+#edge .edge-pill b{display:block;width:7px;height:10px;border-radius:4px;background:#fff;opacity:0}
+/* the mascot's smile, drawn at exactly the mascot's size so the hand-off to the real notch is invisible */
+#edge .edge-face{position:absolute;left:50%;top:50%;width:calc(154px*var(--scale));height:calc(68px*var(--scale));transform:translate(-50%,-50%);overflow:visible;fill:none;stroke:#fff;stroke-width:3.8;stroke-linecap:round;opacity:0;pointer-events:none}
+/* the notch's inverted corners: they grow out of the top corners with --e, overlapping the body by one scaled pixel like the real notch */
+#edge .edge-ear{position:absolute;top:0;width:calc(13px*var(--scale)*var(--e));height:calc(13px*var(--scale)*var(--e));pointer-events:none}
+#edge .edge-ear.l{left:calc(-12px*var(--scale)*var(--e));background:radial-gradient(circle at 0 100%,transparent calc(12px*var(--scale)*var(--e)),#050506 calc(12.3px*var(--scale)*var(--e)))}
+#edge .edge-ear.r{right:calc(-12px*var(--scale)*var(--e));background:radial-gradient(circle at 100% 100%,transparent calc(12px*var(--scale)*var(--e)),#050506 calc(12.3px*var(--scale)*var(--e)))}
+/* static look of the hovered state (also the reduced-motion fallback); the real morph is a Web Animation of --p and --q in app.js */
+#edge.hot .edge-pill{animation:none}
+#edge.hot .edge-pill b{opacity:1}
+@media (prefers-reduced-motion:reduce){#edge .edge-pill{transition:none;animation:none}#edge.hot .edge-pill{--p:.3}}
+
+/* ===== Settings: update row ===== */
+.update-button{height:30px;padding:0 14px;border-radius:10px;font-size:12px;color:#e8e0e3;background:#ffffff12;border:1px solid #ffffff16;white-space:nowrap;transition:background .2s,color .2s,opacity .2s}
+.update-button:hover:not(:disabled){background:#ffffff20}
+.update-button.primary{background:#cdcdcd;color:#211b17;border-color:transparent;font-weight:600}
+.update-button.primary:hover:not(:disabled){background:#dedede}
+.update-button:disabled{opacity:.6}
+#update-status:empty{display:none}
+#settings-button{position:relative}
+#settings-button.has-update::after{content:'';position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px #81baff99}
+
+/* Settings: three rows per column fit the panel */
+.settings-title{margin:0 0 2px}
+.settings-title h2{font-size:22px;line-height:26px}
+.settings-view .preference-row{min-height:38px}
+.settings-group h3{margin-bottom:2px}
+.shortcut-record{padding:5px 8px}
+.update-button{height:28px}
+
+/* Tray: crowded trays slide sideways (wheel or hold-drag) and fade at the edge that still has files */
+.files{overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap;cursor:grab;--fade-l:0px;--fade-r:0px;
+ -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fade-l),#000 calc(100% - var(--fade-r)),transparent 100%);
+ mask-image:linear-gradient(90deg,transparent 0,#000 var(--fade-l),#000 calc(100% - var(--fade-r)),transparent 100%)}
+.files.panning,.files.panning .file-open{cursor:grabbing}
+/* fresh-tray hover: the capsule grows without eyes */
+#edge.hot.plain .edge-pill b{opacity:0}
+
+/* ===== Music cover: cut away around the player's logo, and the logo has no frame ===== */
+.artwork{background:none;box-shadow:none}
+.art-bg{position:absolute;inset:0;border-radius:15px;background:#15201a;box-shadow:inset 0 0 0 1px #ffffff08}
+.artwork:has(#album-art.hidden) .art-bg {
+ padding:0 3px 3px 0;
+ background:#222222 url("record-sleeve.svg") center / contain no-repeat content-box;
+}
+.artwork{--logo:38px;--m:calc(var(--logo)*1.4);--cx:10.5px;--cy:12.5px}
+.artwork.cut .art-bg,.artwork.cut #album-art{
+ -webkit-mask-image:linear-gradient(#000,#000),var(--cut-url);mask-image:linear-gradient(#000,#000),var(--cut-url);
+ -webkit-mask-size:100% 100%,var(--m) var(--m);mask-size:100% 100%,var(--m) var(--m);
+ -webkit-mask-position:0 0,right calc(var(--cx) - var(--m)/2 + 3px) bottom calc(var(--cy) - var(--m)/2 + 3px);mask-position:0 0,right calc(var(--cx) - var(--m)/2 + 3px) bottom calc(var(--cy) - var(--m)/2 + 3px);
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-composite:source-out;mask-composite:subtract}
+#music-source{right:calc(var(--cx) - var(--logo)/2);bottom:calc(var(--cy) - var(--logo)/2);width:var(--logo);height:var(--logo);padding:0;border:0;border-radius:0;background:none;box-shadow:none;overflow:visible;opacity:0;transition:opacity .2s}
+#music-source.ready{opacity:1}
+#music-source img{width:var(--logo);height:var(--logo);border-radius:0;object-fit:contain}
+
+/* ===== Hidden menus: one type and control scale (title 22 / label 14 / body 13 / caption 12 / micro 11; controls 38 and 30 tall) ===== */
+:root{--cap-color:#a39a9f;--cap-dim:#8f868b}
+.editor-view h2,.settings-title h2{font-size:22px;line-height:26px;font-weight:600}
+.editor-view p,.settings-title>span{font-size:12px;color:var(--cap-color)}
+.editor-view .field-label,.timer-editor #timer-form label{font-size:12px;font-weight:500;color:var(--cap-color)}
+.editor-view .editor-back{font-size:13px;font-weight:500}
+.editor-view input:not([type=number]){height:38px;border-radius:12px;font-size:13px;font-weight:500;padding:0 14px}
+.timer-editor #timer-form input{border-radius:12px}
+.editor-view .primary-action,.timer-editor #timer-form .primary-action{height:38px;padding:0 20px;border-radius:12px;font-size:13px;font-weight:600}
+.timer-presets button{height:38px;padding:0 14px;border-radius:12px;font-size:13px;font-weight:500}
+.city-go{width:30px;height:30px;border-radius:10px;top:4px;right:4px}
+.location-search #city-form input{height:38px}
+.city-go{top:4px}
+.location-search #city-results .city-result,.city-current{height:38px;flex:0 0 38px;border-radius:12px}
+.location-search #city-results .city-result strong,.city-current strong{font-size:14px;font-weight:500}
+.location-search #city-results .city-result span,.city-current span{font-size:12px;color:var(--cap-dim)}
+.settings-group h3{font-size:11px}
+.settings-view .preference-row strong{font-size:14px;font-weight:500}
+.shortcut-record{height:30px;font-size:12px;font-weight:500;border-radius:10px}
+.update-button{height:30px;font-size:12px;font-weight:500;border-radius:10px}
+.update-button.primary{font-weight:600}
+.seg{border-radius:10px}
+.seg button{height:26px;font-size:12px;font-weight:500;border-radius:8px}
+.file-name{font-size:12px;font-weight:500}
+.file-size{font-size:11px}
+.dropzone h2{font-size:16px;font-weight:500}
+.dropzone p{font-size:12px}
+
+/* ===== Date and time pickers in the notch's own style ===== */
+.native-store{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
+.event-fields .field-label{position:relative}
+.pick-field{display:flex;align-items:center;gap:10px;width:100%;height:38px;padding:0 14px;border-radius:12px;border:1px solid #ffffff19;background:#ffffff08;color:#ededed;font-size:13px;font-weight:500;text-align:left;transition:border-color .2s,background .2s}
+.pick-field:hover{background:#ffffff0f;border-color:#ffffff2c}
+.pick-field:focus-visible{outline:none;border-color:#afafaf;background:#ffffff0e}
+.pick-field .pk-val{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pick-field svg{width:16px;height:16px;flex:none;opacity:.55;stroke-width:1.8}
+.round-btn{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#ffffff10;color:#d8d0d3;transition:background .2s,opacity .2s;flex:none}
+.round-btn:hover:not(:disabled){background:#ffffff1d}
+.round-btn:disabled{opacity:.3}
+.round-btn svg{width:16px;height:16px;stroke-width:2}
+/* Date picker: the chosen date big on the left; months as chips and the days as a scrolling ribbon of cards on the right */
+.date-editor{padding-bottom:8px}
+.date-intro{justify-content:space-between}
+.date-hero{display:flex;align-items:center;gap:12px;min-width:0}
+.date-hero strong{font-size:44px;line-height:44px;font-weight:600;letter-spacing:-1.5px;color:#fff;font-variant-numeric:tabular-nums}
+.date-hero span{display:block;font-size:14px;font-weight:500;color:#ededed;white-space:nowrap}
+.date-hero small{display:block;font-size:12px;color:var(--cap-dim);white-space:nowrap;margin-top:1px}
+.editor-view p.date-rel{margin:-4px 0 0;font-size:12px;font-weight:500;color:#cdcdcd}
+.date-quick{display:flex;gap:6px}
+.date-quick button{height:30px;padding:0 13px;border-radius:10px;font-size:12px;font-weight:500;color:#e6dde0;background:#ffffff0f;transition:background .2s,color .2s}
+.date-quick button:hover{background:#ffffff1d;color:#fff}
+.date-right{flex:1;min-width:0;align-self:flex-start;display:flex;flex-direction:column;gap:12px}
+.pk-months,.pk-ribbon{display:flex;overflow-x:auto;overflow-y:hidden;cursor:grab;--fade-l:0px;--fade-r:0px;position:relative;
+ -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fade-l),#000 calc(100% - var(--fade-r)),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 var(--fade-l),#000 calc(100% - var(--fade-r)),transparent 100%)}
+.pk-months.panning,.pk-ribbon.panning{cursor:grabbing}
+.pk-months{gap:6px;height:30px}
+.pk-month{flex:none;height:30px;padding:0 13px;border-radius:10px;font-size:12px;font-weight:500;color:#b9aeb2;background:#ffffff0b;white-space:nowrap;transition:background .2s,color .2s}
+.pk-month:hover:not(.on){background:#ffffff18;color:#fff}
+.pk-month.on{background:#cdcdcd;color:#211b17;font-weight:600}
+.pk-ribbon{gap:6px;height:96px;align-items:center}
+.pk-day{flex:none;width:48px;height:88px;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:#ffffff08;transition:background .18s,transform .18s var(--ease-out),opacity .2s}
+.pk-day small{font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--cap-dim)}
+.pk-day strong{font-size:22px;line-height:24px;font-weight:600;color:#ededed;font-variant-numeric:tabular-nums}
+.pk-day i{width:4px;height:4px;border-radius:50%;background:transparent}
+.pk-day.has-ev i{background:#cdcdcd}
+.pk-day.sun small,.pk-day.sun strong{color:#81baff}
+.pk-day.today{outline:1.5px solid #cdcdcdb0;outline-offset:-1.5px}
+.pk-day:hover:not(:disabled):not(.sel){background:#ffffff16;transform:translateY(-3px)}
+.pk-day.sel{background:#cdcdcd}
+.pk-day.sel small,.pk-day.sel strong{color:#211b17}
+.pk-day.sel i{background:#211b17}
+.pk-day:disabled{opacity:.24;cursor:default}
+.time-pick{flex:1;min-width:0;display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.wheels{position:relative;display:flex;align-items:center;gap:4px;height:140px}
+.wheels::before{content:'';position:absolute;left:0;right:0;top:55px;height:30px;border-radius:10px;background:#ffffff12;pointer-events:none}
+.wheel{position:relative;width:84px;height:140px;box-sizing:border-box;padding:55px 0;overflow-y:auto;scroll-snap-type:y mandatory;touch-action:none;cursor:grab;outline:none;
+ -webkit-mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)}
+.wheel.dragging{scroll-snap-type:none;cursor:grabbing}
+.wheel-item{display:block;width:100%;height:30px;scroll-snap-align:center;font-size:15px;font-weight:500;line-height:30px;color:#746c70;font-variant-numeric:tabular-nums;text-align:center;transition:color .15s,font-size .15s}
+.wheel-item.on{color:#fff;font-weight:600;font-size:17px}
+.colon{position:relative;z-index:1;font-size:17px;font-weight:600;color:#9d9498}
+.timer-presets{flex:none}
+.timer-presets button{flex:none;white-space:nowrap}
+.pk-day.has-ev{line-height:15px}
+.pk-day.has-ev::after{bottom:1px}
+
+/* months: a hairline where the year changes instead of year text */
+.pk-year-sep{flex:none;align-self:center;width:1px;height:18px;margin:0 3px;background:#ffffff2e}
+/* start-up greeting: the mascot pops in after the notch has landed; nothing else animates meanwhile */
+#mascot.intro-hidden{opacity:0!important;transition:none!important}
+#mascot.intro-pop{animation:mascot-pop .6s cubic-bezier(.34,1.56,.5,1) both}
+@keyframes mascot-pop{0%{opacity:0;transform:scale(.5) translateY(10px);filter:blur(5px)}55%{opacity:1;filter:blur(0)}100%{opacity:1;transform:scale(1) translateY(0);filter:blur(0)}}
+.mascot-calm .mini-bars{display:none!important}
+@media (prefers-reduced-motion:reduce){#mascot.intro-pop{animation:none}}
+/* validation note: a small bubble in the notch's style */
+#field-note{position:absolute;z-index:40;display:flex;align-items:center;gap:9px;height:36px;max-width:320px;padding:0 15px 0 11px;border-radius:12px;background:#0b0b0d;border:1px solid #cdcdcd3a;color:#ededed;font-size:13px;font-weight:500;white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transform:translateY(5px) scale(.97);transition:opacity .18s ease,transform .24s var(--ease-out),visibility 0s linear .24s}
+#field-note.show{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+#field-note svg{width:18px;height:18px;flex:none;color:#7db8ff;stroke-width:1.9}
+#field-note::before{content:'';position:absolute;top:-6px;left:var(--ax,24px);width:10px;height:10px;background:#0b0b0d;border-left:1px solid #cdcdcd3a;border-top:1px solid #cdcdcd3a;transform:rotate(45deg)}
+#field-note.above::before{top:auto;bottom:-6px;transform:rotate(225deg)}
+.field-bad{border-color:#7db8ff!important}
+.field-shake{animation:field-shake .38s ease}
+@keyframes field-shake{0%,100%{translate:0}20%{translate:-4px}40%{translate:4px}60%{translate:-3px}80%{translate:2px}}
+
+/* The cover and its backdrop are drawn 3 px larger to the right and bottom and clipped back to the visible shape. The cut mask then
+   covers the cover's sub-pixel edge row too (a mask clipped to the box left a faint line along the bottom edge on some displays). */
+.art-bg,#album-art{inset:0 -3px -3px 0;width:calc(100% + 3px);height:calc(100% + 3px);border-radius:0;clip-path:inset(0 3px 3px 0 round 15px)}
+
+/* Panel mode (?panel): the native notch draws the shape, the wings, the glow and the mascot; this page only fills the panel. */
+body.panel-mode{background:transparent}
+body.panel-mode #edge,body.panel-mode #face{display:none}
+body.panel-mode .notch{background:transparent!important;box-shadow:none!important;width:720px!important;height:234px!important;transition:none!important;translate:none!important;opacity:1!important}
+body.panel-mode .notch:before,body.panel-mode .notch:after{display:none}
+body.panel-mode #expanded{background:none!important;opacity:0;transform-origin:50% 0;transition:opacity .12s ease-out,scale .2s cubic-bezier(.2,.8,.2,1)}
+body.panel-mode.ready #expanded{opacity:1}
+body.panel-mode.ready.closing #expanded{opacity:0;scale:.86;transform-origin:50% 0;transition:opacity .06s linear,scale .2s cubic-bezier(.3,0,.2,1)}
+
+/* The outline clips a full-size layout. Its children never reflow into the mini notch. */
+.notch {
+ --morph-time: 340ms;
+ --morph-ease: cubic-bezier(.3,0,.2,1);
+ /* Opening drops from the top: the height leads and the width follows a beat later. */
+ transition: height .32s cubic-bezier(.2,.9,.25,1), width .46s cubic-bezier(.25,0,.1,1) .03s,
+             border-radius .4s var(--morph-ease), top var(--morph-time) var(--morph-ease);
+}
+/* Closing retraces the same shapes backwards: it narrows first, then draws back up into the mini notch. */
+.notch.compact {
+ transition: width .3s cubic-bezier(.4,0,.2,1), height .34s cubic-bezier(.4,0,.2,1) .06s,
+             border-radius .34s var(--morph-ease), top var(--morph-time) var(--morph-ease);
+}
+html, body { overflow: clip; }
+#expanded { position: relative; overflow: clip; transition: opacity var(--morph-time) var(--morph-ease); }
+.panel-layout { position: relative; width: 720px; height: 234px; left: 50%; transform: translateX(-50%); }
+.compact #expanded { visibility: visible; }
+.notch.from-edge.compact { width: var(--start-width); height: var(--start-height); top: var(--start-top); border-radius: var(--start-radius); }
+/* Out of the capsule (it floats a few px down) straight into the panel: the shape meets the screen edge at once and loses its
+   top rounding just as fast, so no gap shows above it; the ears grow in once it is there. Width and height keep their morph. */
+.notch.from-edge:not(.compact) {
+ transition: height .32s cubic-bezier(.2,.9,.25,1), width .46s cubic-bezier(.25,0,.1,1) .03s, top .1s ease-out,
+             border-top-left-radius .1s ease-out, border-top-right-radius .1s ease-out,
+             border-bottom-left-radius .4s var(--morph-ease), border-bottom-right-radius .4s var(--morph-ease);
+}
+.notch.from-edge:not(.compact):before, .notch.from-edge:not(.compact):after { animation: ear-in .16s .08s both; }
+@keyframes ear-in { from { opacity: 0; } }
+/* The face returns only once the shape has nearly landed, so it never rides along with the morph. */
+.notch.compact .face { transition: opacity .14s ease-out .3s; }
+.notch:not(.compact) #expanded { transition-delay: .05s; }
+.notch.from-edge .face { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) {
+ .notch { --morph-time: 0s; }
+ .notch.compact .face { transition: none; }
+}
+
+/* Events: tick one off. The box sits over the colour bar and shows on hover; a ticked event stays struck through. */
+.event{position:relative}
+.event-check{position:absolute;left:-8px;top:50%;width:12px;height:12px;margin-top:-6px;padding:0;border-radius:3.5px;background:#050506;box-shadow:inset 0 0 0 1.5px #ffffff70;opacity:0;transition:opacity .15s,background .15s,box-shadow .15s}
+.event:hover .event-check,.event-check:focus-visible{opacity:1}
+.event-check[aria-checked=true]{background:var(--accent);box-shadow:none}
+.event-check[aria-checked=true]::after{content:'';position:absolute;left:4px;top:1.5px;width:3px;height:6px;border:solid #16120e;border-width:0 1.6px 1.6px 0;transform:rotate(45deg)}
+.event.done{border-left-color:#ffffff26}
+.event.done .event-name,.event.done time{text-decoration:line-through;text-decoration-thickness:1px;color:#8f8f96}
+.event-check{left:-15px}
+/* A fixed 14 px lane on the left of every event: the colour bar normally, the tick box on hover, both centred in it.
+   The text starts after the lane, so nothing moves and nothing touches. */
+.event{border-left:0;padding-left:20px}
+.event::before{content:'';position:absolute;left:6px;top:2px;bottom:2px;width:2px;border-radius:1px;background:#70b0ff;transition:opacity .15s}
+.event.done::before{background:#ffffff26}
+.event:hover::before,.event:has(.event-check:focus-visible)::before{opacity:0}
+.event-check{left:1px}
+
+/* Game mode with Sora hidden: the capsule stays still and takes no pointer at all. */
+body.game #edge,body.game #edge *{pointer-events:none!important}body.game #edge .edge-pill{animation:none!important}
+
+/* Music: the cover, large and strongly blurred, on the left only, fading out well before the middle (dimmed for the text). */
+#music-backdrop{position:absolute;top:-15%;bottom:-15%;left:-8%;width:50%;z-index:0;background:center/cover no-repeat;filter:blur(40px) brightness(.55);-webkit-mask-image:linear-gradient(90deg,#000 35%,transparent);mask-image:linear-gradient(90deg,#000 35%,transparent);opacity:0;transition:opacity .45s ease;pointer-events:none}
+.notch[data-view=music] #music-backdrop.on{opacity:1}
+#expanded>.panel-layout{position:relative;z-index:1}

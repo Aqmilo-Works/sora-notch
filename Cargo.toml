@@ -1,0 +1,91 @@
+[package]
+name = "sora"
+version = "1.0.0"
+description = "A little space at the top of your Windows desktop"
+authors = ["Aqmilo Works"]
+license = "GPL-3.0-or-later"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# macos-private-api: a transparent notch window on macOS (tauri.conf.json macOSPrivateApi); nothing changes on Windows.
+tauri = { version = "2", features = ["tray-icon", "image-png", "macos-private-api"] }
+tauri-plugin-single-instance = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+base64 = "0.22"
+ring = "0.17"
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "webp", "bmp", "tiff", "ico"] }
+tempfile = "3"
+pdf-writer = "0.14"
+zip = { version = "4.6", default-features = false, features = ["deflate-flate2-zlib-rs"] }
+quick-xml = "0.42"
+rcgen = "0.13"
+socket2 = { version = "0.6", features = ["all"] }
+if-addrs = "0.15"
+tiny_http = "0.12"
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+tokio = { version = "1", features = ["fs", "time"] }
+tokio-util = { version = "0.7", features = ["io"] }
+futures-util = "0.3"
+uuid = { version = "1", features = ["v4"] }
+rfd = "0.15"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "stream"] }
+qrcode = { version = "0.14", default-features = false }
+aes = "0.8"
+cbc = { version = "0.1", features = ["alloc"] }
+
+[target.'cfg(windows)'.dependencies]
+# Send > QR Code over WebRTC (rtc_share.rs): Sans-IO, Windows CNG crypto, no OpenSSL.
+str0m = { version = "0.25", default-features = false, features = ["wincrypto"] }
+# The panel page is suspended while hidden (WebView2 TrySuspend / memory target), through the controller Tauri hands out.
+webview2-com = "0.39"
+wvcore = { package = "windows-core", version = "0.62" }
+windows-core = "0.58"
+windows = { version = "0.58", features = ["implement", "UI_Shell", "Win32_System_Ole", "Win32_System_SystemServices", "Win32_System_Com_StructuredStorage", "Foundation", "Foundation_Collections", "Media_Control", "Data_Pdf", "Graphics_Imaging", "Media_Ocr", "Globalization", "Win32_System_JobObjects", "Win32_Security", "Win32_Security_Authorization", "Storage", "Win32_System_WinRT", "Storage_Streams", "Win32_UI_Input_KeyboardAndMouse", "Win32_UI_Accessibility", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging", "Win32_Foundation", "Win32_Graphics_Gdi", "Win32_System_Com", "Win32_System_Diagnostics_ToolHelp", "Win32_System_Threading", "Win32_Storage_FileSystem", "Win32_System_Memory", "Win32_System_ProcessStatus", "Win32_System_Search", "Win32_System_Search_Common", "Win32_System_Variant", "Win32_System_Com_StructuredStorage", "Foundation_Numerics", "Win32_Graphics_Direct2D", "Win32_Graphics_Direct2D_Common", "Win32_Graphics_DirectWrite", "Win32_Graphics_Dxgi_Common", "Win32_Graphics_Imaging", "Win32_UI_Input_Ime", "Win32_UI_HiDpi", "Win32_System_StationsAndDesktops", "Win32_System_DataExchange", "Win32_System_LibraryLoader", "Win32_Graphics_Dwm", "Win32_Media_Audio", "Devices_Bluetooth_Advertisement", "Win32_NetworkManagement_Dns", "Win32_System_SystemInformation", "Win32_System_Diagnostics_Debug", "Win32_Security_Cryptography", "Security_Credentials", "Security_Credentials_UI", "UI_Notifications", "UI_Notifications_Management", "ApplicationModel", "Win32_UI_Notifications", "Win32_UI_Shell_PropertiesSystem", "Win32_System_IO", "Win32_System_Pipes", "Win32_System_Performance", "Win32_System_Registry", "Win32_System_Power", "Devices_Geolocation", "Wdk_Graphics_Direct3D"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+# The same WebRTC stack with pure-Rust crypto (RustCrypto): no OpenSSL and no Swift toolchain needed to build.
+str0m = { version = "0.25", default-features = false, features = ["rust-crypto"] }
+# AppKit calls (window behaviour, the pasteboard, the app in front), the Keychain for sealed.rs.
+objc2 = "0.6"
+objc2-foundation = { version = "0.3", features = ["NSString", "NSData", "NSArray", "NSURL"] }
+objc2-app-kit = { version = "0.3", features = ["NSPasteboard", "NSWorkspace", "NSRunningApplication"] }
+security-framework = "3"
+# getuid and a non-blocking peek on the agent socket (mac/agents.rs).
+libc = "0.2"
+# Text recognition for the Board (mac/board.rs).
+objc2-vision = "0.3"
+# The device position for the weather (mac/place.rs).
+objc2-core-location = "0.3"
+# Notification Center records are binary plists (mac/chat_notices.rs).
+plist = "1"
+# The native notch: an NSPanel with an animated CAShapeLayer (mac/notch_ui.rs).
+objc2-quartz-core = "0.3"
+objc2-core-graphics = "0.3"
+objc2-core-foundation = "0.3"
+# Meeting recording: all sound through ScreenCaptureKit, the microphone through AVAudioEngine (mac/meeting.rs).
+objc2-screen-capture-kit = "0.3"
+objc2-core-media = "0.3"
+objc2-avf-audio = "0.3"
+objc2-core-audio-types = "0.3"
+block2 = "0.6"
+dispatch2 = "0.3"
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+# The Microsoft Store edition: no AI agents, chat apps or self-update (see STORE in main.rs).
+store = []
+
+[profile.release]
+opt-level = "s"
+lto = "thin"
+codegen-units = 8
+strip = true
+panic = "abort"
+
+
+

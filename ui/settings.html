@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sora Settings</title><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="settings.css"><script src="no-tooltips.js"></script></head>
+<body>
+<div id="win">
+  <div class="winctl"><button id="w-min" type="button" aria-label="Minimize window"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M0 5h10"/></svg></button><button id="w-close" class="close" type="button" aria-label="Close window"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="m0 0 10 10M10 0 0 10"/></svg></button></div>
+  <div class="titlebar" data-tauri-drag-region>
+    <div class="brand"><span>Settings</span></div>
+    <label class="filter"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input id="filter" type="search" placeholder="Search" autocomplete="off" spellcheck="false" aria-label="Search settings"></label>
+  </div>
+  <nav id="tabs" aria-label="Settings sections">
+    <div class="tab-set" id="sections">
+      <button class="tab active" data-section="general"><i class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></i><span>General</span></button>
+      <button class="tab" data-section="notch"><i class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v3.5a1.5 1.5 0 0 0 1.5 1.5h3A1.5 1.5 0 0 0 15 7.5V4"/></svg></i><span>Notch</span></button>
+      <button class="tab" data-section="agent"><i class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.7 4.6 4.8 1.9-4.8 1.9L12 16.5l-1.7-4.6-4.8-1.9 4.8-1.9ZM18.5 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8Z"/></svg></i><span>AI Agent</span></button>
+    </div>
+    <div class="tab-set adv" role="group" aria-labelledby="advanced-label">
+      <p class="tab-label" id="advanced-label">Beta</p>
+      <button class="tab" data-section="meeting"><i class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></i><span>Meeting</span></button>
+      <button class="tab" data-section="chats"><i class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 9.5a5.5 5.5 0 0 1-8 4.9L3.5 15.5l1-3.2A5.5 5.5 0 1 1 15 9.5Z"/><path d="M9.6 16.4A5.5 5.5 0 0 0 17 18.4l3.5 1.1-1-3.2a5.5 5.5 0 0 0-2.7-7.5"/></svg></i><span>Chat</span></button>
+    </div>
+  </nav>
+  <main id="content">
+    <div class="col">
+      <header class="pane-head"><div class="title-row"><h1 id="pane-title">General</h1><span class="badge" id="pane-badge" hidden>Beta</span></div><p id="pane-sub"></p></header>
+      <div class="panel active" id="panel-general" data-title="General" data-sub="Language, startup and updates.">
+        <div class="group">
+          <div class="row" data-find="language bahasa english indonesian indonesia"><span class="row-text"><strong>Language</strong></span><span class="seg" id="lang-seg" role="group" aria-label="Language" data-no-i18n><button type="button" data-v="en">English</button><button type="button" data-v="id">Indonesia</button></span></div>
+          <label class="row" data-find="start with windows launch login startup"><span class="row-text"><strong>Start with Windows</strong></span><input id="startup-toggle" class="switch" type="checkbox" role="switch" aria-label="Start with Windows" disabled></label>
+        </div>
+        <h2 class="group-title" id="updates-title">Updates</h2>
+        <div class="group" id="updates-group"><div class="row" data-find="updates version check download"><span class="row-text"><strong>Sora <span id="brand-version" data-no-i18n>v1.0.0</span></strong><small id="update-note">Checks GitHub. Every download is verified.</small></span><button id="update-button" class="button" type="button">Check for updates</button></div></div>
+        <p id="general-status" class="status" role="status"></p>
+        <h2 class="group-title">Application</h2>
+        <div class="group"><div class="row" data-find="quit exit close app"><span class="row-text"><strong>Quit Sora</strong><small>Closes Sora completely</small></span><button id="quit-button" class="button" type="button">Quit</button></div>
+          <div class="row" id="uninstall-row" hidden data-find="uninstall remove delete data reset"><span class="row-text"><strong>Uninstall Sora</strong><small>Deletes Sora and everything it saved</small></span><button id="uninstall-button" class="button danger" type="button">Uninstall</button></div></div>
+      </div>
+      <div class="panel" id="panel-notch" data-title="Notch" data-sub="Shortcut, placement and behavior.">
+        <div class="group"><div class="row" data-find="open sora shortcut hotkey key"><span class="row-text"><strong>Shortcut</strong><small>Show or hide the notch</small></span><button id="shortcut-record" class="keys" type="button" aria-label="Record shortcut" disabled>Ctrl+Alt+Space</button></div></div>
+        <h2 class="group-title">Placement</h2>
+        <div class="group">
+          <div class="row" data-find="notch position left center right top"><span class="row-text"><strong>Position</strong></span><span class="seg" id="position-seg" role="group" aria-label="Position"><button type="button" data-v="left">Left</button><button type="button" data-v="center">Center</button><button type="button" data-v="right">Right</button></span></div>
+          <div class="row" id="display-row" data-find="display monitor screen"><span class="row-text"><strong>Display</strong></span><span class="seg" id="display-seg" role="group" aria-label="Display"></span></div>
+          <div class="row" data-find="notch size minimize maximize small large"><span class="row-text"><strong>Size</strong></span><span class="range" id="size-range"><input id="size-input" type="range" min="0" max="100" step="1" aria-label="Size"><output id="size-out" for="size-input">100%</output></span></div>
+        </div>
+        <h2 class="group-title">Behavior</h2>
+        <div class="group">
+          <label class="row" data-find="hide when maximized fullscreen"><span class="row-text"><strong>Hide when maximized</strong></span><input id="maximize-toggle" class="switch" type="checkbox" role="switch" aria-label="Hide when maximized" disabled></label>
+          <label class="row" data-find="edge handle capsule"><span class="row-text"><strong>Edge handle</strong><small>A thin capsule stays while hidden</small></span><input id="edge-toggle" class="switch" type="checkbox" role="switch" aria-label="Edge handle" disabled></label>
+          <div class="row" data-find="game mode"><span class="row-text"><strong>Game Mode</strong><small>Hide Sora during games</small></span><span class="seg" id="game-mode-seg" role="group" aria-label="Game Mode"><button type="button" data-v="off">Off</button><button type="button" data-v="auto">Auto</button><button type="button" data-v="always">Always</button></span></div>
+        </div>
+        <p id="desktop-status" class="status" role="status"></p>
+      </div>
+      <div class="panel" id="panel-agent" data-title="AI Agent" data-sub="Coding agents in the notch. You approve every action.">
+        <div class="group"><label class="row" data-find="ai agent agents claude codex gemini notifications approvals"><span class="row-text"><strong>AI Agent</strong></span><input id="lab-agents" class="switch" type="checkbox" role="switch" aria-label="AI Agent"></label></div>
+        <div id="labs-agents" hidden>
+          <h2 class="group-title">Alerts</h2>
+          <div class="group">
+            <label class="row" data-find="agent sounds finish approval"><span class="row-text"><strong>Sounds</strong></span><input id="agent-sounds" class="switch" type="checkbox" role="switch" aria-label="Sounds"></label>
+            <label class="row" data-find="weekly recap agents"><span class="row-text"><strong>Weekly recap</strong></span><input id="agent-recap" class="switch" type="checkbox" role="switch" aria-label="Weekly recap"></label>
+            <label class="row" data-find="plan usage limits claude codex"><span class="row-text"><strong>Plan usage</strong></span><input id="agent-usage" class="switch" type="checkbox" role="switch" aria-label="Plan usage"></label>
+          </div>
+          <h2 class="group-title">Connect</h2>
+          <div class="group" id="agent-rows">
+            <div class="row" data-find="claude code claude-code"><span class="row-text"><strong>Claude Code</strong></span><span class="agent-act"><i class="agent-dot" data-agent="claude-code"></i><button class="button" type="button" data-agent="claude-code">Connect</button></span></div>
+            <div class="row" data-find="codex codex"><span class="row-text"><strong>Codex</strong><small>Then run /hooks once</small></span><span class="agent-act"><i class="agent-dot" data-agent="codex"></i><button class="button" type="button" data-agent="codex">Connect</button></span></div>
+            <div class="row" data-find="gemini cli gemini"><span class="row-text"><strong>Gemini CLI</strong><small>View only</small></span><span class="agent-act"><i class="agent-dot" data-agent="gemini"></i><button class="button" type="button" data-agent="gemini">Connect</button></span></div>
+            <div class="row" data-find="antigravity antigravity"><span class="row-text"><strong>Antigravity</strong></span><span class="agent-act"><i class="agent-dot" data-agent="antigravity"></i><button class="button" type="button" data-agent="antigravity">Connect</button></span></div>
+            <div class="row" data-find="copilot cli copilot"><span class="row-text"><strong>Copilot CLI</strong></span><span class="agent-act"><i class="agent-dot" data-agent="copilot"></i><button class="button" type="button" data-agent="copilot">Connect</button></span></div>
+            <div class="row" data-find="muse code muse"><span class="row-text"><strong>Muse Code</strong></span><span class="agent-act"><i class="agent-dot" data-agent="muse"></i><button class="button" type="button" data-agent="muse">Connect</button></span></div>
+            <div class="row" data-find="opencode opencode"><span class="row-text"><strong>OpenCode</strong><small>Restart it once</small></span><span class="agent-act"><i class="agent-dot" data-agent="opencode"></i><button class="button" type="button" data-agent="opencode">Connect</button></span></div>
+            <div class="row" data-find="cursor agent cursor"><span class="row-text"><strong>Cursor Agent</strong><small>View only</small></span><span class="agent-act"><i class="agent-dot" data-agent="cursor"></i><button class="button" type="button" data-agent="cursor">Connect</button></span></div>
+            <div class="row" data-find="amp amp"><span class="row-text"><strong>Amp</strong><small>View only. Restart it once</small></span><span class="agent-act"><i class="agent-dot" data-agent="amp"></i><button class="button" type="button" data-agent="amp">Connect</button></span></div>
+            <div class="row" data-find="hermes agent hermes"><span class="row-text"><strong>Hermes Agent</strong><small>View only. Run hermes plugins enable sora</small></span><span class="agent-act"><i class="agent-dot" data-agent="hermes"></i><button class="button" type="button" data-agent="hermes">Connect</button></span></div>
+          </div>
+          <button class="fold-btn" type="button" data-fold="agent-more" aria-expanded="false">More options</button>
+          <div class="fold" id="agent-more">
+            <div class="group">
+              <label class="row" data-find="antigravity approve commands notch"><span class="row-text"><strong>Approve Antigravity commands</strong><small>Reconnect Antigravity after changing</small></span><input id="agy-approvals" class="switch" type="checkbox" role="switch" aria-label="Approve Antigravity commands"></label>
+              <div class="row" data-find="sounds folder custom"><span class="row-text"><strong>Sounds folder</strong><small>Your own finish.wav, approval.wav, question.wav</small></span><button class="button" type="button" id="agent-sounds-folder">Open</button></div>
+              <div class="row" data-find="other agent command"><span class="row-text"><strong>Other agents</strong><small>Sends each event as JSON on stdin</small></span><button class="button" type="button" id="agent-copy">Copy command</button></div>
+            </div>
+          </div>
+          <p id="agent-status" class="status" role="status"></p>
+        </div>
+      </div>
+      <div class="panel" id="panel-meeting" data-title="Meeting" data-sub="Record calls and transcribe them on this PC." data-advanced>
+        <div class="group"><label class="row" data-find="meeting recorder record zoom teams audio"><span class="row-text"><strong>Meeting recorder</strong><small>Tell people when you record.</small></span><input id="lab-meeting" class="switch" type="checkbox" role="switch" aria-label="Meeting recorder"></label></div>
+        <div id="labs-meeting" hidden>
+          <h2 class="group-title">Recording</h2>
+          <div class="group">
+            <div class="row" data-find="recordings folder"><span class="row-text"><strong>Save to</strong><small id="meeting-folder">Documents\Sora Recordings</small></span><button class="button" type="button" id="meeting-folder-pick">Change</button></div>
+            <div class="row" data-find="transcript language indonesian english auto"><span class="row-text"><strong>Transcript language</strong><small>Picking one is more accurate than Auto.</small></span><span class="seg" id="meeting-lang-seg" role="group" aria-label="Transcript language"><button type="button" data-v="auto">Auto</button><button type="button" data-v="id">Indonesian</button><button type="button" data-v="en">English</button></span></div>
+          </div>
+          <h2 class="group-title">Transcript</h2>
+          <div class="pkgs" id="pkgs" data-find="meeting transcript package lite balanced powerful whisper offline download"></div>
+          <h2 class="group-title">Summary <span class="opt">Optional</span></h2>
+          <div class="pkgs" id="pkgs-sum" data-find="meeting summary optional qwen offline download"></div>
+          <p id="ai-status" class="status" role="status"></p>
+          <h2 class="group-title">Cloud AI <span class="opt">Optional</span></h2>
+          <div class="group"><label class="row" data-find="cloud ai summary claude openai ollama lm studio api key"><span class="row-text"><strong>Summaries in the cloud</strong><small>Use your own cloud AI to write meeting summaries.</small></span><input id="cloud-on" class="switch" type="checkbox" role="switch" aria-label="Summaries in the cloud"></label></div>
+          <div id="cloud-more" hidden>
+            <div class="group labs-gap">
+              <div class="row" data-find="cloud service claude openai compatible groq openrouter ollama"><span class="row-text"><strong>Service</strong><small>Choose the AI service you use.</small></span><span class="seg" id="cloud-provider-seg" role="group" aria-label="Service"><button type="button" data-v="claude">Claude</button><button type="button" data-v="openai">OpenAI</button><button type="button" data-v="other">Other</button></span></div>
+            </div>
+            <form class="tg-login cloud-form" id="cloud-form" autocomplete="off">
+              <label class="tg-field" id="cloud-url-field" for="cloud-url"><span>Address</span><input id="cloud-url" type="text" spellcheck="false" autocomplete="off" placeholder="http://localhost:11434/v1"></label>
+              <div class="tg-field cloud-model-field"><span id="cloud-model-label">Model</span>
+                <div class="cloud-pick">
+                  <button type="button" class="cloud-model-btn" id="cloud-model-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="cloud-model-label cloud-model-name"><span id="cloud-model-name"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button>
+                  <input id="cloud-model" type="text" spellcheck="false" autocomplete="off" aria-labelledby="cloud-model-label" hidden>
+                  <button type="button" class="cloud-icon" id="cloud-model-refresh" aria-label="Refresh the model list" title="Refresh the list"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4h-4"/></svg></button>
+                  <div class="cloud-menu" id="cloud-menu" role="listbox" aria-labelledby="cloud-model-label" hidden></div>
+                </div>
+              </div>
+              <label class="tg-field" for="cloud-key"><span>API key</span><input id="cloud-key" type="password" spellcheck="false" autocomplete="off"></label>
+              <button class="button primary" type="submit">Save</button>
+              <button class="button" type="button" id="cloud-key-remove" hidden>Remove key</button>
+            </form>
+            <p id="cloud-status" class="status" role="status"></p>
+          </div>
+        </div>
+      </div>
+      <div class="panel" id="panel-chats" data-title="Chat" data-sub="Reply to messages right from the notch." data-advanced>
+        <div class="chat-split">
+          <div class="group"><label class="row" data-find="hide message text privacy chat preview whatsapp telegram"><span class="row-text"><strong>Hide message text</strong><small>Chat cards say only what was sent, like "Sent a photo"</small></span><input id="hide-chat-toggle" class="switch" type="checkbox" role="switch" aria-label="Hide message text" disabled></label></div>
+          <div class="chat-apps" id="chat-apps" role="tablist" aria-label="Chat apps">
+            <button class="chat-app on" type="button" role="tab" data-app="whatsapp" aria-selected="true"><span class="chat-logo" data-mark="WhatsApp"></span><span class="chat-name"><b>WhatsApp</b><small id="ca-whatsapp">Off</small></span></button>
+            <button class="chat-app" type="button" role="tab" data-app="telegram" aria-selected="false"><span class="chat-logo" data-mark="Telegram"></span><span class="chat-name"><b>Telegram</b><small id="ca-telegram">Off</small></span></button>
+          </div>
+          <div class="chat-pane">
+            <section class="chat-sec on" id="chat-whatsapp" role="tabpanel" aria-label="WhatsApp">
+              <div class="group"><label class="row" data-find="whatsapp reply quick reply messages linked device"><span class="row-text"><strong>WhatsApp replies</strong><small>Answer WhatsApp messages from the notch.</small></span><input id="lab-whatsapp" class="switch" type="checkbox" role="switch" aria-label="WhatsApp replies"></label></div>
+              <div id="labs-whatsapp" hidden>
+                <div class="group labs-gap">
+                  <div class="row" data-find="whatsapp account link unlink linked devices"><span class="row-text"><strong>Account</strong><small id="wa-status">Not linked</small></span><button class="button" type="button" id="wa-link">Link</button></div>
+                </div>
+                <p class="note warn" role="note"><svg class="note-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 2.5 20h19z"/><path d="M12 10v4.5"/><path d="M12 17.4v.1"/></svg><strong>Unofficial WhatsApp.</strong> Sora connects as a linked device. WhatsApp may limit or ban your account. Be careful!</p>
+                <div class="wa-qr" id="wa-qr" hidden><canvas id="wa-code" width="480" height="480" role="img" aria-label="QR code to link WhatsApp"></canvas><p>On your phone open WhatsApp, then Settings, Linked devices, Link a device, and scan this code.</p></div>
+                <p id="wa-error" class="status" role="status"></p>
+              </div>
+            </section>
+            <section class="chat-sec" id="chat-telegram" role="tabpanel" aria-label="Telegram">
+              <div class="group"><label class="row" data-find="telegram reply quick reply messages tdlib"><span class="row-text"><strong>Telegram replies</strong><small>Answer Telegram messages from the notch.</small></span><input id="lab-telegram" class="switch" type="checkbox" role="switch" aria-label="Telegram replies"></label></div>
+              <div id="labs-telegram" hidden>
+                <div class="group labs-gap">
+                  <div class="row" data-find="telegram account sign in sign out"><span class="row-text"><strong>Account</strong><small id="tg-status">Not signed in</small></span><button class="button" type="button" id="tg-out" hidden>Sign out</button></div>
+                </div>
+                <form class="tg-login" id="tg-login" hidden autocomplete="off">
+                  <label class="tg-field" for="tg-input"><span id="tg-label">Phone number</span><input id="tg-input" type="text" spellcheck="false" autocomplete="off"></label>
+                  <button class="button primary" type="submit" id="tg-next">Next</button>
+                </form>
+                <p id="tg-error" class="status" role="status"></p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <p id="no-match" class="status" hidden>No settings match.</p>
+    </div>
+  </main>
+</div>
+<div id="agent-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="ad-title">
+  <div class="modal-box">
+    <h3 id="ad-title"></h3>
+    <p class="modal-line"><span>File</span><code id="ad-path"></code></p>
+    <p class="modal-line"><span>Backup</span><code id="ad-backup"></code></p>
+    <pre id="ad-diff" tabindex="0"></pre>
+    <div class="modal-act"><button class="button" type="button" id="ad-cancel">Cancel</button><button class="button primary" type="button" id="ad-ok">Install</button></div>
+  </div>
+</div>
+<div id="uninstall-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="un-title">
+  <div class="modal-box">
+    <h3 id="un-title">Uninstall Sora?</h3>
+    <p class="modal-text">Sora closes, and the app and everything it saved are deleted: settings, history, Board, reminders and connected agents. This cannot be undone.</p>
+    <p class="modal-text" id="un-status" role="status"></p>
+    <div class="modal-act"><button class="button" type="button" id="un-cancel">Cancel</button><button class="button danger" type="button" id="un-ok">Uninstall</button></div>
+  </div>
+</div><script type="module" src="settings.js"></script>
+</body>
+</html>

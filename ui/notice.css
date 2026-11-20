@@ -1,0 +1,43 @@
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent;font-family:Poppins,"Segoe UI",sans-serif;color:#f7f4ef}
+/* Everything is the notch's own black, with no rim: the reminder reads as part of the notch.
+   Geometry (top, size, radius, opacity) is set every frame by notice.js from its springs. */
+#join{position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:#050506}
+#capsule{--hold:8000ms;--h:52px;--r:12px;position:absolute;left:50%;top:0;width:0;height:0;transform:translateX(-50%);overflow:clip;background:#050506;opacity:0}
+.notice-body{position:absolute;left:50%;top:0;transform:translateX(-50%);width:calc(100vw - 6px);height:var(--h);display:flex;align-items:center;gap:10px;padding:0 13px 0 12px;opacity:0}
+.badge{display:grid;place-items:center;width:30px;height:30px;flex:none;color:#f4f4f6}
+.badge svg.mark{display:block}
+.badge svg{display:none;width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.sand{fill:currentColor;stroke:none}
+.badge .timer,[data-kind=event] .badge .event,[data-kind=water] .badge .water,[data-kind=alarm] .badge .alarm{display:block}
+[data-kind=event] .badge .timer,[data-kind=water] .badge .timer,[data-kind=alarm] .badge .timer{display:none}
+.copy{flex:1;min-width:0;display:flex;flex-direction:column-reverse}.copy>*{margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+h1{font-size:14px;line-height:18px;font-weight:600;letter-spacing:-.3px}p{color:#8e8e93;font-size:11px;line-height:14px}
+.life{width:24px;flex:none;transform:rotate(-90deg);fill:none;stroke:#ffffff1f;stroke-width:1.9}.count{stroke:#4cd37b;stroke-dasharray:1;stroke-linecap:round}
+.counting .count{animation:count var(--hold) linear forwards}@keyframes count{to{stroke-dashoffset:1}}
+
+/* Badges: the kind's line icon in white, no tile; a chat shows the sender with the
+   app's mark as a badge. */
+#capsule .badge svg{width:100%;height:100%;stroke:#f4f4f6;stroke-width:1.35}#capsule .badge svg[viewBox="0 0 32 32"]{stroke-width:1.7}
+#capsule .badge .timer{display:none}
+#capsule[data-kind=timer] .badge .timer,#capsule[data-kind=event] .badge .event,#capsule[data-kind=water] .badge .water,#capsule[data-kind=alarm] .badge .alarm,#capsule[data-kind=agent] .badge .agent,#capsule[data-kind=meeting] .badge .meeting,#capsule[data-kind=receive] .badge .receive{display:block}
+/* LocalSend: the words keep the usual row (--row); Deny / Accept or the bar sit under it, in the same flat black. */
+#capsule{--row:var(--h)}.notice-body{height:var(--row)}
+.acts[hidden],.meter[hidden]{display:none}
+.acts{position:absolute;left:10px;right:10px;top:var(--row);display:flex;gap:6px;opacity:0}
+.acts button{flex:1;height:26px;border:0;border-radius:13px;font:600 12px Poppins,"Segoe UI",sans-serif;cursor:pointer}
+.acts .deny{background:#ffffff14;color:#e9e9ee}.acts .deny:hover{background:#ffffff22}
+.acts .accept{background:#fff;color:#0b0b0c}.acts .accept:hover{background:#dcdce0}
+.acts button:focus-visible{outline:2px solid #4f9dff;outline-offset:2px}
+.meter{position:absolute;left:13px;right:13px;top:calc(var(--row) - 2px);height:3px;border-radius:2px;background:#ffffff1f;overflow:hidden;opacity:0}
+.meter i{display:block;height:100%;width:0;background:#4cd37b;border-radius:2px;transition:width .2s}
+.pct{display:none;flex:none;font-size:13px;font-weight:600;color:#f4f4f6;font-variant-numeric:tabular-nums}
+.busy .pct{display:block}.busy .life{display:none}
+body.large .acts{left:14px;right:14px;gap:8px}body.large .acts button{height:30px;border-radius:15px;font-size:13px}
+body.large .meter{left:17px;right:17px}body.large .pct{font-size:15px}
+#capsule[data-kind=chat] .badge{background:none;border-radius:0}
+#capsule .badge svg.avatar{display:block;width:100%;height:100%;overflow:visible}
+/* Large (Settings > Notch > Notification size): the card as it was, 300 x 64. */
+body.large #capsule{--h:64px;--r:14px}
+body.large .notice-body{gap:13px;padding:0 17px 0 16px}
+body.large #capsule .badge{width:38px;height:38px}
+body.large h1{font-size:17px;line-height:22px}body.large p{font-size:12px;line-height:16px}body.large .life{width:32px}

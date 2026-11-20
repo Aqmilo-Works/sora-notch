@@ -1,0 +1,13 @@
+{
+  "name": "sora-desktop",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/logic.test.mjs",
+    "test:ui": "node tests/ui.test.cjs"
+  }
+}
+
+
+

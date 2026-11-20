@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sora Notch installer (WiX 3.14): per-user, no administrator rights, a Welcome > Destination folder > Install > Finish wizard.
+     Built by build-msi.ps1 (candle + light). UpgradeCode and the component ids stay the same for the life of the product. -->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="*" Name="Sora Notch" Manufacturer="Aqmilo Works" Version="$(var.Version)" Language="1033"
+           UpgradeCode="{0B6E2F7A-5C1D-4E7B-9A3C-6D84F1E2A5C9}">
+    <Package InstallerVersion="500" Compressed="yes" InstallPrivileges="limited" Platform="x64" Description="Sora Notch $(var.Version)" Manufacturer="Aqmilo Works" />
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of Sora Notch is already installed." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" MaximumUncompressedMediaSize="1000" />
+
+    <!-- Per user: ALLUSERS=2 with MSIINSTALLPERUSER=1 installs into the profile without elevation. -->
+    <Property Id="ALLUSERS" Value="2" />
+    <Property Id="MSIINSTALLPERUSER" Value="1" />
+    <Property Id="ARPNOREPAIR" Value="1" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/Aqmilo-Works/sora-notch" />
+    <Icon Id="SoraIcon" SourceFile="$(var.Icon)" />
+    <Property Id="ARPPRODUCTICON" Value="SoraIcon" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="LocalAppDataFolder">
+        <Directory Id="ProgramsDir" Name="Programs">
+          <Directory Id="INSTALLFOLDER" Name="Sora" />
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder" />
+      <Directory Id="SystemFolder" />
+    </Directory>
+
+    <!-- A per-user component keeps a registry value as its key path. -->
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="Main" Guid="{8F3A1C52-7D64-4B09-A1E8-2C5B90D7E413}" Win64="yes">
+        <RegistryValue Root="HKCU" Key="Software\Sora\Installer" Name="Program" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
+        <File Id="SoraExe" Name="Sora.exe" Source="$(var.SoraExe)" />
+        <!-- Files Sora added later (updates, Sora.exe.old) go with the program. -->
+        <RemoveFile Id="RemoveAll" Name="*.*" On="uninstall" />
+        <RemoveFolder Id="RemoveInstallFolder" On="uninstall" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="ProgramMenuFolder">
+      <Component Id="Menu" Guid="{4D92E6B1-0A7F-43C8-8E15-B3F6A70C9D28}" Win64="yes">
+        <RegistryValue Root="HKCU" Key="Software\Sora\Installer" Name="Shortcut" Type="string" Value="1" KeyPath="yes" />
+        <Shortcut Id="MenuSora" Name="Sora Notch" Description="A little space at the top of your desktop" Target="[#SoraExe]" WorkingDirectory="INSTALLFOLDER" Icon="SoraIcon" />
+      </Component>
+    </DirectoryRef>
+    <Feature Id="Sora" Title="Sora Notch" Level="1" Absent="disallow">
+      <ComponentRef Id="Main" />
+      <ComponentRef Id="Menu" />
+    </Feature>
+
+    <!-- The "Start with Windows" entry, read so that uninstall drops only one that starts this installed copy
+         (an entry of another copy, such as a portable Sora.exe, is left alone). -->
+    <Property Id="STARTUPCMD">
+      <RegistrySearch Id="RunSora" Root="HKCU" Key="Software\Microsoft\Windows\CurrentVersion\Run" Name="Sora" Type="raw" />
+    </Property>
+    <CustomAction Id="CloseSora" Directory="SystemFolder" ExeCommand="&quot;[SystemFolder]taskkill.exe&quot; /F /IM Sora.exe" Execute="immediate" Return="ignore" />
+    <CustomAction Id="DropStartup" Directory="SystemFolder" ExeCommand="&quot;[SystemFolder]reg.exe&quot; delete HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v Sora /f" Execute="immediate" Return="ignore" />
+    <CustomAction Id="LaunchSora" FileKey="SoraExe" ExeCommand="" Execute="immediate" Impersonate="yes" Return="asyncNoWait" />
+    <!-- Uninstall (not an upgrade) leaves nothing behind, so a new install starts from the first-run setup: Sora's data
+         (%APPDATA%\com.nook.desktop) and its cache and web data (%LOCALAPPDATA%\com.nook.desktop), without a console window. -->
+    <SetProperty Id="WixQuietExecCmdLine" Value="&quot;[SystemFolder]cmd.exe&quot; /d /c rmdir /s /q &quot;[AppDataFolder]com.nook.desktop&quot; &amp; rmdir /s /q &quot;[LocalAppDataFolder]com.nook.desktop&quot;"
+                 After="InstallFinalize" Sequence="execute">REMOVE="ALL" AND NOT UPGRADINGPRODUCTCODE</SetProperty>
+    <CustomAction Id="WipeData" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="ignore" />
+    <InstallExecuteSequence>
+      <!-- A running Sora (installed or portable) is closed before its files are replaced or removed. -->
+      <Custom Action="CloseSora" Before="InstallValidate">1</Custom>
+      <Custom Action="DropStartup" After="InstallFinalize">REMOVE="ALL" AND NOT UPGRADINGPRODUCTCODE AND STARTUPCMD ~&gt;&lt; INSTALLFOLDER</Custom>
+      <Custom Action="WipeData" After="SetWixQuietExecCmdLine">REMOVE="ALL" AND NOT UPGRADINGPRODUCTCODE</Custom>
+    </InstallExecuteSequence>
+
+    <!-- The wizard: Welcome, Destination folder, Ready, progress, Finish with "Launch Sora Notch". No licence page. -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Sora Notch" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.Banner)" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.Dialog)" />
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="2">NOT Installed</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
+      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchSora" Order="999">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND NOT Installed</Publish>
+    </UI>
+  </Product>
+</Wix>

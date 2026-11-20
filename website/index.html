@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sora Notch: a friendly notch for Windows</title>
+<meta name="description" content="A little black notch with a face at the top of your Windows screen. Weather, calendar, focus timer, music with synced lyrics, a file tray and sending files to your phone. Free, no account, no tracking.">
+<meta name="theme-color" content="#fbfbfd">
+<meta property="og:title" content="Sora Notch">
+<meta property="og:description" content="A friendly notch for Windows: weather, music, files and more.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://sora-notch.vercel.app/img/og.jpg">
+<meta property="og:url" content="https://sora-notch.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/img/favicon-64.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="preload" href="/fonts/Poppins-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css">
+<script src="/main.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="bar wrap">
+    <a class="brand" href="/" aria-label="Sora Notch home"><img src="/img/icon.png" alt="" width="26" height="26">Sora Notch</a>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn btn-dark btn-sm" href="https://github.com/Aqmilo-Works/sora-notch/releases/latest">Download</a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="hero wrap">
+    <span class="pill"><img src="/img/icon.png" alt="" width="22" height="22">Free for Windows 10 and 11</span>
+    <h1>Sora Notch.<span>A friendly notch.</span></h1>
+    <p class="lede">Weather, your week, music with synced lyrics, a file tray and your phone. All one click away, at the top of your screen.</p>
+    <div class="cta">
+      <a class="btn btn-dark" href="https://github.com/Aqmilo-Works/sora-notch/releases/latest">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>
+        Download for Windows
+      </a>
+      <a class="link" href="https://github.com/Aqmilo-Works/sora-notch">View source on GitHub</a>
+    </div>
+    <div class="links">
+      <!-- Replace with the Microsoft Store link once the app is live. -->
+      <span class="soon">Coming soon to Microsoft Store</span>
+      <span class="soon">Portable Sora.exe · x64</span>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="screen">
+      <video id="trailer" src="/media/trailer.mp4" poster="/media/trailer.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Sora Notch trailer: the notch opening into Home, Music, Tray and Send"></video>
+    </div>
+    <button class="sound" id="sound" type="button" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="off" d="m22 9-6 6m0-6 6 6"/><path class="on" d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" hidden/></svg>
+      <span>Sound off</span>
+    </button>
+  </div>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Everything you reach for,<br>one click away.</h2>
+        <p>Click the notch and it opens into a small panel with four tabs.</p>
+      </div>
+
+      <div class="bento">
+        <article class="tile lg reveal">
+          <h3>Home</h3>
+          <p>Weather, your week with events to tick off, and a focus timer.</p>
+          <div class="visual"><div class="edge"><img src="/media/home.jpg" width="1044" height="338" loading="lazy" decoding="async" alt="Home tab with weather, a week calendar and the focus timer, hanging from the top edge of the screen"></div></div>
+        </article>
+
+        <article class="tile sm reveal">
+          <h3>Music</h3>
+          <p>Now playing from any app, with lyrics that keep time.</p>
+          <div class="visual">
+            <div class="lyrics" aria-hidden="true">
+              <span>hoshi no kaerimichi futari de arukō</span>
+              <span class="now">ashita no sora mo kitto hareru</span>
+              <span>chīsana hikari o mune ni tomoshi te</span>
+            </div>
+            <span class="badge">Romanized from 日本語 · 한국어 · 中文</span>
+          </div>
+        </article>
+
+        <article class="tile sm reveal">
+          <h3>Send</h3>
+          <p>Files to your phone over Wi-Fi with LocalSend, or Quick Share on Android.</p>
+          <div class="visual">
+            <div class="radar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="me"><img src="/img/icon.png" alt="" width="40" height="40"></span>
+              <span class="dev d1">My Phone</span>
+              <span class="dev d2">Android phone</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="tile lg reveal">
+          <h3>Tray</h3>
+          <p>Drop files on the notch and drag them out again. Right-click to convert.</p>
+          <div class="visual"><div class="edge"><img src="/media/tray.jpg" width="1054" height="342" loading="lazy" decoding="async" alt="Tray tab holding an image, a PDF and a video, hanging from the top edge of the screen"></div></div>
+        </article>
+      </div>
+
+      <div class="extras">
+        <div class="reveal">
+          <h3>Out of your way</h3>
+          <p>In full-screen apps and games Sora shrinks into a small capsule.</p>
+        </div>
+        <div class="reveal">
+          <h3><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>Space</kbd></h3>
+          <p>Show or hide Sora from anywhere. Change it in Settings.</p>
+        </div>
+        <div class="reveal">
+          <h3>Starts with Windows</h3>
+          <p>Turn it on once in Settings and Sora is there every morning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy" class="privacy">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Your stuff stays on your PC.</h2>
+        <p>Sora has no server and no analytics. It only goes online for the features that need it.</p>
+      </div>
+      <div class="cols">
+        <div class="col reveal">
+          <h3>No account</h3>
+          <p>Download and run. There is nothing to sign up for.</p>
+        </div>
+        <div class="col reveal">
+          <h3>No ads, no tracking</h3>
+          <p>No analytics or telemetry in the app. This website has none either.</p>
+        </div>
+        <div class="col reveal">
+          <h3>Local by default</h3>
+          <p>Events, timer, settings and tray stay on your computer. Files are never uploaded.</p>
+        </div>
+      </div>
+      <div class="services reveal">
+        <div class="row"><b>Weather</b><span>The coordinates of the city you chose, sent to Open-Meteo.</span></div>
+        <div class="row"><b>Lyrics</b><span>Title, artist and album of the song that is playing, sent to lyric providers.</span></div>
+        <div class="row"><b>Send</b><span>The files you choose, directly from your PC to your own device on your network.</span></div>
+        <a class="link" href="/privacy">Read the full Privacy Policy</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Up and running in a minute.</h2>
+        <p>Sora is a portable app. There is no installer.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <h3>Download.</h3>
+          <p>Get the installer (<b>.msi</b>), the portable <b>.exe</b> or the Mac <b>.dmg</b> from the <a class="link" href="https://github.com/Aqmilo-Works/sora-notch/releases/latest">latest release</a> on GitHub.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Keep it in a folder.</h3>
+          <p>Move it to a folder you keep, such as Documents or a Tools folder. Not Program Files.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Run it.</h3>
+          <p>Double-click <b>Sora.exe</b>. The notch appears at the top of your screen. Click it to open the panel.</p>
+        </div>
+      </div>
+      <div class="note reveal" role="note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4m0 3h.01"/></svg>
+        <div>
+          <h3>Windows protected your PC?</h3>
+          <p>The download is not code-signed yet, so SmartScreen may warn the first time you run it. Click <b>More info</b>, then <b>Run anyway</b>. The release page lists the SHA-256 checksum if you want to verify the file.</p>
+        </div>
+      </div>
+      <p class="reqs">Requires Windows 10 (version 1903) or Windows 11, x64, and the Microsoft WebView2 Runtime (included in Windows 11).</p>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Questions? Answers.</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>Is Sora free?</summary>
+          <p>Yes. Sora is free and open source under the GPL-3.0 license. There are no ads and no paid tier.</p>
+        </details>
+        <details>
+          <summary>Does it work on Windows 10?</summary>
+          <p>Yes, on Windows 10 version 1903 or later, and on Windows 11 (x64). It needs the Microsoft WebView2 Runtime, which is already included in Windows 11.</p>
+        </details>
+        <details>
+          <summary>Why does Windows show a SmartScreen warning?</summary>
+          <p>The GitHub download is not code-signed yet. Click More info, then Run anyway. The Microsoft Store version will be signed and update automatically.</p>
+        </details>
+        <details>
+          <summary>How do I hide Sora?</summary>
+          <p>Press Ctrl + Alt + Space, or use the tray icon menu. You can change the shortcut in Settings. During full-screen apps and games Sora shrinks into a capsule by itself.</p>
+        </details>
+        <details>
+          <summary>What do I need on my phone to receive files?</summary>
+          <p>The LocalSend app on your phone, or Quick Share on Android. Your phone and PC need to be on the same Wi-Fi network.</p>
+        </details>
+        <details>
+          <summary>Which music apps are supported?</summary>
+          <p>Any player or browser that shows up in the Windows media controls (the media box in the volume flyout).</p>
+        </details>
+        <details>
+          <summary>How do I remove Sora?</summary>
+          <p>Turn off Start with Windows in Settings if you enabled it, quit Sora from the tray icon menu, then delete Sora.exe. To remove your settings and events too, delete its app data folder.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final wrap reveal">
+    <div class="notch" aria-hidden="true">
+      <svg viewBox="0 0 92 40"><rect class="eye" x="14" y="6" width="9" height="20" rx="4.5" fill="#fff"/><rect class="eye" x="69" y="6" width="9" height="20" rx="4.5" fill="#fff"/><path d="M33 23q13 12 26 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>
+    </div>
+    <h2>Say hi to Sora.</h2>
+    <p>Free. No account. No ads. No tracking.</p>
+    <div class="cta">
+      <a class="btn btn-dark" href="https://github.com/Aqmilo-Works/sora-notch/releases/latest">Download for Windows</a>
+      <a class="link" href="https://github.com/Aqmilo-Works/sora-notch">View source on GitHub</a>
+    </div>
+    <p class="soon" style="margin-top:22px;font-size:14px">Coming soon to Microsoft Store</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="brand" href="/"><img src="/img/icon.png" alt="" width="26" height="26">Sora Notch</a>
+        <p class="fine">A friendly notch for Windows and macOS. © 2026 Aqmilo Works. Sora is not affiliated with Microsoft, Google or any music or lyrics service.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="https://github.com/Aqmilo-Works/sora-notch/releases/latest">Download</a></li>
+          <li><a href="https://github.com/Aqmilo-Works/sora-notch">GitHub</a></li>
+          <li><a href="mailto:aqmilooooo@gmail.com">aqmilooooo@gmail.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="https://github.com/Aqmilo-Works/sora-notch/blob/main/LICENSE">License: GPL-3.0</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">Sora Notch</div>
+  </div>
+</footer>
+</body>
+</html>

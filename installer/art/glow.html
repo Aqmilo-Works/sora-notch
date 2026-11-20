@@ -1,0 +1,35 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+body{margin:0;background:#777}
+.box{position:relative;overflow:hidden}
+.box *{position:absolute}
+.glass{filter:drop-shadow(0 12px 16px rgba(0,0,30,.5))}
+.glass img{left:-1.5%;top:-1.5%;width:103%;height:103%}
+#pg .glass{left:42px;top:114px;width:80px;height:80px}
+#bg2 .glass{left:437px;top:9px;width:40px;height:40px;filter:drop-shadow(0 4px 5px rgba(30,60,160,.3))}
+.grain{inset:0;width:100%;height:100%;mix-blend-mode:overlay;opacity:.55;filter:none}
+.blur{filter:blur(var(--b,14px))}
+/* panel: dark, an arc of blue and cream light like a horizon */
+#pg{width:164px;height:312px;background:#17171b}
+#pg .cream{left:70px;top:100px;width:140px;height:96px;border-radius:50%;background:#e9dcc3;--b:16px}
+#pg .blue{left:-30px;top:118px;width:150px;height:96px;border-radius:50%;background:#1f3fd8;--b:15px}
+#pg .blue2{left:20px;top:114px;width:90px;height:60px;border-radius:50%;background:#3d63ff;--b:12px}
+#pg .carve{left:-60px;top:160px;width:290px;height:210px;border-radius:50%;background:#17171b;--b:12px}
+#pg .fade{left:0;bottom:0;width:164px;height:120px;background:linear-gradient(180deg,rgba(23,23,27,0),#17171b 85%)}
+/* banner: light, the same glow on the right edge */
+#bg2{width:493px;height:58px;background:#fff}
+#bg2 .cream{left:392px;top:-26px;width:150px;height:60px;border-radius:50%;background:#efe2c8;--b:14px}
+#bg2 .blue{left:330px;top:-22px;width:130px;height:50px;border-radius:50%;background:#7fa2ff;--b:14px}
+#bg2 .blue2{left:372px;top:-30px;width:70px;height:40px;border-radius:50%;background:#2f55ee;--b:11px}
+#bg2 .fade{left:0;top:0;width:360px;height:58px;background:linear-gradient(90deg,#fff 40%,rgba(255,255,255,0))}
+</style>
+<svg width="0" height="0"><filter id="n" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter></svg>
+<div id="pg" class="box"><div class="cream blur"></div><div class="blue blur"></div><div class="blue2 blur"></div><div class="carve blur"></div><div class="fade"></div><div class="glass"><img src="../../icons/icon.png"></div><svg class="grain" viewBox="0 0 164 312"><rect width="164" height="312" filter="url(#n)"/></svg></div>
+<div id="bg2" class="box"><div class="cream blur"></div><div class="blue blur"></div><div class="blue2 blur"></div><div class="fade"></div><div class="glass"><img src="../../icons/icon.png"></div><svg class="grain" viewBox="0 0 493 58" style="opacity:.35"><rect width="493" height="58" filter="url(#n)"/></svg></div>
+
+<script>
+// A superellipse (iOS-style squircle): the curve eases into the sides instead of a circular arc cut into the corner.
+const N=5,pts=[];for(let i=0;i<2400;i++){const a=i/2400*Math.PI*2,c=Math.cos(a),s=Math.sin(a);pts.push((50+50*Math.sign(c)*Math.abs(c)**(2/N)).toFixed(2)+"% "+(50+50*Math.sign(s)*Math.abs(s)**(2/N)).toFixed(2)+"%")}
+document.querySelectorAll(".glass img").forEach(i=>i.style.clipPath="polygon("+pts.join(",")+")");
+</script>

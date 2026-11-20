@@ -1,0 +1,286 @@
+/* Labs tabs (labs.js): Agents, Meeting, Wallet. Normal panel height; only a recording's text opens the tall panel.
+   Flat black cards, white text, one blue (#4f9dff), the recording red, brand marks in their own colours. No gradients. */
+#notch nav [data-tab][hidden]{display:none}
+#notch .lab-view{display:none;min-height:0;padding:2px 0 12px}
+#notch .lab-view.active{display:flex}
+.notch[data-view="meeting-detail"]:not(.compact),body.panel-mode .notch[data-view="meeting-detail"]{height:384px!important}
+.notch[data-view="meeting-detail"] #meeting{height:318px}
+#notch #agents.lab-view.active{gap:10px}
+/* Content from the Home icon's left edge to the Settings icon's right edge (the view itself spans 40-720 px). */
+#notch #agents.lab-view{padding-left:13px;padding-right:4px}
+
+/* ---------- shared */
+#notch .lb-row{display:flex;align-items:center;gap:10px;min-width:0}
+#notch .lb-grow{flex:1}
+#notch .lb-head{height:36px;flex:none}
+#notch .lb-who{display:flex;flex-direction:column;gap:2px;min-width:0}
+#notch .lb-title{font-size:14px;font-weight:600;color:#f4f4f6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#notch .lb-name{font-size:16px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch .lb-sub,#notch .lb-item-sub{display:flex;align-items:center;gap:6px;font-size:12px;color:#8e8e93;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#notch .lb-hint{font-size:11.5px;color:#8e8e93;line-height:15px}
+#notch .lb-warn{font-size:12px;color:#ffd60a;line-height:16px}
+#notch .lb-text{margin:0;font-size:12.5px;line-height:18px;color:#d8d8de}
+#notch .lb-count{font-size:11px;color:#6e6e73;font-variant-numeric:tabular-nums}
+#notch .lb-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:100%;font-size:12px;color:#6e6e73;text-align:center;padding:0 16px}
+#notch .lb-card{border-radius:20px;background:#121214;box-shadow:inset 0 0 0 1px #ffffff0d}
+#notch .lb-glyph{display:inline-grid;place-items:center;flex:none}
+#notch .lb-glyph svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#notch .lb-glyph.big svg{width:26px;height:26px;stroke-width:1.5}
+#notch .lb-icon{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:16px;color:#d8d8de}
+#notch .lb-icon:hover{background:#ffffff14;color:#fff}
+#notch .lb-icon.round{background:#ffffff10}
+#notch .lb-icon.round:hover{background:#ffffff22}
+#notch .lb-icon.on{background:#4f9dff26;color:#4f9dff}
+#notch .lb-icon svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#notch .lb-icon[aria-label="More"] svg{fill:currentColor;stroke:none}
+#notch .lb-primary{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 16px;border-radius:16px;background:#fff;color:#0b0b0c;font-size:13px;font-weight:600;flex:none}
+#notch .lb-primary .lb-glyph svg{width:15px;height:15px}
+#notch .lb-primary:hover:not(:disabled){background:#e4e4e8}
+#notch .lb-primary.rec{background:#ff453a;color:#fff}
+#notch .lb-primary:disabled{background:#ffffff14;color:#6e6e73}
+#notch .lb-ghost{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 13px;border-radius:16px;background:#ffffff10;color:#e6e6ea;font-size:12.5px;font-weight:500;flex:none}
+#notch .lb-ghost:hover{background:#ffffff20}
+#notch :is(.lb-icon,.lb-primary,.lb-ghost,.lb-item,.lb-chip,.lb-cite,.lb-rec,.lb-stop):focus-visible{outline:2px solid #4f9dff;outline-offset:2px}
+#notch .lb-dot{width:7px;height:7px;border-radius:50%;background:#636366;flex:none}
+#notch .lb-dot.live{background:#30d158;box-shadow:0 0 0 3px #30d15826}
+
+/* brand tiles: the mark in white on the brand colour */
+#notch .lb-mark{--s:36px;position:relative;width:var(--s);height:var(--s);flex:none;display:grid;place-items:center;border-radius:calc(var(--s) * .3);background:var(--c);color:#fff}
+#notch .lb-mark i{width:56%;height:56%;background:#fff;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+#notch .lb-mark b{font-size:calc(var(--s) * .44);font-weight:700;line-height:1}
+#notch .lb-mark .lb-glyph svg{width:calc(var(--s) * .5);height:calc(var(--s) * .5)}
+#notch .lb-mark.logo{background:none}
+#notch .lb-mark.logo img{width:100%;height:100%;object-fit:contain;pointer-events:none}
+/* A full square tile (a mark on a colour, All PC audio) looks bigger than an app logo of the same size: in Meeting it is drawn a little smaller. */
+#notch #meeting .lb-mark:not(.logo):not(.badge){transform:scale(.84)}
+#notch .lb-mark.xs{--s:16px;border-radius:5px}
+#notch .lb-mark.s{--s:28px}
+#notch .lb-mark.l{--s:46px}
+#notch .lb-mark.xl{--s:64px}
+#notch .lb-mark.badge{--s:18px;position:absolute;right:-4px;bottom:-4px;border-radius:6px;box-shadow:0 0 0 2.5px #0b0b0c}
+
+/* ---------- Meeting: the call card and the recordings */
+#notch #meeting.lab-view.active{gap:14px}
+#notch .lb-call{flex:1 1 0;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:10px;padding:16px 16px 14px 18px}
+#notch .lb-call.live{box-shadow:inset 0 0 0 1px #ff453a40}
+#notch .lb-acts{gap:10px}
+#notch .lb-end{justify-content:flex-end}
+#notch .lb-chips{gap:6px;flex-wrap:wrap}
+#notch .lb-chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 5px;border-radius:13px;background:#ffffff0a;color:#a1a1a6;font-size:11.5px;font-weight:500}
+#notch .lb-chip.on{background:#ffffff1c;color:#fff}
+/* the record button: a red disc in a soft ring */
+#notch .lb-rec{position:relative;width:48px;height:48px;flex:none;border-radius:50%;background:#ff453a;box-shadow:0 0 0 5px #ff453a2e;transition:transform .15s,box-shadow .2s}
+#notch .lb-rec::after{content:'';position:absolute;inset:16px;border-radius:50%;background:#fff}
+#notch .lb-rec:hover:not(:disabled){transform:scale(1.05);box-shadow:0 0 0 7px #ff453a3a}
+#notch .lb-rec:disabled{background:#2c2c2e;box-shadow:0 0 0 5px #ffffff0a}
+#notch .lb-rec:disabled::after{background:#48484a}
+#notch .lb-rec-label{font-size:13px;font-weight:600;color:#fff}
+#notch .lb-stop{position:relative;width:44px;height:44px;flex:none;border-radius:50%;background:#fff}
+#notch .lb-stop::after{content:'';position:absolute;inset:15px;border-radius:3px;background:#ff453a}
+#notch .lb-stop:hover{background:#e4e4e8}
+#notch .lb-pill{height:20px;padding:0 8px;border-radius:10px;font-size:10.5px;font-weight:700;display:inline-flex;align-items:center}
+#notch .lb-pill.rec{background:#ff453a;color:#fff;animation:lb-blink 1.6s ease-in-out infinite}
+#notch .lb-pill.paused{background:#3a3a3c;color:#d8d8de;animation:none}
+#notch .lb-time{font-size:24px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;line-height:28px}
+/* the live sound: bars grow from the middle */
+#notch .lb-wave{flex:1;min-width:0;height:44px;display:flex;align-items:center;gap:3px}
+#notch .lb-wave i{flex:1;min-width:2px;height:8%;border-radius:2px;background:#ff453a;transition:height .14s linear}
+#notch .lb-call.live .lb-pill.paused~* .lb-wave i{background:#636366}
+/* nothing found yet: a slow radar */
+#notch .lb-radar{position:relative;width:46px;height:46px;flex:none;display:grid;place-items:center;color:#8e8e93}
+@keyframes lb-blink{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){#notch .lb-pill.rec{animation:none}#notch .lb-wave i{transition:none}}
+#notch .lb-side{flex:0 0 250px;min-width:0;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;gap:2px}
+#notch .lb-side-head{display:flex;justify-content:space-between;align-items:center;padding:4px 8px 6px;font-size:12px;font-weight:600;color:#a1a1a6}
+#notch .lb-item{display:flex;align-items:center;gap:10px;width:100%;padding:6px 8px;border-radius:12px;text-align:left}
+#notch .lb-item:hover{background:#ffffff0c}
+#notch .lb-item-text{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+#notch .lb-item-name{font-size:13px;font-weight:500;color:#f2f2f6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#notch .lb-tag{color:#6e6e73}
+#notch .lb-tag.ai{color:#4f9dff}
+
+/* ---------- Meeting: one recording (tall panel) */
+#notch .lb-detail{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;min-height:0}
+#notch .lb-detail .lb-title{max-width:280px}
+#notch .lb-job{display:flex;align-items:center;gap:10px;font-size:12px;color:#c7c7cc}
+#notch .lb-bar{width:110px;height:4px;border-radius:2px;background:#ffffff14;overflow:hidden}
+#notch .lb-bar i{display:block;height:100%;background:#4f9dff;transition:width .3s}
+#notch .lb-switch{align-self:flex-start;flex:none}
+#notch .lb-body{flex:1;min-height:0}
+#notch .lb-search{width:100%;height:32px;padding:0 14px;margin-bottom:8px;border-radius:16px;background:#ffffff0e;color:#f2f2f6;font-size:12.5px;border:0;outline:none}
+#notch .lb-search:focus-visible,#notch .lb-input:focus-visible{box-shadow:inset 0 0 0 1px #4f9dff}
+/* transcript: one block per turn (who, then what they said); each line keeps its time, which plays from there */
+#notch .lb-segs{display:flex;flex-direction:column;gap:14px;padding:2px 0 8px}
+#notch .lb-turn{display:flex;flex-direction:column;gap:1px;--who:#8e8e93}
+#notch .lb-turn[data-who="me"]{--who:#dec9b5}
+#notch .lb-turn:is([data-who="others"],[data-who="p1"]){--who:#4f9dff}
+#notch .lb-turn[data-who="p2"]{--who:#3ccf91}
+#notch .lb-turn[data-who="p3"]{--who:#f5a524}
+#notch .lb-turn[data-who="p4"]{--who:#c48cff}
+#notch .lb-turn[data-who="p5"]{--who:#ff6b8a}
+#notch .lb-turn-head{display:flex;align-items:center;gap:8px;margin-bottom:3px;min-width:0}
+#notch .lb-av{width:20px;height:20px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--who);color:#0b0b0c;font-size:10.5px;font-weight:700}
+#notch .lb-spk{min-width:0;font-size:12px;line-height:18px;font-weight:600;color:var(--who);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch .lb-spk[role=button]{padding:0 4px;margin-left:-4px;border-radius:5px;cursor:text;outline:none}
+#notch .lb-spk[role=button]:hover{background:#ffffff12}
+#notch .lb-spk[role=button]:focus-visible,#notch .lb-spk[contenteditable=plaintext-only]{box-shadow:inset 0 0 0 1px #4f9dff;background:#000}
+#notch .lb-seg{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:12px;padding:3px 6px 3px 28px;border-radius:8px;font-size:13px;line-height:20px}
+#notch .lb-seg.hit{background:#4f9dff1f}
+#notch .lb-seg.playing{background:#ffffff0d}
+#notch .lb-st{color:#e5e5ea;outline:none;border-radius:4px;-webkit-user-select:text;-webkit-user-select:text;user-select:text}
+#notch .lb-st:focus{background:#ffffff0c}
+#notch .lb-ts{all:unset;box-sizing:border-box;cursor:pointer;padding:0 5px;border-radius:5px;color:#5c5c62;font-variant-numeric:tabular-nums;font-size:11px;line-height:20px}
+#notch .lb-ts:hover{color:#dedee3;background:#ffffff12}
+#notch .lb-ts:focus-visible{outline:1.5px solid #4f9dff;outline-offset:1px}
+#notch .lb-seg.playing .lb-ts{color:#4f9dff}
+/* summary: the overview, then each kind of point in its own section, one point per row */
+#notch .lb-sum{display:flex;flex-direction:column;gap:18px;padding:2px 2px 10px}
+#notch .lb-over{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:#4f9dff10;box-shadow:inset 0 0 0 1px #4f9dff26}
+#notch .lb-over .lb-glyph{color:#4f9dff;margin-top:2px}
+#notch .lb-over .lb-text{font-size:13.5px;line-height:21px;color:#e5e5ea}
+#notch .lb-sec{display:flex;flex-direction:column;gap:6px;--k:#8e8e93}
+#notch .lb-sec.dec{--k:#30d158}#notch .lb-sec.todo{--k:#4f9dff}#notch .lb-sec.ask{--k:#ffb340}
+#notch .lb-sec-head{display:flex;align-items:center;gap:8px;margin-bottom:2px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#a1a1a6}
+#notch .lb-sec-head .lb-glyph{width:20px;height:20px;border-radius:6px;background:color-mix(in srgb,var(--k) 18%,transparent);color:var(--k)}
+#notch .lb-sec-head .lb-glyph svg{width:13px;height:13px}
+#notch .lb-sec-head .lb-count{letter-spacing:0}
+#notch .lb-point{display:grid;grid-template-columns:12px 1fr auto;gap:10px;align-items:start;padding:9px 10px 9px 12px;border-radius:10px;background:#ffffff07}
+#notch .lb-bullet{width:7px;height:7px;margin-top:7px;border-radius:50%;background:var(--k)}
+#notch .lb-sec.todo .lb-bullet{width:12px;height:12px;margin-top:4px;box-sizing:border-box;background:none;border:1.6px solid var(--k)}
+#notch .lb-it{margin:0;font-size:13px;line-height:20px;color:#ececf0}
+#notch .lb-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+#notch .lb-pill{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 9px 0 7px;border-radius:11px;background:#ffffff0e;color:#c7c7cc;font-size:11.5px;line-height:1}
+#notch .lb-pill .lb-glyph svg{width:12px;height:12px}
+#notch .lb-cite{flex:none;height:20px;margin-top:0;padding:0 7px;border-radius:10px;background:#ffffff0c;color:#8e8e93;font-size:10.5px;font-variant-numeric:tabular-nums}
+#notch .lb-cite:hover{background:#4f9dff26;color:#9cc4ff}
+#notch .lb-topics{display:flex;flex-wrap:wrap;gap:6px}
+#notch .lb-topic{height:26px;padding:0 11px;border-radius:13px;background:#ffffff0b;color:#d1d1d6;font-size:12px}
+#notch .lb-topic:hover{background:#ffffff16;color:#fff}
+#notch .lb-sum > .lb-hint{padding:0 2px}
+
+/* ---------- Wallet */
+#notch .lb-view .lb-glyph svg{width:14px;height:14px}
+#notch .lb-cards{flex:1;min-height:0;display:grid;grid-auto-flow:column;grid-auto-columns:214px;gap:12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:2px}
+#notch .lb-net-name{font-size:11px;font-weight:600;color:color-mix(in srgb,var(--c) 45%,#fff)}
+#notch .lb-big{display:flex;align-items:baseline;gap:6px;color:#fff;font-variant-numeric:tabular-nums;min-width:0}
+#notch .lb-big span{font-size:22px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch .lb-big small{font-size:12px;font-weight:600;color:#a1a1a6}
+#notch .lb-big.xl span{font-size:30px}
+#notch .lb-foot{gap:8px}
+#notch .lb-foot .lb-item-name{flex:1;font-size:12px;color:#c7c7cc}
+#notch .lb-add{align-items:center;justify-content:center;flex-direction:column;gap:8px;background:none;box-shadow:inset 0 0 0 1.5px #ffffff1a;color:#8e8e93;font-size:12.5px;font-weight:500}
+#notch .lb-add:hover{color:#fff;box-shadow:inset 0 0 0 1.5px #ffffff38}
+/* an address's own pattern, with its network's mark at the corner */
+#notch .lb-avatar{position:relative;flex:none;width:36px;height:36px}
+#notch .lb-avatar.s{width:30px;height:30px}
+#notch .lb-avatar.s .lb-mark.badge{--s:15px;border-radius:5px}
+/* add */
+#notch .lb-addwrap{flex:1;min-height:0;display:flex;gap:18px;align-items:stretch}
+#notch .lb-addart{position:relative;flex:0 0 150px;display:grid;place-items:center;border-radius:20px;background:color-mix(in srgb,var(--c) 14%,#0e0e10);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 34%,transparent)}
+#notch .lb-eye{position:absolute;right:38px;bottom:38px;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#fff;color:#0b0b0c;box-shadow:0 0 0 3px #0e0e10}
+#notch .lb-form{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+#notch .lb-input{flex:1;min-width:0;height:34px;padding:0 14px;border-radius:17px;background:#ffffff0e;color:#f2f2f6;font-size:12.5px;border:0;outline:none}
+#notch .lb-name-in{flex:1 1 auto}
+#notch .lb-net{min-width:130px}
+#notch .lb-caret{margin-left:auto;font-size:10px;color:#8e8e93}
+/* one address */
+#notch .lb-addr{flex:1;min-height:0;display:flex;gap:14px}
+#notch .lb-hero{flex:0 0 300px;display:flex;flex-direction:column;justify-content:space-between;padding:14px 16px;border-radius:18px;background:color-mix(in srgb,var(--c) 13%,#0e0e10);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 34%,transparent)}
+#notch .lb-amt{font-size:14px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums}
+
+/* ---------- Agents: marks, the idle orbit, the folded changes */
+#notch #agents .ai-who .lb-mark{--s:22px;border-radius:7px}
+/* The marks swing up to 14 px past the orbit's edge as it turns: room for them on the left and in the gap. "safe" keeps
+   the start in view when the row is wider than the column (it spilled off the left edge). */
+#notch #agents .ai-card[data-kind=empty]{flex-direction:row;align-items:center;justify-content:safe center;gap:46px}
+#notch .ai-orbit{position:relative;width:96px;height:96px;flex:none;margin-left:14px;border-radius:50%;box-shadow:inset 0 0 0 1px #ffffff14}
+#notch .ai-orbit::before{content:'';position:absolute;inset:22px;border-radius:50%;box-shadow:inset 0 0 0 1px #ffffff0c}
+#notch .ai-orbit .lb-mark{--s:34px;position:absolute;border-radius:10px;box-shadow:0 0 0 3px #141416}
+#notch .ai-orbit .lb-mark:nth-child(1){left:31px;top:-12px}
+#notch .ai-orbit .lb-mark:nth-child(2){left:-10px;top:54px}
+#notch .ai-orbit .lb-mark:nth-child(3){right:-10px;top:54px}
+/* The idle splash: the orbit grows in, the marks pop in one after another, then all drift slowly round (marks stay upright). */
+#notch .ai-orbit{animation:ai-orbit-in .5s cubic-bezier(.16,1,.3,1) backwards,ai-orbit-turn 28s linear .5s infinite}
+#notch .ai-orbit::before{animation:ai-orbit-breathe 3.6s ease-in-out infinite}
+#notch .ai-orbit .lb-mark{animation:ai-mark-in .6s cubic-bezier(.34,1.56,.64,1) .12s backwards,ai-orbit-turn 28s linear .5s infinite reverse}
+#notch .ai-orbit .lb-mark:nth-child(2){animation-delay:.22s,.5s}
+#notch .ai-orbit .lb-mark:nth-child(3){animation-delay:.32s,.5s}
+@keyframes ai-orbit-in{from{scale:.82;opacity:0}}
+@keyframes ai-orbit-turn{to{rotate:360deg}}
+@keyframes ai-orbit-breathe{50%{scale:1.14;opacity:.45}}
+@keyframes ai-mark-in{from{scale:.3;opacity:0}}
+#notch #agents .ai-empty-text .ai-actions{justify-content:flex-start;flex-wrap:wrap;margin-top:8px}
+/* The sheets (new session, weekly recap): more air between their rows. */
+#notch #agents .ai-card[data-kind=new] .ai-body,#notch #agents .ai-card[data-kind=recap] .ai-body{gap:12px}
+#notch #agents .ai-sheet-head{display:flex;align-items:center;gap:16px;min-width:0}
+#notch #agents .ai-sheet-head .ai-folders{flex-wrap:nowrap;overflow:hidden;min-width:0}
+#notch #agents .ai-card[data-kind=recap] .ai-recap{grid-template-columns:repeat(6,minmax(0,1fr));gap:4px 16px}
+#notch #agents .ai-card[data-kind=recap] .ai-recap b{font-size:16px}
+#notch .ai-empty-text{display:flex;flex-direction:column;gap:4px;min-width:0}
+#notch .ai-changes{display:flex;flex-direction:column;gap:2px;padding:4px 2px}
+#notch .ai-change{display:flex;align-items:center;gap:6px;height:26px;padding:0 8px;border-radius:8px;text-align:left;font-size:11.5px;color:#d8d8de}
+#notch .ai-change:hover{background:#ffffff0c}
+#notch .ai-change b{flex:1;min-width:0;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch .ai-changes-head b{color:#a1a1a6}
+#notch .ai-change .add,#notch .ai-diff .a{color:#30d158}
+#notch .ai-change .del,#notch .ai-diff .d{color:#ff7b72}
+#notch .ai-diff{max-height:96px;overflow:auto;padding:6px 8px;border-radius:8px;background:#0b0b0c;font:10.5px/14px Consolas,monospace;white-space:pre;scrollbar-width:thin}
+#notch .ai-hidden{margin:0 8px;font-size:11px;color:#ffd60a}
+#notch .ai-link{align-self:flex-start;height:24px;padding:0 8px;font-size:11.5px;color:#4f9dff}
+
+#notch .lb-big span{font-size:20px}
+#notch .lb-avatar{width:42px;height:42px}
+#notch .lb-avatar .lb-mark.badge{--s:16px;right:-5px;bottom:-5px;border-radius:5px}
+#notch .lb-avatar.s{width:32px;height:32px}
+#notch .lb-foot .lb-item-name{min-width:40px}
+
+/* ---------- v3: the agents' wave, no card boxes */
+#notch #agents .ai-main,#notch #agents .ai-side,#notch #agents .ai-main[data-kind]{background:none;box-shadow:none}
+#notch #agents .ai-main{padding:4px 8px 4px 0}
+#notch #agents .ai-side{padding:2px 0;border-left:1px solid #ffffff10;padding-left:12px;border-radius:0;overflow-y:auto;scrollbar-width:none}
+#notch .ai-wave{position:relative;width:82px;height:82px;flex:none}
+/* The agent orb: Siri Orb from SmoothUI by Eduardo Calvo (MIT, github.com/educlopez/smoothui), ported to plain CSS,
+   on white, with softer blur and colour sources that drift as well as turn, so the colours melt instead of sweeping.
+   Sized for 82 px: blur 5 px, contrast 1.15, dots .66 px, rim 4.9 px. agents.js sets --spin, --drift, --sat, --glow
+   per state and --t0 so a rebuilt card picks the animations up where they were. */
+@property --ai-angle{syntax:"<angle>";inherits:false;initial-value:0deg}
+@property --ai-p{syntax:"<number>";inherits:false;initial-value:-1}
+@property --ai-q{syntax:"<number>";inherits:false;initial-value:-1}
+#notch .ai-orb{--c1:oklch(68% .21 350);--c2:oklch(70% .18 210);--c3:oklch(66% .2 285);--c4:oklch(72% .19 325);--bg:#fff}
+#notch .ai-orb[data-breathe]{animation:ai-orb-breathe 5.5s cubic-bezier(.645,.045,.355,1) var(--t0) infinite}
+@keyframes ai-orb-breathe{50%{scale:1.035}}
+#notch .ai-orb-glow{position:absolute;inset:-12%;border-radius:50%;background:radial-gradient(circle,var(--c2) 0%,transparent 64%);filter:blur(23px);opacity:var(--glow);pointer-events:none}
+#notch .ai-orb-disc{display:grid;grid-template-areas:"stack";overflow:hidden;border-radius:50%;position:relative;isolation:isolate;width:100%;height:100%;background:var(--bg);filter:saturate(var(--sat))}
+#notch .ai-orb-disc::before,#notch .ai-orb-disc::after,#notch .ai-orb-layer{content:"";display:block;grid-area:stack;width:100%;height:100%;border-radius:50%}
+#notch .ai-orb-sheen{background:radial-gradient(circle at 30% 24%,#ffffff52,transparent 34%),radial-gradient(circle at 72% 80%,#ffffff12,transparent 48%);mix-blend-mode:screen;animation:ai-orb-sheen var(--drift) ease-in-out var(--t0) infinite alternate}
+#notch .ai-orb-rim{box-shadow:inset 0 0 0 1px #ffffff29,inset 0 4.9px 9.8px #ffffff38,inset 0 -5.9px 11.8px #00000066;pointer-events:none}
+@keyframes ai-orb-sheen{0%{transform:translate(-6%,-4%) scale(1.05)}100%{transform:translate(7%,6%) scale(1.12)}}
+#notch .ai-orb-disc::before{
+  background:
+    conic-gradient(from calc(var(--ai-angle) * 2) at calc(25% + var(--ai-p) * 25%) calc(70% - var(--ai-q) * 22%),var(--c3),transparent 20% 80%,var(--c3)),
+    conic-gradient(from calc(var(--ai-angle) * 2) at calc(45% - var(--ai-q) * 22%) calc(75% - var(--ai-p) * 18%),var(--c2),transparent 30% 60%,var(--c2)),
+    conic-gradient(from calc(var(--ai-angle) * -3) at calc(80% - var(--ai-p) * 22%) calc(20% + var(--ai-q) * 25%),var(--c1),transparent 40% 60%,var(--c1)),
+    conic-gradient(from calc(var(--ai-angle) * 1.5) at calc(60% + var(--ai-q) * 18%) calc(35% + var(--ai-p) * 22%),var(--c4),transparent 25% 75%,var(--c4)),
+    conic-gradient(from calc(var(--ai-angle) * 2) at calc(15% + var(--ai-q) * 18%) calc(5% + var(--ai-p) * 18%),var(--c2),transparent 10% 90%,var(--c2)),
+    conic-gradient(from calc(var(--ai-angle) * 1) at calc(20% - var(--ai-p) * 14%) calc(80% + var(--ai-q) * 14%),var(--c1),transparent 10% 90%,var(--c1)),
+    conic-gradient(from calc(var(--ai-angle) * -2) at calc(85% + var(--ai-q) * 14%) calc(10% - var(--ai-p) * 14%),var(--c3),transparent 20% 80%,var(--c3));
+  box-shadow:inset var(--bg) 0 0 2px .4px;
+  scale:1.25;
+  filter:blur(5px) contrast(1.15) saturate(1.55);
+  animation:ai-orb-spin var(--spin) linear var(--t0) infinite,ai-orb-p calc(var(--spin) * .3) ease-in-out var(--t0) infinite alternate,ai-orb-q calc(var(--spin) * .47) ease-in-out var(--t0) infinite alternate}
+#notch .ai-orb-disc::after{background-image:radial-gradient(circle,var(--bg) .66px,transparent .66px);background-size:1.32px 1.32px;backdrop-filter:blur(10px) contrast(2.3);mix-blend-mode:overlay;opacity:.35;mask-image:radial-gradient(black 15%,transparent 75%)}
+@keyframes ai-orb-spin{to{--ai-angle:360deg}}
+@keyframes ai-orb-p{to{--ai-p:1}}
+@keyframes ai-orb-q{to{--ai-q:1}}
+@media (prefers-reduced-motion:reduce){#notch .ai-orb,#notch .ai-orb-disc::before,#notch .ai-orb-sheen{animation:none}}
+#notch #agents .ai-card[data-kind=overview],#notch #agents .ai-card[data-kind=finished],#notch #agents .ai-card[data-kind=error]{gap:16px}
+#notch #agents .ai-code{background:#ffffff0a;box-shadow:none}
+
+/* ---------- v3: the meeting radar (one rotating arc) */
+#notch .lb-radar{position:relative;width:48px;height:48px;flex:none;display:grid;place-items:center;color:#9cc4ff}
+#notch .lb-radar .sweep{position:absolute;inset:0;border-radius:50%;border:2px solid #ffffff12;border-top-color:#4f9dff;animation:lb-spin 1.8s cubic-bezier(.5,.15,.5,.85) infinite}
+#notch .lb-radar .lb-glyph{position:relative}
+#notch .lb-radar .lb-glyph svg{width:28px;height:28px;stroke-width:2}
+@keyframes lb-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){#notch .lb-radar .sweep{animation:none}}
+

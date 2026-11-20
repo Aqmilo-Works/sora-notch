@@ -1,0 +1,24 @@
+/target
+/node_modules
+*.log
+
+/tests/artifacts
+*.pem
+*.pfx
+*.msix
+/Sora.exe
+*.exe.sig
+# Chat helpers and the Telegram app key: never in the repo.
+/modules/
+tg-api.txt
+
+.vercel/
+
+# Installer output
+/dist/
+*.msi
+
+# Build helpers for checking the macOS side on Windows (built from tools/mac-check/main.go)
+/tools/mac-check/*.exe
+website/tg-key.json
+**/tg-key.json

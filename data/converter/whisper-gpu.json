@@ -1,0 +1,8 @@
+{
+    "version":  "b5454",
+    "files":  {
+                  "BUILD.txt":  "221746d81c0cecfcbeeab939fea4ccf5a280f0ae2baf209afd1b93a90edcaca0",
+                  "LICENSE":  "bcd8ec749126d45cb06737d0690295d73df4b6e7e194205bcf91190368f27285",
+                  "ggml-vulkan.dll":  "00af8bc50c5ef05c978520ce4b08dd5bc46284223e751e7c711f07047f88a416"
+              }
+}

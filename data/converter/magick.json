@@ -1,0 +1,11 @@
+{
+  "version": "7.1.2-35",
+  "files": {
+    "magick.exe": "75d7b9fbaebab840ee71f9631df06659c0b39ff94bdc507cbac772023ff6ce5c",
+    "LICENSE.txt": "5ffcbc771d4cc2827ca8c4505f6b5b61e0bc1d933e0f41a47eea16ed06db4f90",
+    "NOTICE.txt": "071138ece01928a65983b7273e0022ed73b814097daaf10ba373f4fb4e4387a7",
+    "vcomp140.dll": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164",
+    "SOURCES.txt": "70a0cc40a6294b953e3e9d0cd8da0a2bcafcb3b0231f9e33913ce3deb1d7df91",
+    "policy.xml": "ae9374a4acab8a8781e6bf898ea216a64d48283bf8176221b0213fdeb6d0e32d"
+  }
+}

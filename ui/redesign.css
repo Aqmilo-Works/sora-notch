@@ -1,0 +1,1138 @@
+/* Sora notch, 2026-11 redesign. Home: three widgets straight on the notch's black, no cards, split by thin vertical
+   lines; type does the work (large white values, grey words between them), one blue accent, colour only where it
+   means something (the sky icon). Then the music cover reaching into the left ear, and the tray mascot.
+   Home rules use #home so they win over the older layers. */
+:root{--ink:#f5f5f7;--ink-2:#8e8e93;--ink-3:#5c5c61;--line:#ffffff1c;--blue:#4f9dff}
+
+/* ---------------------------------------------------------------- Home: three columns, no cards */
+#home.active{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;height:172px;margin:0 14px;padding:2px 0 14px;align-items:stretch}
+#home>.widget{position:relative;display:flex;flex-direction:column;min-width:0;width:auto!important;padding:6px 20px!important;border:0!important;background:none;box-shadow:none;color:var(--ink);text-align:left;align-items:stretch}
+#home>.widget+.widget::before{content:'';position:absolute;left:0;top:12px;bottom:12px;width:1px;background:var(--line)}
+#home button{font:inherit;color:inherit}
+#home .w-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;min-height:18px}
+#home .w-title{font-size:13px;font-weight:600;color:var(--ink)}
+#home .w-sub{font-size:11px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#home .w-big{display:block;font-size:34px;font-weight:600;letter-spacing:-1px;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--ink)}
+#home .w-pill{height:26px;padding:0 12px;border-radius:13px;background:var(--blue);color:#fff;font-size:11.5px;font-weight:600;white-space:nowrap}
+#home .w-pill:hover{background:#6aaeff}
+#home .w-link{font-size:11px;color:var(--ink-2);padding:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#home .w-link:hover:not(:disabled){color:var(--ink)}
+#home .w-link:disabled{opacity:1;cursor:default}
+#home .w-icon{width:24px;height:24px;display:grid;place-items:center;border-radius:50%;color:var(--ink-3);margin:-4px -5px 0 0}
+#home .w-icon svg{width:16px;height:16px}
+#home .w-icon[aria-pressed=true]{color:var(--blue)}
+#home .w-icon:hover{color:var(--ink);background:#ffffff12}
+
+#home #city-name{padding:0;margin:0;border-radius:4px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;text-align:left;text-decoration:none}
+#home #city-name:hover{text-decoration:underline;text-decoration-color:#ffffff55;text-underline-offset:4px}
+/* A small chevron: the place name can be changed. */
+#home #city-name{padding-right:17px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='m2 3.5 3 3 3-3' fill='none' stroke='%23ffffff' stroke-opacity='.65' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 55%/12px 12px;transition:background-image .2s ease}
+#home #city-name:hover,#home #city-name:focus-visible{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='m2 3.5 3 3 3-3' fill='none' stroke='%23ffffff' stroke-opacity='.95' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+/* Weather, after the owner's reference: a small halftone of the sky top left, the place top right; feels and humidity
+   bottom left; the condition over a large temperature in the sky's colour bottom right. */
+#home .hw-weather{font-family:Inter,'Segoe UI',sans-serif;--wx-tint:#c3cad4}
+#home .hw-weather[data-sky=clear-day]{--wx-tint:#ff9f0a}
+#home .hw-weather[data-sky=clear-night]{--wx-tint:#b8c6ff}
+#home .hw-weather[data-sky=partly-day]{--wx-tint:#ffb340}
+#home .hw-weather[data-sky=partly-night]{--wx-tint:#b8c6ff}
+#home .hw-weather[data-sky^=fog]{--wx-tint:#9aa3ad}
+#home .hw-weather[data-sky^=rain]{--wx-tint:#5aa8ff}
+#home .hw-weather[data-sky^=snow]{--wx-tint:#d6e6ff}
+#home .hw-weather[data-sky^=storm]{--wx-tint:#a98bff}
+#home .wx-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;min-width:0}
+#home #wx-art{width:70px;height:42px;flex:none}
+#home .hw-weather #city-name{font-size:11.5px;line-height:16px;font-weight:500;color:var(--ink-2);padding-right:14px;background-size:10px 10px;margin-top:1px}
+#home .wx-bottom{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-bottom:6px;min-width:0}
+#home .wx-stats{display:flex;flex-direction:column;gap:2px;flex:none}
+#home .wx-stats span{display:flex;flex-direction:column}
+#home .wx-stats small{font-size:10.5px;line-height:13px;font-weight:500;color:var(--ink-3)}
+#home .wx-stats b{font-size:13px;line-height:17px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+#home .wx-main{display:flex;flex-direction:column;align-items:flex-end;text-align:right;min-width:0}
+#home #condition{max-width:100%;font-size:15px;line-height:19px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#home .wx-temp{font-size:46px;line-height:1;font-weight:500;letter-spacing:-1.5px;color:var(--wx-tint);font-variant-numeric:tabular-nums;white-space:nowrap;transition:color .4s ease}
+
+/* Calendar: the whole month, today in blue, the selected day's events underneath */
+#home .c-head{display:flex;align-items:center;justify-content:space-between;height:20px}
+#home #month{margin:0;font-size:13px;line-height:20px;font-weight:600;color:var(--ink)}
+#home #month[data-year]:not([data-year=""])::after{content:' ' attr(data-year);color:var(--ink-2);font-weight:500}
+#home .c-nav{display:flex;gap:2px;margin-right:-5px}
+#home .c-nav button{width:20px;height:20px;display:grid;place-items:center;padding:0;border-radius:50%;color:var(--ink-2)}
+#home .c-nav button:hover{color:var(--ink);background:#ffffff14}
+#home .c-nav svg{width:13px;height:13px}
+#home .c-dow,#home .month-grid{display:grid;grid-template-columns:repeat(7,1fr);text-align:center}
+#home .c-dow{margin-top:5px;font-size:9px;font-weight:600;color:var(--ink-3);line-height:12px}
+#home .month-grid{grid-auto-rows:15px;margin-top:2px;isolation:isolate}
+#home .month-grid[data-rows="6"]{grid-auto-rows:13px}
+#home .month-grid .day{position:relative;display:grid;place-items:center;width:100%;height:100%;min-width:0;padding:0;margin:0;border:0;border-radius:0;background:none!important;box-shadow:none;font-size:10.5px;font-weight:500;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+#home .month-grid .day::before{content:'';position:absolute;left:50%;top:50%;width:17px;height:17px;translate:-50% -50%;border-radius:50%;z-index:-1;transition:background .15s}
+#home .month-grid .day:hover::before{background:#ffffff14}
+#home .month-grid .day.past{color:var(--ink-3)}
+#home .month-grid .day.selected::before{background:#ffffff26}
+#home .month-grid .day.today{color:#fff;font-weight:700}
+#home .month-grid .day.today::before{background:var(--blue)}
+#home .month-grid .day.has-events::after{content:'';position:absolute;bottom:-1px;left:50%;width:3px;height:3px;translate:-50% 0;border-radius:50%;background:var(--blue)}
+#home .month-grid .day.today.has-events::after{display:none}
+#home .c-foot{display:flex;align-items:center;gap:6px;margin-top:auto;height:24px;padding-top:6px;border-top:1px solid #ffffff12}
+#home #agenda{flex:1;height:18px;min-height:0;overflow-y:auto;scroll-snap-type:y mandatory;margin:0}
+#home #agenda .agenda-empty{font-size:11px;line-height:18px;color:var(--ink-2);text-align:left;padding:0;margin:0}
+#home #agenda .event{position:relative;display:flex;align-items:center;gap:6px;height:18px;min-height:18px;margin:0;padding:0;border:0;font-size:11px;font-weight:500;scroll-snap-align:start}
+#home #agenda .event::before{display:none}
+#home #agenda .event time{order:-1;font-size:10.5px;color:var(--blue);font-weight:600}
+#home #agenda .event-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#home #agenda .event-check{all:unset;order:-2;flex:none;width:11px;height:11px;border-radius:50%;box-shadow:inset 0 0 0 1.3px #ffffff59;cursor:pointer}
+#home #agenda .event-check::before,#home #agenda .event-check::after{display:none}
+#home #agenda .event.done .event-check{background:var(--blue);box-shadow:none}
+#home #agenda .event.done .event-name{color:var(--ink-3);text-decoration:line-through}
+#home #agenda .event-remove{width:14px;height:14px;padding:0;opacity:0;color:var(--ink-2)}
+#home #agenda .event-remove svg{width:11px;height:11px}
+#home #agenda .event:hover .event-remove{opacity:1}
+#home #add-event{width:20px;height:20px;flex:none;display:grid;place-items:center;padding:0;border-radius:50%;background:#ffffff14;font-size:15px;font-weight:500;line-height:1}
+#home #add-event:hover:not(:disabled){background:var(--blue);color:#fff}
+
+/* Focus: "25:00", a four-part progress bar, then the controls */
+#home .f-head{display:flex;align-items:center;justify-content:space-between;height:20px}
+#home .f-label{font-size:13px;font-weight:600;color:var(--ink)}
+#home .hw-timer.done .f-label{color:var(--blue)}
+#home .timer-ring{position:static;width:24px;height:26px;margin:0 -5px 0 0;padding:0;display:grid;place-items:center;border-radius:7px;background:none}
+#home .timer-ring:hover{background:#ffffff12}
+#home #hourglass .sandglass{width:15px;height:21px}
+#home #timer-edit{display:flex;align-items:baseline;margin:auto 0 0;padding:0;left:0;min-width:0;text-align:left;line-height:1;color:var(--ink)}
+#home #timer-edit #minutes,#home #timer-edit #seconds{display:flex}
+#home #timer-edit #minutes::after{content:':';font-size:44px;font-weight:600;line-height:48px;padding:0 1px;translate:0 -2px}
+#home #timer-edit small{display:none}
+#home #timer-edit .timer-digit{flex:0 0 27px;width:27px;font-size:44px;line-height:48px;font-weight:600;text-align:center;font-variant-numeric:tabular-nums}
+#home #timer-edit.long-time .timer-digit{flex-basis:22px;width:22px;font-size:36px}
+#home .f-bar{height:6px;margin:8px 0 10px;border-radius:3px;background:#ffffff17;overflow:hidden;
+  -webkit-mask:repeating-linear-gradient(90deg,#000 0 calc(25% - 3px),transparent calc(25% - 3px) 25%);mask:repeating-linear-gradient(90deg,#000 0 calc(25% - 3px),transparent calc(25% - 3px) 25%)}
+#home #timer-fill{display:block;height:100%;width:0;background:var(--blue);transition:width .25s linear}
+#home .f-ctrl{display:flex;align-items:center;justify-content:space-between;height:30px}
+#home .f-ctrl button{display:grid;place-items:center;padding:0;border-radius:50%;width:30px;height:30px;color:var(--ink-2)}
+#home .f-ctrl button:hover{color:var(--ink);background:#ffffff14}
+#home .f-ctrl svg{width:20px;height:20px}
+#home .f-ctrl #timer-play{width:64px;height:30px;border-radius:15px;background:var(--blue);color:#fff}
+#home .f-ctrl #timer-play:hover{background:#6aaeff}
+#home .f-ctrl #timer-play svg{width:14px;height:14px}
+
+/* Screen Time */
+#home #screen-today{margin-top:6px}
+#home .screen-apps{display:grid;gap:6px;margin-top:auto}
+#home .s-app{display:grid;grid-template-columns:minmax(0,60px) 1fr auto;align-items:center;gap:8px;font-size:11px;color:var(--ink-2)}
+#home .s-app span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+#home .s-app i{height:5px;border-radius:3px;background:#ffffff12;position:relative;overflow:hidden}
+#home .s-app i::before{content:'';position:absolute;inset:0 auto 0 0;width:var(--w);border-radius:3px;background:var(--blue)}
+#home .s-app:nth-child(2) i::before{background:#8fc1ff}
+#home .s-app:nth-child(3) i::before{background:#ffffff8c}
+#home .s-app time{font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+#home .s-empty,#home .w-off p{font-size:11px;line-height:1.45;color:var(--ink-2);margin:0}
+#home .w-off{margin-top:auto;display:flex;flex-direction:column;align-items:flex-start;gap:9px}
+
+/* Water: the day's eight glasses as dots */
+#home .water-count{display:flex;align-items:baseline;gap:6px;margin-top:6px}
+#home .water-count span{font-size:12px;color:var(--ink-2)}
+#home .water-count b{font-weight:500}
+#home .water-drops{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:10px}
+#home .water-drops i{aspect-ratio:1;border-radius:50%;background:#ffffff17;transition:background .3s}
+#home .water-drops i.on{background:var(--blue)}
+#home .w-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto}
+
+/* Qibla */
+#home .qibla-body{flex:1;display:flex;align-items:center;gap:14px;min-height:0}
+#home .compass{position:relative;flex:none;width:88px;height:88px;border-radius:50%;box-shadow:inset 0 0 0 1px #ffffff21}
+#home .compass::before{content:'';position:absolute;inset:6px;border-radius:50%;background:repeating-conic-gradient(#ffffff40 0 1.2deg,transparent 1.2deg 30deg);-webkit-mask:radial-gradient(circle,transparent 34px,#000 34.5px);mask:radial-gradient(circle,transparent 34px,#000 34.5px)}
+#home .compass i{position:absolute;font-style:normal;font-size:9px;font-weight:600;color:var(--ink-3);translate:-50% -50%;line-height:1}
+#home .compass .c-n{left:50%;top:18px;color:var(--blue)}
+#home .compass .c-s{left:50%;top:70px}
+#home .compass .c-e{left:70px;top:50%}
+#home .compass .c-w{left:18px;top:50%}
+#home .needle{position:absolute;left:50%;bottom:50%;width:2px;height:33px;margin-left:-1px;border-radius:1px;background:var(--ink);transform-origin:50% 100%;transition:rotate .8s cubic-bezier(.2,.8,.2,1)}
+#home .needle b{position:absolute;left:50%;top:-4px;width:9px;height:9px;translate:-50% 0;border-radius:2.5px;background:#000;box-shadow:inset 0 0 0 1.5px var(--blue)}
+#home .c-hub{position:absolute;left:50%;top:50%;width:7px;height:7px;translate:-50% -50%;border-radius:50%;background:var(--ink)}
+#home .qibla-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+#home .qibla-text span{font-size:11.5px;font-weight:500;color:var(--ink)}
+#home .qibla-text small{font-size:10.5px;color:var(--ink-2);white-space:nowrap}
+
+/* Prayer */
+#home .prayer-next{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:6px}
+#home .prayer-next>span{display:flex;flex-direction:column;align-items:flex-end;padding-bottom:4px}
+#home #prayer-at{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+#home #prayer-in{font-size:11px;color:var(--blue);font-weight:500;white-space:nowrap}
+#home .prayer-list{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:auto}
+#home .p-cell{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 0 4px;border-radius:9px;min-width:0}
+#home .p-cell small{font-size:9px;color:var(--ink-2);white-space:nowrap}
+#home .p-cell b{font-size:11px;font-weight:600;font-variant-numeric:tabular-nums}
+#home .p-cell.next{background:#4f9dff26}
+#home .p-cell.next small{color:var(--blue)}
+#home .p-cell.past{opacity:.4}
+
+/* Edit mode: each widget gets a dashed frame and jiggles a little */
+.home-editing #home>.widget{outline:1.5px dashed #ffffff40;outline-offset:-4px;border-radius:20px;animation:w-jiggle .32s ease-in-out infinite alternate}
+.home-editing #home>.widget::before{display:none}
+.home-editing #home>.widget:nth-child(2n){animation-delay:-.16s}
+.home-editing #home>.widget.dragging{animation:none;background:#1c1c1e}
+#home .w-remove{top:4px;right:6px}
+@keyframes w-jiggle{from{rotate:-.5deg}to{rotate:.5deg}}
+.wp-chip{height:28px;padding:0 10px 0 8px;font-size:11.5px;gap:5px}
+#widget-chips{gap:5px}
+@media(prefers-reduced-motion:reduce){.home-editing #home>.widget{animation:none}#home .needle{transition:none}}
+
+/* ---------------------------------------------------------------- Music: the cover reaches the left edge and the ear */
+#music-glow{--glow-fade:linear-gradient(90deg,rgb(0 0 0/0) 125px,rgb(0 0 0/0.03) 137.5px,rgb(0 0 0/0.1) 150px,rgb(0 0 0/0.2) 162.5px,rgb(0 0 0/0.35) 175px,rgb(0 0 0/0.5) 187.5px,rgb(0 0 0/0.65) 200px,rgb(0 0 0/0.8) 212.5px,rgb(0 0 0/0.9) 225px,rgb(0 0 0/0.97) 237.5px,rgb(0 0 0/1) 250px,rgb(0 0 0/1) 440px,rgb(0 0 0/0.97) 451.7px,rgb(0 0 0/0.9) 463.4px,rgb(0 0 0/0.8) 475.1px,rgb(0 0 0/0.65) 486.8px,rgb(0 0 0/0.5) 498.5px,rgb(0 0 0/0.35) 510.2px,rgb(0 0 0/0.19999999999999996) 521.9px,rgb(0 0 0/0.09999999999999998) 533.6px,rgb(0 0 0/0.030000000000000027) 545.3px,rgb(0 0 0/0) 557px);position:absolute;top:0;left:-12px;width:60%;height:100%;z-index:0;pointer-events:none;opacity:0;transition:opacity .45s ease;overflow:hidden;
+  -webkit-mask:radial-gradient(circle at 0 100%,transparent 11.5px,#000 12px) 0 0/12px 12px no-repeat,linear-gradient(#000 0 0) 11px 0/calc(100% - 11px) 100% no-repeat;
+  mask:radial-gradient(circle at 0 100%,transparent 11.5px,#000 12px) 0 0/12px 12px no-repeat,linear-gradient(#000 0 0) 11px 0/calc(100% - 11px) 100% no-repeat}
+#music-glow #music-backdrop{position:absolute;inset:-90px -60px -90px -120px;width:auto;height:auto;opacity:1;background:center/cover no-repeat;filter:blur(42px) brightness(var(--dim,.5)) saturate(1.2);
+  /* Black at the left (it never reaches the notch wing), full strength in the middle, gone by the progress bar's end. */
+  -webkit-mask-image:var(--glow-fade);mask-image:var(--glow-fade);transition:none}
+/* A little noise under the same fade (dither): a smooth dark gradient on 8 bits per channel shows steps without it. */
+#music-glow::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:screen;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 -.3'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-mask-image:linear-gradient(90deg,rgb(0 0 0/0) 110px,rgb(0 0 0/0.03) 123px,rgb(0 0 0/0.1) 136px,rgb(0 0 0/0.2) 149px,rgb(0 0 0/0.35) 162px,rgb(0 0 0/0.5) 175px,rgb(0 0 0/0.65) 188px,rgb(0 0 0/0.8) 201px,rgb(0 0 0/0.9) 214px,rgb(0 0 0/0.97) 227px,rgb(0 0 0/1) 240px,rgb(0 0 0/1) 330px,rgb(0 0 0/0.97) 339.5px,rgb(0 0 0/0.9) 349px,rgb(0 0 0/0.8) 358.5px,rgb(0 0 0/0.65) 368px,rgb(0 0 0/0.5) 377.5px,rgb(0 0 0/0.35) 387px,rgb(0 0 0/0.19999999999999996) 396.5px,rgb(0 0 0/0.09999999999999998) 406px,rgb(0 0 0/0.030000000000000027) 415.5px,rgb(0 0 0/0) 425px);mask-image:linear-gradient(90deg,rgb(0 0 0/0) 110px,rgb(0 0 0/0.03) 123px,rgb(0 0 0/0.1) 136px,rgb(0 0 0/0.2) 149px,rgb(0 0 0/0.35) 162px,rgb(0 0 0/0.5) 175px,rgb(0 0 0/0.65) 188px,rgb(0 0 0/0.8) 201px,rgb(0 0 0/0.9) 214px,rgb(0 0 0/0.97) 227px,rgb(0 0 0/1) 240px,rgb(0 0 0/1) 330px,rgb(0 0 0/0.97) 339.5px,rgb(0 0 0/0.9) 349px,rgb(0 0 0/0.8) 358.5px,rgb(0 0 0/0.65) 368px,rgb(0 0 0/0.5) 377.5px,rgb(0 0 0/0.35) 387px,rgb(0 0 0/0.19999999999999996) 396.5px,rgb(0 0 0/0.09999999999999998) 406px,rgb(0 0 0/0.030000000000000027) 415.5px,rgb(0 0 0/0) 425px)}
+.notch[data-view=music]:not(.compact) #music-glow:has(#music-backdrop.on){opacity:1}
+html.mac #music-glow #music-backdrop{-webkit-mask-image:linear-gradient(180deg,transparent 100px,#000 190px),var(--glow-fade);-webkit-mask-composite:source-in;mask-image:linear-gradient(180deg,transparent 100px,#000 190px),var(--glow-fade);mask-composite:intersect}
+html.mac #music-glow::after{display:none}
+/* !important: the rule that shows the glow outranks this one, so the glow used to linger inside the shrinking notch. */
+body.panel-mode:not(.ready) #music-glow,body.panel-mode.closing #music-glow{opacity:0!important;transition:opacity .06s linear}
+#expanded{z-index:1}
+
+/* ---------------------------------------------------------------- Tray: white, airier dashes, and the mascot that grabs */
+#dropzone.dropzone{border:0!important;box-shadow:none!important;background-color:transparent;transition:background-color .45s ease,box-shadow .45s ease}
+/* The resting dashes sit on ::after so they can fade out while the ring fades in (a background image cannot be cross-faded). */
+#dropzone.dropzone::after{display:block!important;content:'';position:absolute;inset:0;z-index:0;pointer-events:none;animation:none!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='19' ry='19' stroke='%23ffffff' stroke-opacity='.22' stroke-width='4.4' stroke-dasharray='9 9' stroke-linecap='round'/%3E%3C/svg%3E");opacity:1;transition:opacity .45s ease}
+/* A file over the tray: the dashes give way to one seamless ring of light, blue into white, that slowly turns (the
+   gradient ends where it starts, so the turn has no seam), and a soft blue glow inside. The ring is always there at
+   opacity 0 and only fades in and out, never pops. Its turn is paused, not reset, when the file leaves, so it carries on
+   from the same angle next time. Glow and dashes fade with it. */
+@property --tray-turn{syntax:'<angle>';inherits:false;initial-value:0deg}
+#dropzone.dropzone::before{display:block!important;content:'';position:absolute;inset:0;z-index:0;border-radius:19px;padding:1.6px;pointer-events:none;opacity:0;
+  background:conic-gradient(from var(--tray-turn),#0a84ff,#8fd0ff 18%,#ffffff 30%,#8fd0ff 42%,#0a84ff 55%,#5ac8fa 72%,#ffffff 85%,#0a84ff);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  filter:drop-shadow(0 0 5px #4ab6f566);transition:opacity .45s cubic-bezier(.3,0,.2,1);animation:tray-turn 3.2s linear infinite paused!important}
+.dragging #dropzone.dropzone{background-color:#4ab6f50d;box-shadow:inset 0 0 34px #60beff1f!important}
+.dragging #dropzone.dropzone::after{opacity:0}
+.dragging #dropzone.dropzone::before{opacity:1;animation-play-state:running!important}
+.caught #dropzone.dropzone::before{animation:tray-turn 3.2s linear infinite,tray-ring-out .6s ease-out forwards!important}
+@keyframes tray-turn{to{--tray-turn:360deg}}
+@keyframes tray-ring-out{40%{opacity:1;filter:drop-shadow(0 0 10px #8fd0ffaa)}to{opacity:0}}
+@media(prefers-reduced-motion:reduce){#dropzone.dropzone::before{animation:none!important}}
+#shelf-empty,#files{transition:opacity .35s ease,translate .45s cubic-bezier(.2,.8,.2,1),scale .45s cubic-bezier(.2,.8,.2,1)}
+.dragging #shelf-empty{opacity:1;translate:0 -4px;scale:1.04}
+.dragging #tray-symbol{color:#8fd0ff}
+#tray-symbol{transition:color .45s ease}
+.dragging #files{opacity:.35}
+#music-glow{border-bottom-left-radius:42px 30px}
+
+/* Fixes after the first look at the cardless Home */
+#home.active{grid-template-rows:minmax(0,1fr)}
+#home>.widget{min-height:0;overflow:hidden}
+#home #temp{font-size:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;color:inherit}
+#home .qibla-body{gap:12px}
+#home .compass{width:80px;height:80px}
+#home .compass::before{-webkit-mask:radial-gradient(circle,transparent 30px,#000 30.5px);mask:radial-gradient(circle,transparent 30px,#000 30.5px)}
+#home .compass .c-n{top:16px}#home .compass .c-s{top:64px}#home .compass .c-e{left:64px}#home .compass .c-w{left:16px}
+#home .needle{height:29px}
+#home #qibla-deg{font-size:30px}
+#home .qibla-text span{white-space:nowrap}
+
+/* ================================================================ 2026-11-07, round 3: roomier Calendar (square: the
+   day and its list; wide: month left, list right), To-do, Alarm, Markets, the Focus dial, glasses. */
+
+
+/* Calendar, square: "Saturday / 7", then the day's items with a blue bar, "2 more" */
+#home .hw-calendar{display:flex;flex-direction:column}
+#home .hw-calendar .c-month{display:none}
+#home .c-side{position:relative;display:flex;flex-direction:column;flex:1;min-height:0}
+#home .c-day{display:flex;flex-direction:column}
+#home #cal-weekday{font-size:13px;font-weight:600;color:var(--blue);line-height:18px}
+#home #cal-date{font-size:38px;font-weight:600;letter-spacing:-1px;line-height:1.05}
+#home #cal-count{display:none}
+#home .hw-calendar #agenda{flex:1;height:auto;min-height:0;margin-top:8px;overflow-y:auto;scroll-snap-type:y mandatory;border:0;padding:0}
+#home .hw-calendar #agenda .event{display:grid;grid-template-columns:10px 1fr auto;grid-template-rows:17px 15px;column-gap:7px;height:36px;min-height:36px;align-items:center;font-size:13px;font-weight:600}
+#home .hw-calendar #agenda .event-check{grid-row:1/3;width:10px;height:30px;border-radius:0;box-shadow:none;background:none;display:flex;justify-content:center}
+#home .hw-calendar #agenda .event-check::after{display:block;content:'';width:3px;height:100%;border-radius:2px;background:var(--blue)}
+#home .hw-calendar #agenda .event.done .event-check{background:none}
+#home .hw-calendar #agenda .event.done .event-check::after{background:var(--ink-3)}
+#home .hw-calendar #agenda .event-name{grid-area:1/2;align-self:end}
+#home .hw-calendar #agenda .event time{order:0;grid-area:2/2;align-self:start;font-size:11px;font-weight:500;color:var(--ink-2)}
+#home .hw-calendar #agenda .event-remove{grid-area:1/3/3/4}
+#home .hw-calendar #agenda .agenda-empty{font-size:12px;color:var(--ink-2);line-height:18px}
+#home #cal-more{font-size:11px;color:var(--ink-2);min-height:14px;line-height:14px}
+#home .hw-calendar #add-event{position:absolute;right:0;bottom:-2px}
+
+/* Calendar, wide: the month on the left with room to breathe, the day's list on the right */
+#home .hw-calendar[data-size=wide]{display:grid;grid-template-columns:1.15fr 1fr;column-gap:26px}
+#home .hw-calendar[data-size=wide] .c-month{display:flex;flex-direction:column}
+#home .hw-calendar[data-size=wide] .month-grid{grid-auto-rows:18px;margin-top:4px}
+#home .hw-calendar[data-size=wide] .month-grid[data-rows="6"]{grid-auto-rows:16px}
+#home .hw-calendar[data-size=wide] .month-grid .day{font-size:11.5px}
+#home .hw-calendar[data-size=wide] .month-grid .day::before{width:19px;height:19px}
+#home .hw-calendar[data-size=wide] .c-side{border-left:1px solid var(--line);padding-left:22px;margin-left:-4px}
+#home .hw-calendar[data-size=wide] .c-day{flex-direction:row;align-items:baseline;gap:6px;height:20px}
+#home .hw-calendar[data-size=wide] #cal-weekday{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+#home .hw-calendar[data-size=wide] #cal-date{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--blue);line-height:18px}
+#home .hw-calendar[data-size=wide] #cal-count{display:block;margin-left:auto;font-size:11px;color:var(--ink-2)}
+#home .hw-calendar[data-size=wide] #agenda{margin-top:6px}
+#home .hw-calendar[data-size=wide] #cal-more{display:none}
+.home-editing #home .hw-calendar[data-size=wide] .c-side{border-left-color:transparent}
+
+/* Size button on the Calendar while editing */
+#home .w-resize{display:none;position:absolute;top:4px;left:6px;z-index:3;width:20px;height:20px;border-radius:50%;background:#f4f4f5;color:#0a0a0a;place-items:center;padding:0}
+#home .w-resize svg{width:12px;height:12px;stroke-width:2.6}
+.home-editing #home .w-resize{display:grid}
+#home .w-resize .shrink,#home [data-size=wide] .w-resize .grow{display:none}
+#home [data-size=wide] .w-resize .shrink{display:inline}
+#home>.widget[data-size=wide]{grid-column:span 2}
+
+/* Focus: "7:59" over a dial that slides under a fixed marker, a round play button */
+#home #timer-edit{margin:4px auto 0;justify-content:center}
+#home #timer-edit .timer-digit{flex:0 0 22px;width:22px;font-size:36px;line-height:40px}
+#home #timer-edit #minutes::after{font-size:36px;line-height:40px}
+#home .f-dial{display:block;width:100%;height:auto;margin:2px 0 0;overflow:visible}
+#home #timer-dial path{fill:none;stroke-linecap:round}
+#home .f-dial .band{stroke:var(--blue);stroke-width:17;stroke-linecap:butt}
+#home .f-dial .minor{stroke:#ffffff47;stroke-width:1.7}
+#home .f-dial .major{stroke:var(--ink);stroke-width:2.3}
+#home .f-dial .past{stroke:#ffffff8c;stroke-width:1.7}
+#home .f-dial .marker{fill:var(--blue);stroke:var(--blue);stroke-width:2.4;stroke-linecap:butt}
+#home .f-ctrl{justify-content:center;gap:22px;height:36px;margin-top:auto}
+#home .f-ctrl #timer-play{width:36px;height:36px;border-radius:50%;background:var(--ink);color:#000}
+#home .f-ctrl #timer-play:hover{background:#fff}
+#home .f-ctrl #timer-play svg{width:13px;height:13px}
+#home .f-bar{display:none}
+
+/* Water: eight small glasses */
+#home .water-drops{gap:4px;margin-top:12px}
+#home .water-drops i{aspect-ratio:auto;border-radius:0;background:none;display:grid;place-items:center}
+#home .water-drops svg{width:100%;max-width:18px;height:auto}
+#home .water-drops .g-cup{fill:none;stroke:#ffffff4d;stroke-width:1.3;stroke-linejoin:round}
+#home .water-drops .g-water{fill:transparent;transition:fill .3s}
+#home .water-drops i.on .g-cup{stroke:var(--blue)}
+#home .water-drops i.on .g-water{fill:var(--blue)}
+
+/* To-do: rings, titles, when */
+#home .todo-list{display:flex;flex-direction:column;gap:2px;margin-top:8px;overflow-y:auto;min-height:0;flex:1}
+#home .td{display:grid;grid-template-columns:14px 1fr auto;align-items:center;gap:8px;min-height:24px;font-size:12.5px;font-weight:500}
+#home .td span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#home .td time{font-size:11px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+#home .td-check{width:13px;height:13px;padding:0;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--blue)}
+#home .td:nth-child(3n+2) .td-check{box-shadow:inset 0 0 0 1.5px #34c759}
+#home .td.late .td-check{box-shadow:inset 0 0 0 1.5px #ff9f0a}
+#home .td.late time{color:#ff9f0a;font-weight:600}
+#home .td.today time{color:var(--ink)}
+#home .td.done span{color:var(--ink-3);text-decoration:line-through}
+#home .td.done .td-check{background:var(--ink-3);box-shadow:none}
+#home .td-empty{font-size:12px;color:var(--ink-2);margin:auto 0}
+#home .w-title b{font-weight:500;color:var(--ink-2);margin-left:3px}
+
+/* Alarm: label, the time large, a switch */
+#home .alarm-list{display:flex;flex-direction:column;gap:6px;margin-top:6px;overflow-y:auto;min-height:0;flex:1}
+#home .al{position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:46px}
+#home .al>span{display:flex;flex-direction:column;min-width:0}
+#home .al small{font-size:11px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#home .al b{font-size:28px;font-weight:600;letter-spacing:-.8px;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--ink-3);transition:color .2s}
+#home .al.on b{color:var(--ink)}
+#home .sw{position:relative;flex:none;width:38px;height:22px;padding:0;border-radius:11px;background:#3a3a3c;transition:background .2s}
+#home .sw::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0006;transition:translate .2s}
+#home .sw[aria-checked=true]{background:#34c759}
+#home .sw[aria-checked=true]::after{translate:16px 0}
+#home .al-remove{position:absolute;right:44px;width:20px;height:20px;padding:0;display:grid;place-items:center;border-radius:50%;color:var(--ink-2);opacity:0}
+#home .al-remove svg{width:12px;height:12px}
+#home .al:hover .al-remove{opacity:1}
+#home .al-remove:hover{color:var(--ink);background:#ffffff14}
+
+
+/* Markets: name, price, change */
+#home .mk-list{display:flex;flex-direction:column;justify-content:space-evenly;flex:1;min-height:0;margin-top:6px}
+#home .mk{display:grid;grid-template-columns:1fr auto 62px;align-items:baseline;gap:10px}
+#home .mk b{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#home .mk span{font-size:13px;font-weight:500;font-variant-numeric:tabular-nums;text-align:right}
+#home .mk small{font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;color:var(--ink-2)}
+#home .mk.up small{color:#30d158}
+#home .mk.down small{color:#ff453a}
+
+/* The hidden menus: New to-do, New alarm, Markets symbols */
+.alarm-editor .editor-intro input{margin-top:10px;width:100%}
+.markets-editor form{flex:1;display:flex;flex-direction:column;gap:8px;align-self:center}
+.markets-editor form input{width:100%;height:38px;font-size:13px}
+.markets-editor form button{align-self:flex-end}
+#markets-error{font-size:11px;color:#ff9f0a;margin:0;min-height:14px}
+#event-editor .editor-intro h2,#alarm-editor h2,#markets-editor h2{font-size:22px;font-weight:600;letter-spacing:-.4px}
+#event-form .field-label input#event-title{height:40px;font-size:15px;font-weight:500;border-radius:12px;padding:0 14px}
+#event-form .pick-field{border-radius:12px}
+#event-form .primary-action,.alarm-editor .primary-action,.markets-editor .primary-action{background:var(--blue);color:#fff;border-radius:16px;padding:8px 18px;font-size:12px}
+#event-form .primary-action:hover,.alarm-editor .primary-action:hover,.markets-editor .primary-action:hover{background:#6aaeff}
+/* round 3 fixes */
+#home .hw-calendar #agenda .event{grid-template-rows:19px 16px;height:42px;min-height:42px;row-gap:1px;align-content:center}
+#home .hw-calendar #agenda .event-name{line-height:19px;align-self:center}
+#home .hw-calendar #agenda .event time{line-height:16px;align-self:center}
+#home .hw-calendar #agenda .event-check::after{position:static;border:0;transform:none;inset:auto}
+#home .hw-calendar #agenda .event.done .event-name,#home .hw-calendar #agenda .event.done time{color:var(--ink-3)}
+#home .td.late time{color:#ff9f0a;font-weight:600}
+#home .water-drops i.on{background:none}
+#home #timer-edit #seconds{margin:0;padding:0}
+#home #timer-edit #minutes::after{padding:0 2px 0 1px}
+#home #timer-edit #minutes,#home #timer-edit #seconds{justify-content:flex-start;min-width:0;width:auto;flex:none}
+
+/* ================================================================ round 4: square Calendar = a roomy month; wide
+   Calendar = one piece, the month and "TOMORROW / 2 upcoming events" cards; Focus = a half dial turned like a camera's;
+   glasses like tumblers; Markets one page per market with its line. */
+
+/* Calendar, square: the month alone, with air between the rows */
+#home .hw-calendar .c-month{display:flex;flex-direction:column;flex:1;min-height:0}
+#home .hw-calendar[data-size=square] .c-side{display:none}
+#home .hw-calendar .c-dow{margin-top:8px}
+#home .hw-calendar .month-grid{grid-auto-rows:19px;margin-top:3px}
+#home .hw-calendar .month-grid[data-rows="6"]{grid-auto-rows:17px}
+#home .hw-calendar .month-grid .day{font-size:11.5px}
+#home .hw-calendar .month-grid .day::before{width:20px;height:20px}
+
+/* Calendar, wide: one piece, no line between the month and the list */
+#home .hw-calendar[data-size=wide]{display:grid;grid-template-columns:1fr 1fr;column-gap:24px}
+#home .hw-calendar[data-size=wide] .c-side{border:0;padding:0;margin:0;display:flex;flex-direction:column;min-height:0}
+#home .hw-calendar[data-size=wide] .month-grid{grid-auto-rows:19px}
+#home .hw-calendar[data-size=wide] .month-grid[data-rows="6"]{grid-auto-rows:17px}
+#home .hw-calendar[data-size=wide] .c-day{display:flex;flex-direction:column;align-items:flex-start;gap:4px;height:auto}
+#home .hw-calendar[data-size=wide] #cal-weekday{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);line-height:14px}
+#home .hw-calendar[data-size=wide] #cal-date{display:none}
+#home .hw-calendar[data-size=wide] #cal-count{display:block;margin:0;font-size:15px;font-weight:600;color:var(--ink);line-height:20px}
+#home .hw-calendar[data-size=wide] #agenda{display:flex;flex-direction:column;gap:6px;margin-top:8px;padding-right:2px}
+#home .hw-calendar[data-size=wide] #agenda .event{position:relative;display:grid;grid-template-columns:1fr auto;grid-template-rows:14px 18px;column-gap:6px;row-gap:1px;height:auto;min-height:42px;padding:5px 10px 5px 13px;border-radius:9px;background:#ffffff0d;box-shadow:inset 0 0 0 1px #ffffff0a;overflow:hidden;align-content:center;scroll-snap-align:start}
+#home .hw-calendar[data-size=wide] #agenda .event-check{position:absolute;left:0;top:0;bottom:0;width:6px;height:auto;padding:0;border-radius:0;background:none;box-shadow:none}
+#home .hw-calendar[data-size=wide] #agenda .event-check::after{display:block;content:'';width:3px;height:100%;border-radius:0;background:var(--blue);margin:0}
+#home .hw-calendar[data-size=wide] #agenda .event:nth-child(3n+2) .event-check::after{background:#34c759}
+#home .hw-calendar[data-size=wide] #agenda .event:nth-child(3n+3) .event-check::after{background:#ff9f0a}
+#home .hw-calendar[data-size=wide] #agenda .event.done .event-check::after{background:var(--ink-3)}
+#home .hw-calendar[data-size=wide] #agenda .event time{grid-area:1/1;font-size:10.5px;font-weight:600;letter-spacing:.04em;color:var(--ink-3);line-height:14px;align-self:end}
+#home .hw-calendar[data-size=wide] #agenda .event-name{grid-area:2/1;font-size:13px;font-weight:600;color:var(--ink);line-height:18px;align-self:start}
+#home .hw-calendar[data-size=wide] #agenda .event-remove{grid-area:1/2/3/3;align-self:center}
+#home .hw-calendar[data-size=wide] #agenda .agenda-empty{display:flex;flex-direction:column;gap:2px;padding:9px 12px;border-radius:9px;background:#ffffff0d;font-size:12px;line-height:16px}
+#home .hw-calendar[data-size=wide] #agenda .agenda-empty b{color:var(--ink);font-weight:600}
+#home .hw-calendar[data-size=wide] #agenda .agenda-empty span{color:var(--ink-2)}
+#home .hw-calendar[data-size=wide] #add-event{position:absolute;right:0;top:0;bottom:auto}
+
+/* Focus: a half dial; scroll or drag it to set the length; the time sits inside it */
+#home .hw-timer{position:relative}
+#home .f-dial{position:relative;display:block;width:100%;margin-top:auto;cursor:grab;touch-action:none;outline:none;border-radius:8px}
+#home .f-dial.turning{cursor:grabbing}
+#home .f-dial:focus-visible{box-shadow:0 0 0 2px #ffffff40}
+#home .f-dial svg{display:block;width:100%;height:auto;overflow:visible}
+#home #timer-dial path{fill:none;stroke-linecap:round}
+#home .f-dial .band{stroke:var(--blue);stroke-width:21;stroke-linecap:butt;opacity:.92}
+#home .f-dial .in{stroke:#ffffffb3;stroke-width:1.8}
+#home .f-dial .minor{stroke:#ffffff40;stroke-width:1.6}
+#home .f-dial .major{stroke:var(--ink);stroke-width:2.3}
+#home .f-dial text{stroke:none;fill:var(--ink-2);font-size:9px;font-weight:600;text-anchor:middle;dominant-baseline:middle}
+#home .f-dial .marker{fill:var(--blue);stroke:var(--blue);stroke-width:2.4;stroke-linecap:butt}
+#home #timer-play{position:absolute;left:50%;bottom:0;translate:-50% 0;width:38px;height:38px;padding:0;display:grid;place-items:center;border-radius:50%;background:var(--ink);color:#000}
+#home #timer-play:hover{background:#fff}
+#home #timer-play svg{width:13px;height:13px}
+#home #timer-edit{position:absolute;left:50%;bottom:44px;translate:-50% 0;margin:0;z-index:1}
+#home #timer-edit .timer-digit{flex:0 0 19px;width:19px;font-size:31px;line-height:34px}
+#home #timer-edit #minutes::after{font-size:31px;line-height:34px}
+#home #timer-edit.long-time .timer-digit{flex-basis:16px;width:16px;font-size:26px}
+#home .f-ctrl{display:none}
+
+/* Water: tumblers, full ones solid */
+#home .water-drops{display:flex;gap:6px;margin-top:10px}
+#home .water-drops i{flex:0 0 auto;width:19px}
+#home .water-drops svg{width:19px;height:21px;max-width:none}
+#home .water-drops path{fill:none;stroke:#8fd6ff;stroke-width:1.6;stroke-linejoin:round;opacity:.75}
+#home .water-drops i.on path{fill:#d4f1ff;stroke:#d4f1ff;opacity:1}
+#home .water-label{display:block;margin-top:10px;font-size:12px;font-weight:600;color:var(--ink)}
+#home .water-count{margin-top:0}
+#home .water-count .w-big{font-size:32px}
+
+/* To-do: delete on hover */
+#home .td{grid-template-columns:14px 1fr auto 18px}
+#home .td-remove{width:18px;height:18px;padding:0;display:grid;place-items:center;border-radius:50%;color:var(--ink-2);opacity:0}
+#home .td-remove svg{width:11px;height:11px}
+#home .td:hover .td-remove{opacity:1}
+#home .td-remove:hover{color:var(--ink);background:#ffffff14}
+
+
+/* Markets: one page per market */
+#home .mk-dots{display:flex;gap:4px;margin-left:auto;margin-right:6px;align-self:center}
+#home .mk-dots i{width:5px;height:5px;border-radius:50%;background:#ffffff2e}
+#home .mk-dots i.on{background:var(--ink)}
+#home .mk-pages{display:flex;flex:1;min-height:0;overflow:hidden;outline:none;margin-top:4px}
+#home .mk-page{position:relative;flex:0 0 100%;display:flex;flex-direction:column;min-width:0}
+#home .mk-top{display:flex;align-items:baseline;gap:6px;min-width:0}
+#home .mk-top b{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#home .mk-top small{font-size:10.5px;color:var(--ink-3);white-space:nowrap}
+#home .mk-page strong{font-size:27px;font-weight:600;letter-spacing:-.8px;line-height:1.15;font-variant-numeric:tabular-nums}
+#home .mk-ch{font-size:11.5px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums}
+#home .mk-page.up .mk-ch{color:#30d158}
+#home .mk-page.down .mk-ch{color:#ff453a}
+#home .mk-spark{position:absolute;left:0;right:0;bottom:0;width:100%;height:44px}
+#home .mk-spark .l{fill:none;stroke:var(--ink-2);stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+#home .mk-spark .a{fill:#ffffff0a}
+#home .mk-page.up .mk-spark .l{stroke:#30d158}
+#home .mk-page.up .mk-spark .a{fill:#30d15814}
+#home .mk-page.down .mk-spark .l{stroke:#ff453a}
+#home .mk-page.down .mk-spark .a{fill:#ff453a14}
+
+/* Markets menu: chosen chips, search, results */
+.markets-editor{align-items:stretch}
+.markets-editor .editor-intro{align-self:stretch;display:flex;flex-direction:column}
+.markets-editor .editor-intro .editor-back{margin-top:auto}
+.mk-chosen{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.mk-chip{height:24px;padding:0 10px;border-radius:12px;background:#ffffff14;color:#f5f5f7;font-size:11px;font-weight:500}
+.mk-chip:hover{background:#ff453a33;color:#fff;text-decoration:line-through}
+.mk-find{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.mk-find form{display:block}
+.mk-find input{width:100%;height:34px;font-size:12.5px}
+.mk-results{display:grid;grid-template-columns:1fr 1fr;gap:4px;overflow-y:auto;max-height:108px}
+.mk-result{display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:6px 10px;border-radius:9px;background:#ffffff08;text-align:left;min-width:0}
+.mk-result:hover{background:#ffffff14}
+.mk-result.on{background:#4f9dff26;box-shadow:inset 0 0 0 1px #4f9dff66}
+.mk-result b{font-size:12px;font-weight:600;color:#f5f5f7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.mk-result small{font-size:10px;color:#8e8e93;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.mk-none{font-size:12px;color:#8e8e93;margin:6px 0}
+/* round 4 fixes */
+#home .f-dial svg{width:auto;height:auto}
+#home .f-dial>svg{display:block;width:100%;height:auto}
+#home #timer-play svg{width:13px;height:13px;display:block}
+#home #timer-edit{position:static;translate:none;margin:2px auto 0;justify-content:center}
+#home .f-dial{margin-top:4px}
+#home #timer-play{width:34px;height:34px}
+#home .mk-spark path{stroke:none}
+#home .mk-spark .l{stroke-width:1.6}
+#home .mk-spark .a{stroke:none}
+.markets-editor .mk-find form{align-self:stretch;width:100%;display:block;flex:none}
+.mk-result{padding:5px 10px}
+.mk-results{max-height:112px}
+#home .f-dial{width:min(100%,170px);margin:2px auto 0}
+/* Square Calendar keeps its + (next to the month arrows); the list itself shows only when wide */
+#home .hw-calendar[data-size=square] .c-side{display:contents}
+#home .hw-calendar[data-size=square] .c-day,#home .hw-calendar[data-size=square] #agenda,#home .hw-calendar[data-size=square] #cal-more{display:none}
+#home .hw-calendar[data-size=square] #add-event{position:absolute;top:6px;right:68px;width:20px;height:20px;font-size:14px}
+
+/* ================================================================ round 5 */
+/* Size changes morph (View Transitions); no jiggle while editing, so nothing shakes */
+#home>.widget[data-widget=weather]{view-transition-name:w-weather}
+#home>.widget[data-widget=calendar]{view-transition-name:w-calendar}
+#home>.widget[data-widget=timer]{view-transition-name:w-timer}
+#home>.widget[data-widget=screen]{view-transition-name:w-screen}
+#home>.widget[data-widget=water]{view-transition-name:w-water}
+#home>.widget[data-widget=prayer]{view-transition-name:w-prayer}
+#home>.widget[data-widget=todo]{view-transition-name:w-todo}
+#home>.widget[data-widget=alarm]{view-transition-name:w-alarm}
+#home>.widget[data-widget=markets]{view-transition-name:w-markets}
+#home>.widget[hidden]{view-transition-name:none}
+::view-transition-group(*){animation-duration:.32s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+::view-transition-old(*),::view-transition-new(*){height:100%;object-fit:none;object-position:left top}
+.home-editing #home>.widget,.home-editing #home>.widget:nth-child(2n){animation:none}
+
+/* Empty lists: one quiet line in the middle, no box */
+#home .hw-calendar[data-size=wide] #agenda:has(.agenda-empty){justify-content:center;align-items:center}
+#home .hw-calendar[data-size=wide] #agenda .agenda-empty{display:block;padding:0;background:none;box-shadow:none;text-align:center;font-size:12.5px;color:var(--ink-2)}
+#home .todo-list:has(.td-empty),#home .alarm-list:has(.td-empty){justify-content:center;align-items:center}
+#home .td-empty{margin:0;text-align:center;font-size:12.5px;color:var(--ink-2)}
+
+/* Screen Time: every app, three at a time; the wheel scrolls the rest */
+#home .screen-apps{max-height:63px;overflow-y:auto;overscroll-behavior:contain;scroll-snap-type:y mandatory;align-content:start}
+#home .s-app{scroll-snap-align:start;min-height:17px}
+#home .s-app:nth-child(n+4) i::before{background:#ffffff59}
+
+/* Water: take a glass back */
+#home .w-acts{display:flex;align-items:center;gap:6px;flex:none}
+#home .w-round{width:26px;height:26px;padding:0;display:grid;place-items:center;border-radius:50%;background:#ffffff14;font-size:15px;font-weight:600;line-height:1}
+#home .w-round:hover:not(:disabled){background:#ffffff26}
+#home .w-round:disabled{opacity:.3}
+
+/* Prayer: the day's five times with room between them */
+#home .prayer-list{gap:6px}
+#home .p-cell{padding:7px 0 6px;gap:3px;border-radius:10px}
+#home .p-cell small{font-size:9.5px}
+#home .p-cell b{font-size:11.5px}
+
+
+/* ================================================================ round 6 */
+/* Home as a row whose widths animate: a square widget is a third, a wide one two thirds. The Calendar's month keeps a
+   square's width in both sizes and its list waits beyond it, so growing simply opens the list like a drawer. */
+#home.active{display:flex;container-type:inline-size}
+#home>.widget{flex:0 0 33.3333%;transition:flex-basis .42s cubic-bezier(.32,.72,0,1)}
+#home>.widget[data-size=wide]{flex-basis:66.6667%}
+::view-transition-group(*){animation:none}
+#home .hw-calendar,#home .hw-calendar[data-size=wide]{display:block;position:relative}
+#home .hw-calendar .c-month{position:absolute;left:20px;top:6px;bottom:14px;width:calc(33.3333cqw - 40px)}
+#home .hw-calendar .c-side,#home .hw-calendar[data-size=square] .c-side,#home .hw-calendar[data-size=wide] .c-side{display:flex;flex-direction:column;position:absolute;top:6px;bottom:10px;left:calc(33.3333cqw + 4px);width:calc(33.3333cqw - 24px);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility 0s linear .2s}
+#home .hw-calendar[data-size=wide] .c-side{opacity:1;visibility:visible;transition:opacity .3s ease .14s,visibility 0s}
+#home .hw-calendar .c-day,#home .hw-calendar #agenda{display:flex}
+#home .hw-calendar #cal-more{display:none}
+#home .hw-calendar .c-side .c-day{flex-direction:column;align-items:flex-start;gap:4px;height:auto}
+#home .hw-calendar .c-side #cal-weekday{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);line-height:14px}
+#home .hw-calendar .c-side #cal-date{display:none}
+#home .hw-calendar .c-side #cal-count{display:block;margin:0;font-size:15px;font-weight:600;color:var(--ink);line-height:20px;min-height:0}
+#home .hw-calendar .c-side #agenda{flex:1;flex-direction:column;gap:6px;margin-top:8px;min-height:0}
+#home .c-nav #add-event,#home .hw-calendar[data-size=square] #add-event,#home .hw-calendar[data-size=wide] #add-event{position:static;width:20px;height:20px;margin-right:4px;font-size:14px}
+#home .hw-calendar .month-grid,#home .hw-calendar[data-size=wide] .month-grid{grid-auto-rows:19px}
+#home .hw-calendar .month-grid[data-rows="6"],#home .hw-calendar[data-size=wide] .month-grid[data-rows="6"]{grid-auto-rows:17px}
+@media(prefers-reduced-motion:reduce){#home>.widget{transition:none}#home .hw-calendar .c-side{transition:none}}
+
+
+/* Prayer: room inside the blue box and between the times */
+#home .w-prayer{padding-inline:14px!important}
+#home .prayer-list{gap:3px}
+#home .p-cell{padding:7px 0 7px;gap:3px;border-radius:9px}
+#home .p-cell small{font-size:8.5px;letter-spacing:.1px}
+#home .p-cell b{font-size:10.5px;letter-spacing:.1px}
+
+/* Edit mode: a real X to remove (top right), the size switch as a pill at the bottom right, clear of the content */
+#home .w-remove{display:none;top:6px;right:8px;width:22px;height:22px;padding:0;background:#f4f4f5;color:#0a0a0a;box-shadow:0 2px 8px #0008}
+.home-editing #home .w-remove{display:flex;align-items:center;justify-content:center}
+#home .w-remove svg{display:block;flex:none;width:12px;height:12px;fill:none;stroke-width:2.6;stroke-linecap:round;color:#0a0a0a;stroke:#0a0a0a}
+#home .w-resize{top:auto;left:auto;right:8px;bottom:8px;width:auto;height:24px;padding:0 10px;border-radius:12px;gap:5px;grid-auto-flow:column;align-items:center;background:#f4f4f5;color:#0a0a0a;box-shadow:0 2px 8px #0008;font-size:11px;font-weight:600}
+#home .w-resize svg{width:11px;height:11px;stroke:#0a0a0a}
+#home .w-resize::after{content:'Wide'}
+#home [data-size=wide] .w-resize::after{content:'Square'}
+
+/* Calendar size switch in the edit header (Square | Wide) */
+.wp-size{display:flex;align-items:center;flex:none;height:28px;padding:2px;border-radius:14px;background:#ffffff0f;gap:2px}
+.wp-size span{height:24px;padding:0 10px;display:grid;place-items:center;border-radius:12px;font-size:11px;font-weight:600;color:#8e8e93;transition:background .2s,color .2s}
+.wp-size span.on{background:#ffffff24;color:#fff}
+.wp-size[hidden]{display:none}
+/* Prayer: the blue box reaches a little into the gaps, so the time has air on both sides */
+#home .p-cell.next{margin:0 -3px;padding-inline:3px}
+/* round 7: the dial is one clean half circle (a faint track under the blue band, square ends); Prayer's next time is
+   simply blue, no box, at the earlier roomier size */
+#home #timer-dial .track{stroke:#ffffff12;stroke-width:21;stroke-linecap:butt}
+#home #timer-dial .band{stroke-linecap:butt}
+#home .w-prayer{padding-inline:20px!important}
+#home .prayer-list{gap:6px}
+#home .p-cell,#home .p-cell.next{padding:7px 0 6px;margin:0;background:none;border-radius:0}
+#home .p-cell small{font-size:9.5px}
+#home .p-cell b{font-size:11.5px}
+#home .p-cell.next small,#home .p-cell.next b{color:var(--blue)}
+/* Prayer: bolder times, medium names (the times stay heavier) */
+#home .p-cell b{font-weight:700}
+#home .p-cell small{font-weight:500}
+/* Prayer: names easier to read; the blue time as heavy to the eye as the white ones (blue on black reads thinner) */
+#home .p-cell small{font-size:10px;font-weight:500;color:#c7c7cc}
+#home .p-cell.past{opacity:.55}
+#home .p-cell.next small,#home .p-cell.next b{color:#6aaeff}
+#home .p-cell.next b{-webkit-text-stroke:.35px #6aaeff}
+#home .p-cell.next small{-webkit-text-stroke:.2px #6aaeff}
+
+/* ================================================================ Home's menus, one calm pattern for all of them:
+   a top line (round back button, a one-word title, the blue action on the right), then the content, large and clean. */
+#notch .editor-view.active{position:relative;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:14px;height:168px;margin:0 26px;padding:2px 0 12px}
+#notch .editor-view .editor-intro{display:flex;flex-direction:row;align-items:center;gap:10px;width:auto;height:32px;flex:none;margin:0;padding:0;align-self:stretch}
+#notch .editor-view .editor-intro>p{display:none}
+#notch .editor-view h2{margin:0;font-size:15px;font-weight:600;letter-spacing:-.2px;line-height:32px;color:#f5f5f7}
+#notch .editor-view .editor-back{order:-1;flex:none;width:30px;height:30px;margin:0;padding:0;display:grid;place-items:center;border-radius:50%;background:#ffffff12;color:#f5f5f7;font-size:0}
+#notch .editor-view .editor-back:hover{background:#ffffff21}
+#notch .editor-view .editor-back svg{width:15px;height:15px;stroke-width:2.2}
+#notch .editor-view .primary-action{position:absolute;top:3px;right:0;z-index:2;height:30px;min-width:64px;padding:0 16px;margin:0;border:0;border-radius:15px;background:#4f9dff;color:#fff;font-size:12px;font-weight:600;letter-spacing:0}
+#notch .editor-view .primary-action:hover{background:#6aaeff}
+#notch .editor-view input{color:#ededed;-webkit-text-fill-color:#ededed;caret-color:#4f9dff;color-scheme:dark}
+#notch .editor-view input::placeholder{color:#6e6e73;-webkit-text-fill-color:#6e6e73}
+/* A search field: a soft pill with the button inside */
+#notch #city-form,#notch #markets-form{position:relative;display:block;width:100%}
+#notch #city-query,#notch #markets-input{width:100%;height:40px;padding:0 48px 0 16px;border:0;border-radius:20px;background:#ffffff0f;font-size:13px;box-shadow:none}
+#notch #city-query:focus,#notch #markets-input:focus{outline:none;background:#ffffff17}
+#notch .city-go{position:absolute;right:5px;top:5px;width:30px;height:30px;padding:0;display:grid;place-items:center;border-radius:50%;background:#4f9dff;color:#fff}
+#notch .city-go svg{width:15px;height:15px;stroke-width:2.2}
+
+/* Location */
+#notch #location-editor .location-search{flex:1;display:flex;flex-direction:column;gap:6px;width:auto;min-height:0;padding:0}
+#notch #city-results{height:auto;max-height:76px;margin:0;padding:0;border:0;overflow-y:auto;display:flex;flex-direction:column;gap:2px;font-size:12px;color:#8e8e93}
+#notch #city-results .city-result{display:flex;flex-direction:row;align-items:baseline;gap:8px;width:100%;padding:7px 12px;border-radius:10px;text-align:left}
+#notch #city-results .city-result:hover{background:#ffffff0f}
+#notch .city-result strong{font-size:13px;font-weight:600;color:#f5f5f7}
+#notch .city-result span{font-size:11px;color:#8e8e93}
+
+/* New to-do: one big line to type in, the day and the time as two soft chips */
+#notch #event-form{position:static;flex:1;display:flex;flex-direction:column;gap:12px;min-width:0}
+#notch #event-form>.field-label{display:block;font-size:0;margin:0}
+#notch #event-form #event-title{width:100%;height:auto;padding:4px 0 10px;border:0;border-bottom:1px solid #ffffff1f;border-radius:0;background:none;font-size:22px;font-weight:600;letter-spacing:-.4px;box-shadow:none}
+#notch #event-form #event-title:focus{outline:none;border-bottom-color:#4f9dff;background:none}
+#notch #event-form .event-fields{display:flex;gap:8px;margin:0}
+#notch #event-form .event-fields .field-label{display:block;margin:0;font-size:0}
+#notch #event-form .event-fields .field-label>span{display:none}
+#notch #event-form .pick-field{display:flex;align-items:center;flex-direction:row-reverse;justify-content:flex-end;gap:8px;height:34px;width:auto;padding:0 14px;border:0;border-radius:17px;background:#ffffff0f;color:#f5f5f7;font-size:12.5px;font-weight:500}
+#notch #event-form .pick-field:hover{background:#ffffff1a}
+#notch #event-form .pick-field svg{width:15px;height:15px;color:#8e8e93}
+#notch #event-form .event-actions{margin:0;display:contents}
+#notch #event-error{margin:0;font-size:11px;color:#ff9f0a}
+
+/* Date: the day in the title, Today / Tomorrow on the right; months as words, days as small tiles */
+#notch #date-editor .date-intro{gap:10px}
+#notch #date-editor .date-hero{display:flex;align-items:baseline;gap:8px;margin:0}
+#notch #date-editor .date-hero strong{font-size:15px;font-weight:600;line-height:32px}
+#notch #date-editor .date-hero>div{display:flex;align-items:baseline;gap:8px}
+#notch #date-editor #date-weekday{font-size:15px;font-weight:600;color:#f5f5f7}
+#notch #date-editor #date-month-year{font-size:12px;color:#8e8e93}
+#notch #date-editor .date-rel{display:none}
+#notch #date-editor .date-quick{display:flex;gap:6px;margin:0 0 0 auto}
+#notch #date-editor .date-quick button{height:30px;padding:0 14px;border-radius:15px;background:#ffffff0f;color:#f5f5f7;font-size:12px;font-weight:500;border:0}
+#notch #date-editor .date-quick button:hover{background:#ffffff1a}
+#notch #date-editor .date-right{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0;width:auto}
+#notch #date-editor .pk-month{height:26px;padding:0 12px;border-radius:13px;background:none;border:0;color:#8e8e93;font-size:12px;font-weight:500}
+#notch #date-editor .pk-month:hover{color:#f5f5f7}
+#notch #date-editor .pk-month.on{background:#ffffff17;color:#f5f5f7}
+#notch #date-editor .pk-day{width:46px;min-width:46px;height:58px;border-radius:14px;background:#ffffff08;border:0}
+#notch #date-editor .pk-day.sel{background:#4f9dff;color:#fff}
+#notch #date-editor .pk-day.sel *{color:#fff}
+
+/* Time and New alarm: the wheels in the middle, the value as the title */
+#notch #time-editor .time-pick,#notch #alarm-editor .time-pick{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;width:auto;margin:0}
+#notch #time-editor h2,#notch #alarm-editor h2{font-variant-numeric:tabular-nums}
+#notch #alarm-editor #alarm-label{flex:0 1 220px;height:30px;margin:0 0 0 6px;padding:0 14px;border:0;border-radius:15px;background:#ffffff0f;font-size:12.5px}
+#notch #alarm-editor #alarm-label:focus{outline:none;background:#ffffff17}
+
+/* Focus length: minutes : seconds in large type, quick lengths below */
+#notch #timer-form:not([hidden]){position:static;inset:auto;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:0;border-radius:0;background:none}
+
+#notch #timer-form .tm-row{display:flex;align-items:center;gap:6px}
+#notch #timer-form .tm-field{display:flex;flex-direction:column-reverse;align-items:center;gap:2px;font-size:10px;font-weight:500;color:#8e8e93}
+#notch #timer-form .tm-field input{width:92px;height:52px;padding:0;border:0;border-radius:14px;background:#ffffff0a;text-align:center;font-size:40px;font-weight:600;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+#notch #timer-form .tm-field input:focus{outline:none;background:#ffffff14}
+#notch #timer-form .tm-colon{font-size:34px;font-weight:600;color:#6e6e73;margin-bottom:16px}
+#notch #timer-form>div{display:contents}
+#notch #timer-form .timer-presets{display:flex;gap:6px}
+#notch #timer-form .timer-presets button{height:26px;min-width:44px;padding:0 12px;border:0;border-radius:13px;background:#ffffff0f;color:#c7c7cc;font-size:11.5px;font-weight:500}
+#notch #timer-form .timer-presets button:hover{background:#ffffff1a}
+#notch #timer-form .timer-presets button.on{background:#ffffff26;color:#fff}
+#notch #timer-error{margin:0;font-size:11px;color:#ff9f0a}
+#notch #timer-error:empty{display:none}
+
+/* Markets: chosen ones as chips in the top line, search, then results */
+#notch #markets-editor .mk-chosen{margin:0;flex-wrap:nowrap;overflow-x:auto;min-width:0}
+#notch #markets-editor .mk-find{flex:1;min-height:0}
+#notch #timer-form>.tm-row{display:flex;align-items:center;gap:8px}
+#notch #timer-form .timer-presets{justify-content:center}
+#notch #date-editor .date-right{gap:8px}
+#notch #date-editor .pk-ribbon{height:56px;margin:0;padding:0}
+#notch #date-editor .pk-day{height:52px;min-height:0}
+#notch #date-editor .pk-months{margin:0}
+#notch #timer-form>.tm-row{justify-content:center;margin:0;width:auto;align-self:center}
+#notch #timer-form .timer-presets{align-self:center;margin:0}
+#notch #markets-editor .mk-results{max-height:78px;gap:4px}
+#notch #markets-editor .mk-result{flex-direction:row;align-items:baseline;gap:8px;padding:8px 12px;border-radius:10px;min-height:0}
+#notch #markets-editor .mk-result small{flex:1;min-width:0}
+#notch #markets-editor .mk-find{gap:8px}
+#notch #markets-editor .mk-results{flex:none;grid-auto-rows:34px;max-height:72px;overflow-y:auto}
+#notch #markets-editor .mk-result{height:34px;align-items:center;padding:0 12px;box-shadow:none}
+#notch #markets-editor .mk-result.on{background:#4f9dff2e;box-shadow:none}
+#notch #date-editor .date-right{overflow:hidden;align-self:stretch;max-width:100%}
+#notch #date-editor .pk-ribbon,#notch #date-editor .pk-months{width:100%;max-width:100%;min-width:0;flex:none}
+
+/* ================================================================ Home's menus as control panels. The notch grows
+   150 px taller while one is open (native: notch_ui TALL; here the page's notch follows), and the panel is laid out as
+   labelled tiles: what you set is large, what it is called is a small grey label. */
+.notch[data-view$="-editor"]:not(.compact),body.panel-mode .notch[data-view$="-editor"]{height:384px!important}
+#notch .editor-view.cp.active{height:318px;gap:12px;padding:2px 0 14px}
+#notch .cp .cp-body{position:static;flex:1;display:flex;flex-direction:column;gap:12px;min-height:0;width:auto;margin:0;padding:0}
+#notch .cp .cp-row{flex:1;display:flex;gap:12px;min-height:0}
+#notch .cp .tile{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;min-height:0;padding:14px 16px;border-radius:18px;background:#ffffff0a;box-shadow:inset 0 0 0 1px #ffffff08}
+#notch .cp .t-label{display:block;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#8e8e93;line-height:14px}
+#notch .cp .t-head{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:22px}
+#notch .cp .t-note{font-size:11px;color:#6e6e73;margin-top:auto}
+#notch .cp .t-nav{display:flex;gap:2px}
+#notch .cp .t-nav button{width:24px;height:24px;padding:0;display:grid;place-items:center;border-radius:50%;color:#c7c7cc}
+#notch .cp .t-nav button:hover:not(:disabled){background:#ffffff14;color:#fff}
+#notch .cp .t-nav button:disabled{opacity:.25}
+#notch .cp .t-nav svg{width:14px;height:14px}
+#notch .cp .quick-list{display:flex;flex-direction:column;gap:3px}
+#notch .cp .quick-list>i{height:1px;margin:3px 0;background:#ffffff12}
+#notch .cp .quick-list button{height:25px;padding:0 10px;border-radius:9px;text-align:left;font-size:12px;font-weight:500;color:#e5e5ea}
+#notch .cp .quick-list button:hover{background:#ffffff12;color:#fff}
+#notch .cp .wheels{flex:1;align-self:center;min-height:0}
+#notch .cp .wheel-title{font-size:15px;font-weight:600;color:#f5f5f7;font-variant-numeric:tabular-nums;line-height:22px;margin:0}
+#notch .cp input:not(.native-store){width:100%;height:40px;padding:0 16px;border:0;border-radius:14px;background:#ffffff0f;font-size:13px;box-shadow:none}
+#notch .cp input:not(.native-store):focus{outline:none;background:#ffffff17}
+
+/* Location: search on top; where the weather is from now, and the search results */
+#notch #location-editor #city-form{flex:none}
+#notch #location-editor .loc-now{flex:0 0 250px}
+#notch #loc-city{font-size:22px;font-weight:600;letter-spacing:-.4px;line-height:1.15;color:#f5f5f7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch #loc-coords{font-size:12px;color:#8e8e93;font-variant-numeric:tabular-nums}
+#notch #loc-detail{font-size:12px;line-height:1.35;color:#c7c7cc;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+#notch #loc-detail:empty{display:none}
+#notch .cp .t-btn{display:flex;align-items:center;gap:8px;align-self:flex-start;height:32px;margin-top:auto;padding:0 14px 0 11px;border-radius:16px;background:#ffffff14;color:#f5f5f7;font-size:12px;font-weight:500}
+#notch .cp .t-btn:hover:not(:disabled){background:#ffffff24}
+#notch .cp .t-btn:disabled{opacity:.5}
+#notch .cp .t-btn svg{width:15px;height:15px}
+#notch #location-editor .loc-list{flex:1}
+#notch #location-editor #city-results{flex:1;max-height:none;min-height:0;display:flex;flex-direction:column;gap:2px;overflow-y:auto;font-size:12px;color:#6e6e73}
+
+/* New to-do: what, then the day, the time and quick picks side by side */
+#notch #event-editor #event-form>#event-title{flex:none;height:48px;padding:0 18px;border:0;border-radius:16px;background:#ffffff0a;font-size:18px;font-weight:600;letter-spacing:-.3px;box-shadow:inset 0 0 0 1px #ffffff08}
+#notch #event-editor #event-form>#event-title:focus{background:#ffffff12;box-shadow:inset 0 0 0 1px #4f9dff80}
+#notch #event-editor .t-day{flex:1.35}
+#notch #event-editor .t-time{flex:1}
+#notch .pick-dow,#notch .pick-days{display:grid;grid-template-columns:repeat(7,1fr);text-align:center}
+#notch .pick-dow{font-size:9.5px;font-weight:600;color:#6e6e73;line-height:12px}
+#notch .pick-days{grid-auto-rows:23px;isolation:isolate}
+#notch .pick-days[data-rows="6"]{grid-auto-rows:21px}
+#notch .pick-days .pk-day{position:relative;width:100%;height:100%;min-width:0;padding:0;margin:0;border:0;border-radius:0;background:none;display:grid;place-items:center;font-size:12px;font-weight:500;color:#f5f5f7;font-variant-numeric:tabular-nums}
+#notch .pick-days .pk-day::before{content:'';position:absolute;left:50%;top:50%;width:22px;height:22px;translate:-50% -50%;border-radius:50%;z-index:-1}
+#notch .pick-days .pk-day:hover:not(:disabled)::before{background:#ffffff14}
+#notch .pick-days .pk-day.today{color:#4f9dff;font-weight:700}
+#notch .pick-days .pk-day.sel{color:#fff;font-weight:700}
+#notch .pick-days .pk-day.sel::before{background:#4f9dff}
+#notch .pick-days .pk-day.has-ev::after{content:'';position:absolute;bottom:0;left:50%;width:3px;height:3px;translate:-50% 0;border-radius:50%;background:#8e8e93}
+#notch .pick-days .pk-day:disabled{color:#48484a;opacity:1}
+#notch #event-error{position:absolute;top:10px;right:84px;margin:0;font-size:11px;color:#ff9f0a}
+
+/* Focus length: the length large on the left, presets as six big buttons */
+#notch #timer-editor .t-length{flex:1.1;align-items:stretch}
+#notch #timer-editor .tm-row{flex:1;display:flex;align-items:center;justify-content:center;gap:8px}
+#notch #timer-editor .tm-field input{width:110px;height:84px;font-size:52px;border-radius:18px;background:#ffffff0a}
+#notch #timer-editor .t-presets{flex:1}
+#notch #timer-editor .timer-presets{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:8px}
+#notch #timer-editor .timer-presets button{height:auto;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;border-radius:14px;background:#ffffff0d;color:#f5f5f7;font-size:22px;font-weight:600;line-height:1.1}
+#notch #timer-editor .timer-presets button small{font-size:10px;font-weight:500;color:#8e8e93}
+#notch #timer-editor .timer-presets button.on{background:#4f9dff;color:#fff}
+#notch #timer-editor .timer-presets button.on small{color:#ffffffcc}
+#notch #timer-error{margin:0;text-align:center}
+
+/* New alarm: the time on the wheels, a label and quick times */
+#notch #alarm-editor .t-time-big{flex:1.1}
+#notch #alarm-editor .t-alarm{flex:1}
+#notch #alarm-editor #alarm-label{flex:none;margin:0 0 4px}
+#notch #alarm-editor .al-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+#notch #alarm-editor .al-quick button{height:34px;padding:0;text-align:center;border-radius:11px;background:#ffffff0d;font-variant-numeric:tabular-nums}
+
+/* Markets: what you watch on the left (tap to remove), search and results on the right */
+#notch #markets-editor .t-watch{flex:0 0 240px}
+#notch #markets-editor .mk-chosen{display:flex;flex-direction:column;gap:2px;flex-wrap:nowrap;overflow-y:auto;overflow-x:hidden;min-height:0;margin:0}
+#notch .mk-row{display:grid;grid-template-columns:1fr auto 18px;align-items:baseline;gap:8px;min-height:30px;padding:6px 10px;border-radius:10px;text-align:left}
+#notch .mk-row:hover{background:#ff453a1f}
+#notch .mk-row b{font-size:13px;font-weight:600;color:#f5f5f7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch .mk-row small{font-size:10.5px;color:#8e8e93}
+#notch .mk-row i{font-style:normal;font-size:15px;color:#6e6e73;text-align:center}
+#notch .mk-row:hover i{color:#ff453a}
+#notch #markets-editor .t-find{flex:1;gap:10px}
+#notch #markets-editor .mk-results{flex:1;max-height:none;min-height:0;grid-auto-rows:36px;overflow-y:auto}
+/* control panel fixes */
+#notch .pick-days .pk-day,#notch .pick-days .pk-day.sel,#notch .pick-days .pk-day:focus{outline:none;box-shadow:none;border:0}
+#notch .pick-days .pk-day:focus-visible::before{box-shadow:0 0 0 2px #ffffff55}
+#notch #timer-editor #timer-form:not([hidden]){align-items:stretch;justify-content:flex-start;gap:12px}
+#notch #timer-editor #timer-form>.cp-row{display:flex}
+#notch #timer-editor .tm-field input{width:118px;height:88px}
+#notch .cp .wheels{flex:none;margin:auto 0;align-self:center}
+#notch #timer-editor .timer-presets{align-self:stretch;justify-content:stretch}
+#notch #event-editor .t-day{flex:1.25}
+#notch #event-editor .t-time{flex:.85}
+/* Markets: each page sits exactly one width apart and slides by transform, so no other chart ever peeks in */
+#home .mk-pages{position:relative;display:block;overflow:hidden}
+#home .mk-page{position:absolute;inset:0;transform:translateX(calc((var(--i,0) - var(--page,0)) * 100%));transition:transform .38s cubic-bezier(.32,.72,0,1)}
+#home .mk-pages{cursor:grab;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+#home .mk-pages.drag{cursor:grabbing}
+#home .mk-pages.drag .mk-page{transition:none}
+@media(prefers-reduced-motion:reduce){#home .mk-page{transition:none}}
+/* Calendar size handle: a small tab on the middle of its right edge while editing (› to widen, ‹ to make it square) */
+#home .w-resize,#home [data-size] .w-resize{display:none;position:absolute;top:50%;right:4px;left:auto;bottom:auto;translate:0 -50%;width:22px;height:52px;padding:0;border-radius:11px;background:#f4f4f5;color:#0a0a0a;box-shadow:0 2px 8px #0008;place-items:center;z-index:3}
+.home-editing #home .w-resize{display:grid}
+#home .w-resize::after,#home [data-size=wide] .w-resize::after{content:none}
+#home .w-resize svg{width:14px;height:14px;stroke:#0a0a0a;stroke-width:2.6}
+/* New to-do (daily) */
+#notch #todo-editor #todo-title{flex:none;height:48px;padding:0 18px;border-radius:16px;background:#ffffff0a;font-size:18px;font-weight:600;letter-spacing:-.3px;box-shadow:inset 0 0 0 1px #ffffff08}
+#notch #todo-editor #todo-title:focus{background:#ffffff12;box-shadow:inset 0 0 0 1px #4f9dff80}
+#notch #todo-editor .t-time{flex:1}
+#notch #todo-editor .t-list{flex:1.2}
+#notch #todo-editor .todo-wheels{transition:opacity .2s}
+#notch #todo-editor .t-time .t-btn{align-self:center;margin-top:0}
+#notch #todo-editor .todo-all{display:flex;flex-direction:column;gap:2px;overflow-y:auto;min-height:0}
+/* The size handle is just the chevron, no box */
+#home .w-resize,#home [data-size] .w-resize{width:20px;height:36px;right:2px;background:none;box-shadow:none;color:#f5f5f7;border-radius:6px}
+#home .w-resize:hover{background:#ffffff14}
+#home .w-resize svg{width:18px;height:18px;stroke:#f5f5f7;stroke-width:2.6}
+/* The size chevron sits on the dashed outline itself, cutting it (the widget lets 12 px paint past its edge while editing) */
+.home-editing #home>.widget[data-widget=calendar]{overflow:clip;overflow-clip-margin:12px}
+#home .w-resize,#home [data-size] .w-resize{right:-6.25px;width:22px;height:30px;background:#050506;border-radius:8px}
+#home .w-resize:hover{background:#1c1c1e}
+/* Edit mode: the dashed frame is drawn (an SVG rect), not an outline, so no dash drops out at the notch's scale; the X
+   and the size chevron sit on the frame, cutting it, without a white disc */
+.home-editing #home>.widget{outline:none;overflow:clip;overflow-clip-margin:12px}
+/* WebKit (the Mac) has no overflow-clip-margin: clipped at the edge, the X above each widget showed as a dot. */
+@supports not (overflow-clip-margin:12px){.home-editing #home>.widget,.home-editing #home>.widget[data-widget=calendar]{overflow:visible}}
+.home-editing #home>.widget::after{content:'';position:absolute;inset:4px;border-radius:20px;pointer-events:none;z-index:2;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='20' ry='20' stroke='%23ffffff' stroke-opacity='.4' stroke-width='3' stroke-dasharray='6 6'/%3E%3C/svg%3E")}
+.home-editing #home>.widget.dragging::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='20' ry='20' stroke='%23ffffff' stroke-opacity='.7' stroke-width='3' stroke-dasharray='6 6'/%3E%3C/svg%3E")}
+#home .w-remove{top:-7px;right:22px;width:22px;height:22px;border-radius:7px;background:#050506;box-shadow:none;color:#f5f5f7}
+#home .w-remove:hover{background:#1c1c1e}
+#home .w-remove svg{width:13px;height:13px;stroke:#f5f5f7;color:#f5f5f7;stroke-width:2.6}
+.home-editing #home>.widget::after{background:none;border:2px dashed #ffffff4d;border-radius:20px}
+.home-editing #home>.widget.dragging::after{border-color:#ffffff99}
+#home .w-remove{top:-7px;right:auto;left:50%;translate:-50% 0}
+.home-editing #home>.widget::after{border-radius:12px}
+#home .w-remove{top:-7px;right:-7px;left:auto;translate:none}
+/* The chevron sits midway between two dashed frames: on the boundary between the Calendar and its neighbour */
+#home .w-resize,#home [data-size] .w-resize{right:-11px;background:none}
+#home .w-resize:hover{background:#ffffff14}
+/* Back on the Calendar's own right line (its centre is 5 px in from the edge), cutting it with the notch black */
+#home .w-resize,#home [data-size] .w-resize{right:-6px;background:#050506}
+#home .w-resize:hover{background:#1c1c1e}
+
+/* ================================================================ Motion: only the Calendar turning square <-> wide
+   (a soft spring), its list sliding in and the chevron turning. Nothing else animates. */
+:root{--spring:linear(0,.04 2%,.18 5%,.5 10%,.82 16%,.97 22%,1.025 28%,1.03 33%,1.01 45%,.998 60%,1);--pop:cubic-bezier(.34,1.56,.64,1)}
+#home>.widget{transition:none}
+#home>.widget[data-widget=calendar]{transition:flex-basis .62s var(--spring)}
+#home .hw-calendar .c-side{transform:translateX(18px);transition:opacity .22s ease,transform .45s var(--spring),visibility 0s linear .22s}
+#home .hw-calendar[data-size=wide] .c-side{transform:none;transition:opacity .3s ease .12s,transform .55s var(--spring) .08s,visibility 0s}
+#home .w-resize .shrink,#home [data-size=wide] .w-resize .shrink{display:none}
+#home .w-resize .grow,#home [data-size=wide] .w-resize .grow{display:inline}
+#home .w-resize svg{transition:rotate .45s var(--spring),translate .45s var(--spring)}
+#home [data-size=wide] .w-resize svg{rotate:180deg;translate:-1.5px 0}
+@media(prefers-reduced-motion:reduce){#home>.widget[data-widget=calendar],#home .hw-calendar .c-side,#home .w-resize svg{transition:none}}
+/* No other motion on Home: no shake on a refused chip, no fade-in of the Home view */
+.wp-chip.nope,#home.active{animation:none}
+/* Dragging: no second shape around the card; the dashed frame itself lights up and fills softly */
+/* Dragging: the card is frosted, so what it passes over is blurred behind it and the two never mix */
+#home>.widget.dragging,.home-editing #home>.widget.dragging{background:#141416b3;-webkit-backdrop-filter:blur(36px) saturate(1.2);backdrop-filter:blur(36px) saturate(1.2);box-shadow:none;outline:none;border-radius:16px;z-index:5}
+.home-editing #home>.widget.dragging::after{border-color:#ffffffa6;background:none}
+
+/* ================================================================ Segments (ui/rings.js), used by Home System. */
+.segs{display:flex;gap:3px;height:12px}
+.segs i{flex:1;border-radius:4px;background:#ffffff14}
+.segs i.on{background:var(--on,#30d158);box-shadow:0 0 6px color-mix(in srgb,var(--on,#30d158) 45%,transparent)}
+
+/* ================================================================ Home: System (segments per resource). Scrolls when it holds more. */
+#home .sys-list{margin-top:8px;min-height:0;flex:1;overflow-y:auto;scrollbar-width:none}
+#home .sys-list{display:flex;flex-direction:column;gap:4px}
+#home .sys{display:grid;grid-template-columns:1fr auto;row-gap:2px;line-height:14px;min-width:0;--on:#30d158}
+#home .sys[data-level=mid]{--on:#ff9f0a}
+#home .sys[data-level=high]{--on:#ff453a}
+#home .sys b{font-size:11px;font-weight:500;color:var(--ink-2)}
+#home .sys .val{font-size:11.5px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+#home .sys .segs{grid-column:1/-1;height:7px;gap:2.5px}
+#home .sys .segs i{border-radius:3px}
+#home .sys-net{font-size:10.5px;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:pre}
+#home .w-markets[data-delayed] .w-title::after{content:' · delayed';font-weight:500;color:var(--ink-3)}
+
+/* ================================================================ Home menus, second pass
+   One reading order in every menu: a title row, then tiles. Labels are plain words (no tracking, no capitals), text on the
+   tiles stays at 4.5:1 or better, and every field shows a ring when it has the keyboard. The Focus menu keeps the normal
+   panel height (it has little to say); Event, To-do, Alarm and Markets use the tall panel. */
+#notch .cp .t-label{font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:#a1a1a6;line-height:16px}
+#notch .cp .t-count{font-size:11px;color:#8e8e93;font-variant-numeric:tabular-nums}
+#notch .cp .t-note{font-size:11.5px;color:#8e8e93}
+#notch .editor-view input::placeholder,#notch .editor-view textarea::placeholder{color:#8a8a90;-webkit-text-fill-color:#8a8a90}
+#notch .cp input:focus-visible,#notch .cp textarea:focus-visible{outline:none;box-shadow:inset 0 0 0 1.5px #4f9dffcc}
+#notch .cp button:focus-visible{outline:2px solid #4f9dff;outline-offset:2px}
+
+/* Event: day, time, and a note that shows when the event starts */
+#notch #event-editor .t-memo{flex:1;min-width:0}
+#notch .cp textarea{flex:1;min-height:0;width:100%;resize:none;border:0;border-radius:14px;background:#ffffff0f;color:#ededed;-webkit-text-fill-color:#ededed;caret-color:#4f9dff;color-scheme:dark;padding:10px 12px;font:13px/1.45 inherit;font-family:inherit;scrollbar-width:none}
+#notch .cp textarea::-webkit-scrollbar{display:none}
+#notch .cp textarea:focus{background:#ffffff17}
+
+/* Focus: length and presets, the session (name and two switches), and what today added up to */
+#notch #timer-editor.cp.active{height:318px;gap:12px;padding:2px 0 14px}
+#notch #timer-editor #timer-form{flex:1;min-height:0;display:flex;flex-direction:column}
+#notch #timer-editor #timer-form[hidden]{display:none}
+#notch #timer-editor #timer-form>.cp-row{flex:1;align-items:stretch;gap:12px}
+#notch #timer-editor .tile{flex:1;padding:14px 16px;gap:10px;justify-content:flex-start}
+#notch #timer-editor .t-length{flex:1;justify-content:space-between}
+#notch #timer-editor .t-today{flex:1}
+#notch #timer-editor .tm-row{flex:none;display:flex;align-items:center;justify-content:center;gap:6px}
+#notch #timer-editor .tm-field{display:flex;flex-direction:row;align-items:baseline;gap:5px;font-size:12px;color:#a1a1a6}
+#notch #timer-editor .tm-field input{width:78px;height:64px;padding:0;border:0;border-radius:16px;background:#ffffff0f;font-size:34px;font-weight:600;text-align:center;font-variant-numeric:tabular-nums;color:#f5f5f7;-webkit-text-fill-color:#f5f5f7;-moz-appearance:textfield;appearance:textfield}
+#notch #timer-editor .tm-field input::-webkit-inner-spin-button,#notch #timer-editor .tm-field input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+#notch #timer-editor .tm-field input:focus{background:#ffffff17;outline:none}
+#notch #timer-editor .tm-colon{font-size:28px;font-weight:600;color:#8e8e93;margin:0 2px}
+#notch #timer-editor #timer-error{margin:0;font-size:11.5px;color:#ff8a80}
+#notch #timer-editor #timer-error:empty{display:none}
+#notch #timer-editor .timer-presets{flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-self:stretch}
+#notch #timer-editor .timer-presets button{height:42px;min-width:0;padding:0;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:4px;border-radius:13px;background:#ffffff0f;color:#f5f5f7;font-size:15px;font-weight:600}
+#notch #timer-editor .timer-presets button small{font-size:11px;font-weight:500;color:#a1a1a6}
+#notch #timer-editor .timer-presets button:hover{background:#ffffff1c}
+#notch #timer-editor .timer-presets button.on{background:#4f9dff;color:#fff}
+#notch #timer-editor .timer-presets button.on small{color:#ffffffd9}
+#notch #timer-editor .t-today strong{font-size:30px;font-weight:600;letter-spacing:-.5px;line-height:1.1;color:#f5f5f7;font-variant-numeric:tabular-nums}
+#notch #timer-editor .t-today #focus-count{font-size:12px;color:#a1a1a6;margin-top:-4px}
+#notch .fw{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:6px;height:62px}
+#notch .fw-day{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%}
+#notch .fw-day i{display:block;width:100%;max-width:16px;border-radius:5px;background:#ffffff26}
+#notch .fw-day.today i{background:#4f9dff}
+#notch .fw-day small{font-size:10.5px;color:#8e8e93;line-height:1}
+#notch .fw-day.today small{color:#f5f5f7}
+
+/* One switch for every menu: a track and a knob, on is blue */
+#notch .opt{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:34px;font-size:12.5px;color:#d1d1d6}
+#notch .opt-sw{position:relative;flex:none;width:40px;height:24px;padding:0;border-radius:12px;background:#ffffff2e;transition:background .2s ease}
+#notch .opt-sw::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .22s cubic-bezier(.3,.7,.3,1)}
+#notch .opt-sw[aria-checked=true]{background:#4f9dff}
+#notch .opt-sw[aria-checked=true]::after{transform:translateX(16px)}
+@media(prefers-reduced-motion:reduce){#notch .opt-sw,#notch .opt-sw::after{transition:none}}
+#notch #todo-editor .t-list .opt{flex:none}
+#notch #alarm-editor .t-alarm .opt{margin-top:auto}
+#notch #alarm-editor .t-alarm .t-note{margin-top:0}
+
+/* Markets: what you watch on the left, a search that knows codes on the right */
+#notch #markets-editor .t-watch{flex:0 0 232px;gap:6px}
+#notch #markets-editor .mk-chosen{flex:1;min-height:0;display:flex;flex-direction:column;gap:2px;flex-wrap:nowrap;overflow-y:auto;overflow-x:hidden;margin:0;scrollbar-width:none}
+#notch #markets-editor .mk-row{grid-template-columns:54px 1fr 18px;gap:8px;min-height:34px;align-items:center;padding:0 8px;border-radius:10px;text-align:left}
+#notch #markets-editor .mk-row b{font-size:13px}
+#notch #markets-editor .mk-row small{font-size:11.5px;color:#a1a1a6;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#notch #markets-editor .t-find{flex:1;gap:8px}
+#notch #markets-editor .mk-find input{height:38px;border-radius:12px;font-size:13px}
+#notch .mk-tabs{display:flex;gap:2px;padding:3px;border-radius:11px;background:#ffffff0c;flex:none}
+#notch .mk-tabs button{flex:1;min-width:0;height:26px;padding:0 4px;white-space:nowrap;border-radius:8px;font-size:12px;font-weight:600;color:#a1a1a6;background:transparent}
+#notch .mk-tabs button:hover{color:#fff;background:#ffffff0d}
+#notch .mk-tabs button[aria-pressed=true]{background:#ffffff1f;color:#fff}
+#notch #markets-editor .mk-results{flex:1;min-height:0;max-height:none;display:flex;flex-direction:column;gap:2px;grid-template-columns:none;overflow-y:auto;scrollbar-width:none}
+#notch #markets-editor .mk-result{flex:none;display:grid;grid-template-columns:62px 1fr auto auto;align-items:center;gap:8px;height:34px;padding:0 10px;border-radius:10px;background:transparent;box-shadow:none;text-align:left}
+#notch #markets-editor .mk-result:hover{background:#ffffff0f}
+#notch #markets-editor .mk-result b{font-size:13px;font-weight:600;color:#f5f5f7}
+#notch #markets-editor .mk-result span{font-size:12px;color:#a1a1a6;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#notch #markets-editor .mk-result .mk-tag{font-style:normal;font-size:10.5px;font-weight:600;color:#8e8e93;min-width:30px;text-align:right}
+#notch #markets-editor .mk-result .mk-act{font-style:normal;font-size:11.5px;font-weight:600;color:#8e8e93}
+#notch #markets-editor .mk-result:hover .mk-act{color:#f5f5f7}
+#notch #markets-editor .mk-result.on{background:transparent}
+#notch #markets-editor .mk-result.on .mk-act{color:#4f9dff}
+#notch #markets-editor .mk-none{margin:8px 10px;font-size:12px;color:#a1a1a6}
+#notch #markets-error{margin:0;min-height:0;font-size:11.5px;color:#ff8a80;flex:none}
+#notch #markets-error:empty{display:none}
+
+/* To-do: the wheels are always live; no time chosen means every day, any time */
+#notch #todo-editor .todo-wheels{opacity:1}
+#notch #todo-editor .t-btn[hidden]{display:none}
+#notch #todo-editor .t-head .wheel-title{font-size:13px;color:#a1a1a6}
+#notch #todo-editor .t-head .wheel-title{margin-left:auto}
+#notch .rep{margin-left:auto;font-size:12.5px;color:#d1d1d6}
+#notch .t-head .opt-sw{margin-left:8px;width:36px;height:22px;border-radius:11px}
+#notch .t-head .opt-sw::after{width:18px;height:18px}
+#notch .t-head .opt-sw[aria-checked=true]::after{transform:translateX(14px)}
+#notch #alarm-editor .t-alarm{justify-content:space-evenly;gap:0;padding:12px 16px}
+#notch #alarm-editor .grp{display:flex;flex-direction:column;gap:8px}
+#notch #alarm-editor .t-alarm .opt{margin-top:0}
+/* No grey block over a number you are about to change */
+/* Selection shows only while setting something in a Home menu (alarm, event, timer...); nowhere else in the panel. */
+#notch input::selection,#notch textarea::selection{background:transparent;color:inherit;-webkit-text-fill-color:inherit}
+#notch .editor-view input::selection,#notch .editor-view textarea::selection{background:#ffffff3d;color:#fff;-webkit-text-fill-color:#fff}
+#notch #todo-editor.anytime .wheel .on{color:#a1a1a6}
+#notch #todo-editor .todo-all .mk-none{margin:6px 0}
+
+/* Alarm: the label first, eight starting points, and the next ring in words */
+#notch #alarm-editor .t-alarm{gap:8px}
+#notch #alarm-editor .al-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+#notch #alarm-editor .al-quick button{height:36px;border-radius:10px;font-size:12.5px;font-variant-numeric:tabular-nums}
+#notch #alarm-editor .t-note{margin-top:auto}
+#home .f-label{min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+
+/* Sharp text (the page is drawn at a fractional scale, so anything promoted to its own layer is drawn blurry or soft):
+   - entrances end where the element already is, so no layer stays behind (fill "backwards", not "both");
+   - the hidden toast has a backdrop blur, which kept a layer over everything: it is not drawn until it shows;
+   - nothing that holds text moves or scales on hover or press (the Board cards used to lift and shrink). */
+.view.active,#send-list .bubble.new,#send-list .file-card,#timer-notice,#timer-notice>svg path{animation-fill-mode:backwards!important}
+#toast{visibility:hidden;transition:opacity .2s,transform .2s,visibility 0s linear .2s}
+#toast.show{visibility:visible;transition-delay:0s}
+
+/* ================================================================ Home: Steam Games (a black card, the game in big letters, covers fanned in front) and Gamble (an outlined wheel, no fill, like the other widgets). Flat; one blue. */
+#home>.widget.w-steam{padding:0!important;container-type:size}
+#home .st-text{position:absolute;left:20px;right:20px;top:7px;z-index:5;display:flex;flex-direction:column;pointer-events:none;line-height:16px}
+#home .st-kicker{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:#8e8e93;font-weight:500}
+#home .st-text b{font-size:19px;line-height:24px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#home .st-text small:last-child{font-size:11.5px;color:#8e8e93;white-space:nowrap;margin-top:1px}
+#home .st-text small.live{color:#30d158;font-weight:600}
+#home .steam-stack{position:absolute;inset:0 0 6px 0;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 84%,transparent 100%);mask-image:linear-gradient(180deg,#000 84%,transparent 100%)}
+/* Big covers, fanned: the front one at the right (a little taller than wide), the next two leaning out from behind it to the left, all inside the widget. Only the very bottom fades.
+   Pointing at the front one shows a play sign: a click opens the game. */
+#home .steam-card{position:absolute;padding:0;overflow:hidden;border-radius:13px;border:2.5px solid #f2f2f4;background:#2a2a2e;color:#8e8e93;font-size:22px;font-weight:700;display:grid;place-items:center;box-shadow:0 5px 16px #000b;cursor:pointer;
+  --x:calc(100cqw - 22px - 52cqw);--y:46cqh;--w:52cqw;--h:72cqh;--r:-3deg;--z:3;left:var(--x);top:var(--y);width:var(--w);height:var(--h);transform:rotate(var(--r));transform-origin:0 100%;z-index:var(--z);
+  transition:left .4s cubic-bezier(.2,.8,.2,1),top .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1),height .4s cubic-bezier(.2,.8,.2,1),transform .4s cubic-bezier(.2,.8,.2,1),opacity .3s}
+#home .steam-card[data-d="1"]{--x:calc(100cqw - 22px - 75cqw);--y:61cqh;--w:38cqw;--h:62cqh;--r:-6deg;--z:2}
+#home .steam-card[data-d="2"]{--x:max(22px,calc(100cqw - 22px - 98cqw));--y:79cqh;--w:32cqw;--h:52cqh;--r:-9deg;--z:1}
+#home .steam-card:not([data-d="0"]):not([data-d="1"]):not([data-d="2"]){--x:5cqw;--y:100cqh;opacity:0;pointer-events:none;--z:0}
+#home .steam-card[data-d="0"]::after{content:'';position:absolute;inset:0;background:#0006 center/38px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%234f9dff'/%3E%3Cpath d='M16 12v16l13-8z' fill='white'/%3E%3C/svg%3E");opacity:0;transition:opacity .2s}
+#home .steam-card[data-d="0"]:hover::after,#home .steam-card[data-d="0"]:focus-visible::after{opacity:1}
+#home .steam-card[data-d="0"]:hover{transform:rotate(-2deg) translateY(-3px)}
+#home .steam-card.ghost{pointer-events:none;border:2px solid #ffffff1f;background:#0d0d0f;box-shadow:none;color:#ffffff4d}
+#home .steam-card.ghost::after{display:none}
+#home .steam-card.ghost svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.5}
+#home .steam-card img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Weather: the halftone a little larger, filling the empty corner */
+/* Weather: the halftone larger, set over the top-left corner (out of the header row, so the place keeps its room). */
+#home #wx-art{position:absolute;left:8px;top:3px;width:96px;height:82px;pointer-events:none}
+#home .wx-top{justify-content:flex-end}
+
+/* Water: the reminder beside the bell; ten plain glasses in two rows of five, the drunk ones holding a pastel gradient
+   (#water-grad in the widget); "Today's water" over the count, a quiet − and a round blue + bottom right. */
+#home .w-water .water-defs{position:absolute;width:0;height:0;overflow:hidden}
+#home .w-water .w-head .w-acts{gap:6px;min-width:0}
+#home .w-water #water-every{font-size:11px;color:var(--ink-3)}
+#home .w-water .water-drops{display:grid;grid-template-columns:repeat(5,20px);justify-content:start;column-gap:11px;row-gap:6px;margin:auto 0}
+#home .w-water .water-drops i{display:block;width:20px;height:23px}
+#home .w-water .water-drops svg{width:100%;height:100%;display:block;overflow:visible}
+#home .w-water .water-drops path{fill:none;stroke:#ffffff38;stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linejoin:round;opacity:1}
+#home .w-water .water-drops i.on path{fill:url(#water-grad);stroke:none}
+#home .w-water .w-foot{margin-top:0;align-items:flex-end}
+#home .w-water .water-sum{display:flex;flex-direction:column;min-width:0}
+#home .w-water .water-label{display:block;margin:0;font-size:11.5px;line-height:15px;font-weight:400;color:var(--ink-2)}
+#home .w-water .water-count{margin:0 0 -1px;align-items:baseline;gap:5px}
+#home .w-water .water-count .w-big{font-size:32px;line-height:1;letter-spacing:-1px}
+#home .w-water .water-count span{font-size:13px;color:#a9d6ff;font-weight:500}
+#home .w-water .water-count span b{font-weight:500}
+#home .w-water .w-foot .w-acts{gap:8px;align-items:center}
+#home .w-water #water-undo{width:28px;height:28px;background:none;color:var(--ink-3);font-size:17px}
+#home .w-water #water-undo:hover:not(:disabled){background:#ffffff14;color:var(--ink)}
+#home .w-add{width:34px;height:34px;font-size:20px;font-weight:500;background:var(--blue);color:#fff}
+#home .w-add:hover:not(:disabled){background:#6aaeff}
+
+/* 2026-11-17: Weather and Prayer's bottom line sits on Water's ("10 of 8 glasses") baseline, so the row reads level.
+   Weather's feels/humidity share the temperature's baseline. */
+#home .wx-bottom{padding-bottom:0;margin-bottom:-1px;align-items:last baseline}
+#home .p-cell,#home .p-cell.next{padding-bottom:0}
+/* Calendar (square and wide): the day names and the grid sit at the bottom, so the last row of dates lands on that
+   same baseline whether the month has five rows or six; the spare room goes under the month's name. The day list of the
+   wide Calendar ends on Water's bottom edge. */
+#home .hw-calendar .c-month{display:flex;flex-direction:column}
+#home .hw-calendar .c-dow{margin-top:auto}
+#home .hw-calendar .c-side,#home .hw-calendar[data-size=square] .c-side,#home .hw-calendar[data-size=wide] .c-side{bottom:6px}
+#home .hw-calendar .c-month{bottom:7px}
+
+/* 2026-11-17: every widget title on one baseline, in one size (13px semibold, like "Water"): the header row is 20px with
+   its parts centred, so an icon-only button (+, the pencil) no longer pushes the title down. The wide Calendar's
+   "Today", Steam's kicker and Weather's place follow the same line. */
+#home .w-head{height:20px;min-height:20px;align-items:center}
+#home .w-title{line-height:20px}
+#home .hw-calendar .c-side #cal-weekday,#home .hw-calendar[data-size=wide] .c-side #cal-weekday{font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink);line-height:20px}
+#home .st-text{top:6px}
+#home .st-kicker{font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink);line-height:20px}
+#home .hw-weather #city-name{font-family:Poppins,'Segoe UI',sans-serif;font-size:11px;line-height:20px;margin-top:0}
+/* The day circle follows the digits' ink, which in Poppins sits a little below the line box's middle. */
+#home .month-grid .day::before{top:calc(50% - .35px)}
+
+/* To-do: four rows fill the list, the wheel moves one row at a time and it snaps; text a little larger. */
+#home .todo-list{gap:0;container-type:size;scroll-snap-type:y mandatory;scrollbar-width:none}
+#home .todo-list .td{height:25cqh;min-height:0;flex:none;scroll-snap-align:start;scroll-snap-stop:always;font-size:13.5px}
+#home .todo-list .td time{font-size:11.5px}
+#home .todo-list .td-check{width:15px;height:15px}
+/* Alarm: two to a view, snapping the same way. */
+#home .alarm-list{gap:0;container-type:size;scroll-snap-type:y mandatory;scrollbar-width:none}
+#home .alarm-list .al{height:50cqh;min-height:0;flex:none;scroll-snap-align:start;scroll-snap-stop:always}
+/* System: the four readings spread to the bottom edge. */
+#home .sys-list{justify-content:space-between}
+/* The last row's text lands on Water's baseline: each row's content sits a little low in its slot. */
+#home .todo-list .td{padding-top:11px}
+/* Alarm: larger, so its two rows fill the same box as To-do's four (top of the first, bottom of the last) without extra gaps. */
+#home .alarm-list .al{padding-top:15.5px}
+#home .al>span{gap:0}
+#home .al b{font-size:34.65px;letter-spacing:-1.05px;line-height:1}
+#home .al small{font-size:12.1px;line-height:14.7px}
+#home .al .sw{scale:1.1;margin-right:2.1px}
+/* Calendar: the day names and dates reach the same left and right edges as the title and the arrows (each date is
+   centred in a seventh of the width, which left the first and last columns sitting inside the frame). */
+#home .hw-calendar .c-dow,#home .hw-calendar .month-grid{margin-inline:-8px}
+
+/* 2026-11-17: every round button's icon sits in the middle of its circle (checked by pixels, in every state). Icon
+   buttons lose the browser's default padding, which pushed their 16px icon 2px right; + and − are drawn icons rather
+   than characters, whose place depends on the font. */
+#home .w-icon{padding:0}
+#home #add-event svg{width:12px;height:12px;stroke-width:2.2}
+#home .w-water .w-round svg{width:14px;height:14px;stroke-width:2.2}
+#home .w-water .w-add svg{width:16px;height:16px;stroke-width:2.4}
+/* An odd-sized icon in an even-sized circle lands on a half pixel and can't be centred: these icons are even now. */
+#home .c-nav svg{width:14px;height:14px}
+#home .td-remove svg{width:12px;height:12px}
+#home #timer-play svg{width:14px;height:14px}
+#home-edit svg{width:16px;height:16px}
+#widget-cancel svg,#widget-done svg{width:16px;height:16px}
+/* The place names (Weather, Prayer) a size up. */
+#home .hw-weather #city-name,#home #prayer-city{font-size:12.5px}
+#home .hw-weather #city-name{max-width:58%;background-size:11px 11px;padding-right:15px}

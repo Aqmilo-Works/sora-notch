@@ -1,0 +1,227 @@
+/* Board and Chat history: the tall panel, flat black, small custom controls (no native ones). */
+.notch[data-view="history"]:not(.compact),
+body.panel-mode .notch[data-view="history"]{height:384px!important}
+/* The preview's panel is as tall as its content (features.js sets --pv-h); the board inside just takes the room it needs. */
+.notch[data-view="board-preview"]:not(.compact),
+body.panel-mode .notch[data-view="board-preview"]{height:var(--pv-h,234px)!important}
+#notch #board.fx-view.previewing{height:auto;min-height:0}
+#notch .fx-view{display:none;flex-direction:column;gap:10px;height:318px;margin:0 20px;padding:2px 0 14px;min-height:0}
+#notch .fx-view.active{display:flex}
+/* The Board keeps the normal panel height: compact. */
+#notch #board.fx-view{height:174px;gap:8px;padding:0 0 12px}
+#notch #board .fx-bar{height:30px}
+#notch .fx-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex:none;height:32px}
+#notch .fx-right{display:flex;align-items:center;gap:10px}
+#notch .fx-lbl{font-size:12px;color:#8e8e93}
+#notch .fx-segs{display:flex;gap:4px;padding:3px;border-radius:16px;background:#ffffff0c}
+#notch .fx-seg{height:26px;padding:0 13px;border-radius:13px;font-size:12px;font-weight:500;color:#a1a1a6;white-space:nowrap}
+#notch .fx-seg:hover{color:#fff}
+#notch .fx-seg.on{background:#ffffff1f;color:#fff}
+#notch .fx-mini{height:26px;padding:0 12px;border-radius:13px;background:#ffffff12;color:#e6e6ea;font-size:12px;font-weight:500}
+#notch .fx-mini:hover:not(:disabled){background:#ffffff24}
+#notch .fx-chip{height:24px;padding:0 11px;border-radius:12px;background:#ffffff0c;color:#b4b4ba;font-size:11.5px;font-weight:500;white-space:nowrap;flex:none}
+#notch .fx-chip.on{background:color-mix(in srgb,var(--c,#4f9dff) 22%,#0c0c0e);color:#fff;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c,#4f9dff) 55%,transparent)}
+#notch .fx-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#ffffff22 transparent}
+#notch .fx-empty{display:grid;place-items:center;height:100%;text-align:center;color:#6e6e73;font-size:13px;padding:0 40px}
+#notch .fx-empty p{margin:0}
+#notch .fx-menu{position:absolute;z-index:50;min-width:170px;padding:5px;border-radius:14px;background:#17171a;box-shadow:0 12px 34px #000c,inset 0 0 0 1px #ffffff14;display:flex;flex-direction:column}
+#notch .fx-menu button{height:30px;padding:0 12px;border-radius:9px;text-align:left;font-size:12.5px;color:#ececf0}
+#notch .fx-menu button:hover{background:#ffffff14}
+#notch .fx-menu button.danger{color:#ff7b72}
+#notch .fx-menu hr{border:0;height:1px;margin:4px 6px;background:#ffffff12}
+/* Board: a shelf of clean cards in one row that runs sideways (see features.js) */
+#notch #board .fx-bar{gap:8px}
+#notch .bd-find{position:relative;display:flex;align-items:center;flex:none;width:132px}
+#notch .bd-find svg{position:absolute;left:10px;width:13px;height:13px;fill:none;stroke:#7d7d84;stroke-width:2.2;stroke-linecap:round;pointer-events:none}
+#notch .bd-find input{width:100%;height:28px;padding:0 10px 0 29px;border:0;outline:0;border-radius:14px;background:#ffffff0f;color:#ededed;-webkit-text-fill-color:#ededed;caret-color:#4f9dff;font-size:12px;-webkit-user-select:text;user-select:text}
+#notch .bd-find input::placeholder{color:#7d7d84;-webkit-text-fill-color:#7d7d84}
+#notch .bd-find input:focus-visible{box-shadow:inset 0 0 0 1px #4f9dff}
+#notch #board .fx-segs{padding:2px;gap:2px;margin-right:auto}
+#notch #board .fx-seg{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px;font-size:11.5px}
+#notch #board .fx-seg small{font-size:10px;font-weight:500;opacity:.55}
+#notch #board .fx-seg.on{background:#f2f2f4;color:#0b0b0d}
+#notch #board .fx-scroll{margin:-6px -20px 0;padding:6px 20px 4px;display:flex;align-items:stretch;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+#notch #board .fx-empty{width:100%;min-width:600px}
+#notch .bd-grid{display:grid;grid-template-rows:118px;grid-auto-flow:column;grid-auto-columns:140px;gap:10px;width:max-content;padding:0}
+#notch .bd-card{--fill:#f3f2ef;--ink:#121214;position:relative;display:flex;flex-direction:column;width:140px;height:118px;padding:0;border-radius:16px;background:var(--fill);color:var(--ink);text-align:left;overflow:hidden;box-shadow:inset 0 0 0 1px #ffffff10;transition:box-shadow .15s}
+#notch .bd-card:hover{box-shadow:inset 0 0 0 1.5px #ffffff3d}
+#notch .bd-card:active{transform:none}
+#notch .bd-card:focus-visible{outline:2px solid #4f9dff;outline-offset:2px}
+#notch .bd-body{flex:1;min-height:0;display:flex;flex-direction:column;gap:3px;padding:11px 12px 6px;overflow:hidden}
+#notch .bd-text{font-size:11.5px;line-height:15px;font-weight:500;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word;white-space:pre-wrap}
+#notch .bd-card.tag-code{--fill:#1b1b1f;--ink:#a9c8ff}
+#notch .bd-card.tag-code .bd-text{font:10.5px/13px Consolas,'Cascadia Mono',monospace;-webkit-line-clamp:6}
+#notch .bd-card.link{--fill:#1b1b1f;--ink:#f4f4f6}
+#notch .bd-host{font-size:14px;line-height:18px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+#notch .bd-url{display:block;font-size:10.5px;line-height:14px;color:#8a8a92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch .bd-card.tag-color .bd-body{justify-content:flex-end}
+#notch .bd-hex{font-size:15px;font-weight:650;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+#notch .bd-card.image{--fill:#1b1b1f}
+#notch .bd-card.image .bd-body{position:absolute;inset:0;padding:0}
+#notch .bd-card.image .bd-body img{width:100%;height:100%;object-fit:cover;display:block}
+#notch .bd-foot{position:relative;flex:none;margin-top:auto;display:flex;align-items:center;gap:6px;height:26px;padding:0 12px;font-size:10px;color:inherit}
+#notch .bd-foot::before{content:'';position:absolute;inset:0;background:currentColor;opacity:.07}
+#notch .bd-card.image .bd-foot{color:#f2f2f6}
+#notch .bd-card.image .bd-foot::before{background:#000;opacity:.55}
+#notch .bd-foot>*{position:relative}
+#notch .bd-dot{width:7px;height:7px;border-radius:50%;background:var(--dot);flex:none}
+/* Where it was copied from (the program's icon), and a link's page on its card */
+#notch .bd-app{width:14px;height:14px;object-fit:contain;flex:none}
+#notch .bd-card.link.og .bd-body{padding:0}
+#notch .bd-card.link.og .bd-body img{width:100%;height:100%;object-fit:cover;display:block}
+#notch .bd-site{display:flex;align-items:center;gap:5px;font-size:10px;color:#8a8a92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch .bd-card.link.og .bd-body{position:relative}
+#notch .bd-play{position:absolute;left:50%;top:50%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;display:grid;place-items:center;background:#000a;color:#fff;pointer-events:none}
+#notch .bd-play svg,#notch .pv-play svg{width:14px;height:14px;fill:currentColor;stroke:none;margin-left:2px}
+#notch .pv-play{position:relative;display:block;width:100%;padding:0;border-radius:12px;background:none;cursor:pointer}
+#notch .pv-play svg{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -9px;padding:0;color:#fff}
+#notch .pv-play::before{content:'';position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;background:#000a;transition:background .15s,transform .15s}
+#notch .pv-play:hover::before{background:#ff3b30;transform:scale(1.06)}
+#notch .pv-play:focus-visible{outline:2px solid #4f9dff;outline-offset:2px}
+#notch .bd-ico{width:12px;height:12px;border-radius:3px;flex:none}
+#notch .bd-title{font-size:12px;line-height:15px;font-weight:600;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+#notch .bd-kind{font-weight:600;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch .bd-age{margin-left:auto;opacity:.6;white-space:nowrap}
+#notch .bd-actions{position:absolute;right:6px;top:6px;display:none;align-items:center;gap:4px;z-index:5}
+#notch .bd-card:hover .bd-actions,#notch .bd-card:focus-visible .bd-actions{display:flex}
+#notch .bd-info{white-space:nowrap;height:22px;padding:0 8px;border-radius:11px;display:grid;place-items:center;background:#000b;color:#f2f2f6;font-size:9.5px;font-weight:500}
+#notch .bd-act{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#000b;color:#f0f0f4;cursor:pointer}
+#notch .bd-act:hover{background:#000;color:#fff}
+#notch .bd-act.on{color:#f5b82e}
+#notch .bd-act svg{width:12px;height:12px;stroke-width:2.2}
+#notch .bd-card.kept{box-shadow:inset 0 0 0 2px #f5b82e}
+#notch .bd-card.kept .bd-foot::after{content:'';position:absolute;right:12px;width:6px;height:6px;border-radius:50%;background:#f5b82e}
+#notch .bd-card.kept .bd-age{margin-right:12px}
+/* Chat history */
+#notch .hs-tools{display:flex;gap:8px;align-items:center;flex:none}
+#notch .hs-tools input{flex:none;width:170px;height:30px;padding:0 12px;border-radius:15px;border:0;outline:0;background:#ffffff0d;color:#ededed;-webkit-text-fill-color:#ededed;caret-color:#4f9dff;font-size:12px;box-shadow:inset 0 0 0 1px #ffffff0f;-webkit-user-select:text;user-select:text}
+#notch .hs-tools input::placeholder{color:#6e6e73;-webkit-text-fill-color:#6e6e73}
+#notch .hs-apps{display:flex;gap:6px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+/* Chat history: a quiet timeline (a rail with the apps' own marks on the left, a card per sender, its newest messages inside) */
+#notch .hs-tl{position:relative;padding:4px 2px 10px 0}
+#notch .hs-tl::before{content:'';position:absolute;left:17px;top:18px;bottom:18px;border-left:1.5px dashed #ffffff18}
+#notch .hs-g{position:relative;display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+#notch .hs-node{position:relative;z-index:1;flex:none;width:34px;height:34px;margin-top:2px;border-radius:11px;display:grid;place-items:center;font-size:14px;font-weight:600;color:var(--c);background:color-mix(in srgb,var(--c) 18%,#000);box-shadow:0 0 0 5px #000}
+#notch .hs-node.logo{background:var(--bg);color:var(--fg)}
+#notch .hs-node.real,#notch .hs-mini.real{background:none}
+#notch .hs-node.real img{width:34px;height:34px;object-fit:contain;display:block;border-radius:9px}
+#notch .hs-mini.real img{width:16px;height:16px;object-fit:contain;display:block;border-radius:4px}
+#notch .hs-node:not(.logo)::before,#notch .hs-mini:not(.logo)::before{content:attr(data-l)}
+#notch .hs-node svg{width:19px;height:19px;fill:currentColor}
+#notch .hs-mini{width:16px;height:16px;border-radius:5px;display:inline-grid;place-items:center;margin-right:6px;vertical-align:-3px;background:var(--bg);color:var(--fg);font-size:9px}
+#notch .hs-mini svg{width:10px;height:10px;fill:currentColor}
+#notch .fx-chip{display:inline-flex;align-items:center}
+#notch .hs-card{flex:1;min-width:0;padding:10px 16px 12px;border-radius:16px;background:#101013}
+#notch .hs-ghead{display:flex;align-items:center;gap:9px;min-height:26px}
+#notch .hs-ghead b{font-size:13.5px;font-weight:600;color:#f4f4f6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#notch .hs-app{font-size:11px;color:#6e6e73;white-space:nowrap}
+#notch .hs-count{min-width:20px;height:18px;padding:0 6px;border-radius:9px;background:#ffffff12;color:#b4b4ba;font-size:10.5px;font-weight:600;display:grid;place-items:center}
+#notch .hs-ghead time{margin-left:auto;font-size:11px;color:#6e6e73;white-space:nowrap}
+#notch .hs-chev{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;color:#8e8e93;flex:none}
+#notch .hs-chev:hover{background:#ffffff14;color:#fff}
+#notch .hs-chev svg{width:13px;height:13px;stroke-width:2.2;transition:transform .2s}
+#notch .hs-chev.open svg{transform:rotate(180deg)}
+#notch .hs-msgs{display:flex;flex-direction:column;gap:7px;margin-top:6px}
+#notch .hs-msg{display:flex;align-items:baseline;gap:12px}
+#notch .hs-text{flex:1;min-width:0;font-size:12.5px;line-height:18px;color:#9a9aa1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch .hs-msg:first-child .hs-text{color:#dcdce0}
+#notch .hs-msg time{font-size:10.5px;color:#58585e;white-space:nowrap;flex:none}
+#notch .hs-more{font-size:11px;color:#6e6e73}
+#history-button.active{color:#fff;background:#ffffff1c}
+/* Reply to a linked WhatsApp chat (whatsapp.rs): a small text button on the card, then a box under its messages */
+.hs-replyto{margin-left:6px;height:22px;padding:0 10px;border-radius:11px;background:#4f9dff26;color:#cfe3ff;font-size:11.5px;font-weight:500}
+.hs-replyto:hover{background:#4f9dff40}
+.hs-reply{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.hs-reply input{flex:1;min-width:0;height:30px;padding:0 12px;border:0;border-radius:15px;background:#ffffff12;color:#fff;font:inherit;font-size:12.5px;outline:none}
+.hs-reply input:focus-visible{box-shadow:inset 0 0 0 1px #4f9dff}
+.hs-reply input::placeholder{color:#a3a3aa}
+.hs-send{height:30px;padding:0 14px;border-radius:15px;background:#4f9dff;color:#fff;font-size:12px;font-weight:600}
+.hs-send:disabled{background:#ffffff14;color:#8d8d94}
+.hs-replyto:focus-visible,.hs-send:focus-visible{outline:2px solid #4f9dff;outline-offset:2px}
+.hs-reply-err{flex-basis:100%;margin:0 4px;font-size:11.5px;color:#ff9b9b}
+/* Board preview: opens under the shelf in the tall panel (features.js setPreview) */
+/* The cards keep their size and place while a preview is open (only the height is fixed: 6 + 118 + 4), so the shelf does not jump; the preview body is 26 px shorter instead (pv-body, pv-image). */
+#notch #board.previewing .fx-scroll{flex:none;height:128px}
+/* A ring laid over the card: a picture card's image (positioned) would paint over the card's own shadow or outline. */
+#notch .bd-card.sel::after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 2px #4f9dff;pointer-events:none;z-index:4}
+#notch .bd-card.sel.kept::after{box-shadow:inset 0 0 0 2px #f5b82e}
+#notch .bd-preview{flex:none;display:flex;flex-direction:column;gap:8px;padding:8px 8px 10px;border-radius:18px;background:#101013;box-shadow:inset 0 0 0 1px #ffffff12}
+#notch .bd-preview[hidden]{display:none}
+#notch .pv-head{display:flex;align-items:center;gap:6px;flex:none}
+#notch .pv-chip{height:24px;padding:0 10px;border-radius:12px;display:inline-flex;align-items:center;background:#ffffff12;color:#d6d6dc;font-size:11px;font-weight:500;white-space:nowrap}
+#notch .pv-tools{margin-left:auto;display:flex;gap:6px;align-items:center}
+#notch .pv-split{display:flex;gap:1px}
+#notch .pv-btn{height:24px;padding:0 12px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:#ffffff14;color:#f2f2f4;font-size:11.5px;font-weight:600}
+#notch .pv-btn:hover{background:#ffffff26}
+#notch .pv-btn.ghost{gap:6px;padding:0 11px}
+#notch .pv-btn.copy{background:#f2f2f4;color:#0b0b0d}
+#notch .pv-btn.copy:hover{background:#fff}
+#notch .pv-split .pv-btn.copy:not(:only-child):first-child{border-radius:12px 4px 4px 12px}
+#notch .pv-split .pv-btn.more{width:26px;padding:0;border-radius:4px 12px 12px 4px}
+#notch .pv-btn.icon{width:24px;padding:0}
+#notch .pv-btn.icon.on{color:#f5b82e}
+#notch .pv-btn svg{width:13px;height:13px;stroke-width:2.2}
+#notch .pv-btn:focus-visible{outline:2px solid #4f9dff;outline-offset:1px}
+/* The content sits straight on the panel; a long one scrolls inside, at most as tall as the notch can grow. */
+#notch .pv-body{flex:none;max-height:314px;overflow-x:hidden;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#ffffff22 transparent}
+#notch .pv-text{padding:2px 4px 0;color:#e6e6ea}
+#notch .pv-text pre{margin:0;font:13px/19px Poppins,'Segoe UI',sans-serif;white-space:pre-wrap;word-break:break-word}
+#notch .pv-text.code pre{font:11.5px/16px Consolas,'Cascadia Mono',monospace;color:#a9c8ff}
+#notch .pv-link{display:flex;flex-direction:column;gap:4px;padding:2px 4px 0}
+#notch .pv-link b{font-size:18px;line-height:24px;font-weight:650;color:#f4f4f6}
+#notch .pv-url{font-size:12px;line-height:17px;color:#8a8a92;word-break:break-all}
+/* A picture is shown whole and fills the preview: as wide as the panel, as tall as its shape asks (up to what the panel can grow), never cropped. */
+#notch .pv-image{position:relative;width:100%;min-height:120px;max-height:314px;overflow:hidden;border-radius:12px;background:#1b1b1f;touch-action:none}
+#notch .pv-image img{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0;display:block;-webkit-user-select:none;user-select:none}
+#notch .pv-image.zoomed{cursor:grab}
+#notch .pv-image.moving{cursor:grabbing}
+/* Scan text: the picture dims a little, each word found gets a box; picked words fill blue as one band. --px is one screen pixel at this zoom. */
+#notch .pv-image.scanning img{filter:brightness(.72)}
+#notch .pv-ocr{position:absolute;left:0;top:0;transform-origin:0 0;--px:1px}
+#notch .ocr-word{position:absolute;background:#ffffff26;cursor:text;touch-action:none}
+#notch .ocr-word.first{border-radius:calc(var(--px) * 4) 0 0 calc(var(--px) * 4)}
+#notch .ocr-word.last{border-radius:0 calc(var(--px) * 4) calc(var(--px) * 4) 0}
+#notch .ocr-word.first.last{border-radius:calc(var(--px) * 4)}
+#notch .ocr-word:hover{background:#ffffff40}
+#notch .ocr-word.on{background:#4f9dff80}
+#notch .pv-ocrbar{display:flex;align-items:center;gap:6px;margin-top:8px}
+#notch .pv-ocrnote{flex:1;min-width:0;color:#b8b8c0;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#notch .pv-btn:disabled{opacity:.4;cursor:default}
+#notch .pv-btn.ghost.scan.on{background:#4f9dff33;color:#cfe3ff}
+#notch .pv-zoomchip{min-width:0;font-variant-numeric:tabular-nums}
+#notch .pv-color{display:flex;flex-direction:column;gap:10px;overflow:visible}
+#notch .pv-swatch{display:block;height:64px;border-radius:12px;box-shadow:inset 0 0 0 1px #ffffff22}
+#notch .pv-rows{margin:0 2px;display:grid;grid-template-columns:auto 1fr;gap:3px 16px;font:11.5px/17px Consolas,'Cascadia Mono',monospace}
+#notch .pv-rows dt{color:#7d7d84}
+#notch .pv-rows dd{margin:0;color:#e6e6ea}
+/* The header's Clear belongs to the Board only (the Tray has its own). */
+.notch:not([data-view^="board"]) #board-clear{display:none}
+.notch:not([data-view="history"]) #history-clear{display:none}
+/* A link with its page: the picture of the page on top (cropped to a band), then the site, the title and the description. */
+#notch .pv-link.rich{padding:0;gap:0}
+#notch .pv-og{display:block;width:100%;height:150px;object-fit:cover;border-radius:12px}
+#notch .pv-ogtext{display:flex;flex-direction:column;gap:3px;padding:9px 4px 2px}
+#notch .pv-site{font-size:10.5px;line-height:14px;color:#8a8a92;letter-spacing:.01em}
+#notch .pv-ogtext b{font-size:15px;line-height:20px;font-weight:650;color:#f4f4f6}
+#notch .pv-desc{margin:0;font-size:12px;line-height:17px;color:#b4b4ba;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+#notch .pv-note{margin-top:4px;font-size:11px;color:#6e6e73}
+#notch .pv-load{align-self:flex-start;margin-top:6px}
+/* Code in a terminal window: a dark bar with the language, a black body, a prompt or line numbers */
+#notch .pv-code{padding:0;overflow:hidden;background:none}
+#notch .pv-term{border-radius:12px;background:#09090a;box-shadow:inset 0 0 0 1px #ffffff14;overflow:hidden}
+#notch .pv-term-bar{display:flex;align-items:center;gap:6px;height:28px;padding:0 12px;background:#161618;box-shadow:inset 0 -1px 0 #ffffff0d}
+#notch .pv-term-bar i{width:9px;height:9px;border-radius:50%;background:#3a3a3f}
+#notch .pv-term-bar span{margin-left:6px;font-size:11px;font-weight:500;color:#8e8e93}
+#notch .pv-term-body{margin:0;padding:10px 0 12px;max-height:300px;overflow:auto;scrollbar-width:thin;scrollbar-color:#ffffff22 transparent;font:12px/18px Consolas,'Cascadia Mono','Cascadia Code',monospace;color:#e2e2e6}
+#notch .pv-term-body .ln{display:block;padding:0 14px 0 0;white-space:pre;min-width:max-content}
+#notch .pv-term-body .ln b{display:inline-block;font-weight:400;text-align:right;color:#55555b;-webkit-user-select:none;user-select:none}
+#notch .pv-term-body .ln b.no{width:42px;margin-right:12px}
+#notch .pv-term-body .ln b.ps{min-width:46px;padding-left:14px;margin-right:8px;color:#4f9dff;text-align:left}
+#notch .pv-term-body.prompted .ln{padding-left:0}
+/* The first press of a Clear button: it reads "Confirm?" (see app.js); a second press clears */
+#notch .icon-button.confirming{width:auto;padding:0 12px;border-radius:15px;background:#ff453a2e;color:#ff9b94;font-size:12px;font-weight:600;white-space:nowrap}
+#notch .icon-button.confirming svg{display:none}
+#notch .icon-button.confirming::after{content:'Confirm?'}
+#notch .pv-site{display:flex;align-items:center;gap:6px}
+#notch .pv-ico{width:14px;height:14px;border-radius:3px;object-fit:contain;flex:none}
+#notch .pv-og.whole{object-fit:contain;background:#1b1b1f;height:180px}

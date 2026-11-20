@@ -1,0 +1,342 @@
+/* Send: two cards (what, to whom), one action bar, and a picker that slides over them. Notch theme: flat black, Poppins; Send's own violet accent (--send-accent) follows its glow.
+   Type scale: 16 title · 14 action · 13 body · 12 secondary · 10.5 caption. */
+#notch[data-view=send] #expanded,#notch[data-view=send-sheet] #expanded{background:none}
+#send{--send-accent:#8fc1ff;--send-accent-hover:#8fc1ff;--send-ink:#141414}
+#send.active{display:flex;position:relative;flex-direction:column;gap:10px;margin:0 23px;padding:6px 0 0;height:160px;color:#f4f4f5;box-sizing:border-box;font-family:Poppins,'Noto JP','Noto KR','Noto SC',"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+#send [hidden]{display:none!important}#send button,#send input{font-family:inherit}#send button{cursor:pointer}#send svg{width:16px;height:16px;display:block}#send i{display:inline-grid;place-items:center;font-style:normal}
+#send button:focus-visible,#send input:focus-visible{outline:2px solid var(--send-accent);outline-offset:2px}
+
+.send-split{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);align-items:stretch;flex:1;min-height:0}
+.transfer-tile{min-width:0;display:flex;align-items:center;gap:14px;padding:0 16px 0 14px;text-align:left;border-radius:18px;background:#0f0f10b8;box-shadow:inset 0 0 0 1px #ffffff12;color:inherit;transition:background .15s,box-shadow .15s}
+.transfer-tile:hover:enabled{background:#161617d0;box-shadow:inset 0 0 0 1px #ffffff26}.transfer-tile:disabled{opacity:.55;cursor:default}
+.transfer-copy{flex:1;min-width:0;display:grid;gap:3px}
+.transfer-caption{font-size:10.5px;line-height:1;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--send-accent)}
+.transfer-copy strong,.transfer-copy small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.transfer-copy strong{font-size:16px;line-height:1.3;font-weight:600;letter-spacing:-.01em}.transfer-copy small{font-size:12px;line-height:1.3;color:#8f8f96}
+.tile-go{flex:none;width:28px;height:28px;border-radius:50%;background:#ffffff0f;color:#a4a4ab;transition:background .15s,color .15s}.transfer-tile:hover:enabled .tile-go{background:#ffffff1c;color:#fff}.tile-go svg{width:14px!important;height:14px!important}
+.peer-icon,#send-art{width:54px;height:54px;flex:none;display:grid;place-items:center;border-radius:15px;background:#1a1a1c;color:#c9c9ce}.peer-icon svg,#send-art svg{width:24px!important;height:24px!important}
+#send-art{position:relative;background:transparent}#send-art>i{position:absolute;inset:3px;background:#1d1d20;box-shadow:inset 0 0 0 1px #ffffff1f;border-radius:10px;overflow:hidden;color:#c9c9ce}#send-art i img{width:100%;height:100%;object-fit:contain}
+#send-art:not([data-count]) svg,#send-art[data-count="0"] svg{width:24px;height:24px}
+#send-art[data-count="2"] i:first-child,#send-art[data-count="3"] i:first-child{transform:translate(-5px,-3px) rotate(-9deg)}#send-art[data-count="3"] i:nth-child(2){transform:translate(2px,-2px) rotate(6deg)}#send-art i:last-child{transform:scale(.96)}
+.send-link{display:grid;place-items:center}.send-link i{width:30px;height:30px;border-radius:50%;background:#0f0f10;box-shadow:inset 0 0 0 1px #ffffff1a;color:var(--send-accent)}.send-link svg{width:14px!important;height:14px!important}
+
+.send-foot{display:flex;align-items:center;gap:10px;height:42px}
+.send-foot #send-note{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;line-height:1.3;color:#a6a6ad}.send-foot #send-note.error{color:#8cc0ff}
+#send-pin{width:86px;height:38px;padding:0 12px;border:0;border-radius:12px;background:#111112;box-shadow:inset 0 0 0 1px #ffffff1f;color:#f4f4f5;font-size:13px;text-align:center}#send-pin::placeholder{color:#6f6f76}
+#send-go{height:40px;padding:0 22px;border-radius:20px;background:var(--send-accent);color:var(--send-ink);font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:filter .15s,background .15s}#send-go:hover:enabled{filter:brightness(1.07)}#send-go:disabled{background:#161617;color:#6b6b72;cursor:default}
+#send-meter{appearance:none;-webkit-appearance:none;flex:1;min-width:0;width:auto;height:6px;border:0;border-radius:3px;background:#ffffff14;overflow:hidden}#send-meter::-webkit-progress-bar{background:#ffffff14;border-radius:3px}#send-meter::-webkit-progress-value{background:var(--send-accent);border-radius:3px;transition:width .2s}
+#send-meter:indeterminate{background:#6dafff55;animation:send-wait 1.4s linear infinite}@keyframes send-wait{to{background-position:-150% 0}}
+
+#send-sheet{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;background:#0a0a0b;border-radius:18px;box-shadow:inset 0 0 0 1px #ffffff1a;padding:6px 14px 6px}
+.sheet-head{display:flex;align-items:center;gap:10px;height:38px;flex:none;border-bottom:1px solid #ffffff12;padding-bottom:6px}.sheet-head>strong{font-size:15px;font-weight:600;margin-right:auto}
+#send-file-actions,#send-device-actions{display:flex;align-items:center;gap:8px}
+.sheet-head button{height:28px;padding:0 13px;border-radius:14px;background:#ffffff10;color:#e4e4e7;font-size:12px;font-weight:500;transition:background .15s}.sheet-head button:hover:enabled{background:#ffffff1d}.sheet-head button:disabled{opacity:.45;cursor:default}
+.sheet-head #send-done{padding:0 18px;background:var(--send-accent);color:var(--send-ink);font-size:12.5px;font-weight:600}.sheet-head #send-done:hover{background:var(--send-accent-hover)}
+#send-count{font-size:12px;color:#a6a6ad;margin-right:2px}
+#send-list{flex:1;min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:#ffffff26 transparent;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;gap:2px 16px;padding:6px 0 0;color:#b4b4bb;font-size:13px}
+.batch-row,.device-row{display:flex;align-items:center;min-width:0;gap:10px;height:34px;padding:0 8px;border-radius:10px;cursor:pointer;transition:background .12s}.batch-row:hover,.device-row:hover{background:#ffffff0d}
+.batch-row span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:#f4f4f5}.batch-row small{flex:none;font-size:11.5px;color:#8f8f96}
+.batch-row input{appearance:none;-webkit-appearance:none;position:relative;flex:none;width:18px;height:18px;margin:0;border-radius:6px;box-shadow:inset 0 0 0 1.5px #ffffff3d;background:transparent;cursor:pointer;transition:background .12s,box-shadow .12s}.batch-row input:checked{background:var(--send-accent);box-shadow:none}.batch-row input:checked::after{content:"";position:absolute;left:6px;top:2.5px;width:4px;height:8px;border:solid var(--send-ink);border-width:0 2px 2px 0;transform:rotate(45deg)}
+#send-list.devices{grid-template-columns:minmax(0,1fr)}.device-row{height:46px;gap:12px;text-align:left;width:100%;color:inherit}
+.dev-ico{width:34px;height:34px;flex:none;border-radius:10px;background:#1a1a1c;color:#c9c9ce}.dev-ico svg{width:18px!important;height:18px!important}.dev-text{flex:1;min-width:0;display:grid;gap:2px}.dev-text strong{font-size:14px;font-weight:600;color:#f4f4f5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dev-text small{font-size:12px;color:#8f8f96}
+.send-empty{grid-column:1/-1;display:grid;place-items:center;min-height:84px;margin:0;color:#8f8f96;font-size:13px;line-height:1.5;text-align:center}
+#send-ip-form{display:flex;align-items:center;gap:8px;margin:8px 0 0;flex:none}#send-ip{flex:1;height:34px;padding:0 12px;border:0;border-radius:12px;background:#111112;box-shadow:inset 0 0 0 1px #ffffff1f;color:#f4f4f5;font-size:13px}#send-ip::placeholder{color:#6f6f76}
+#send-connect{height:34px;padding:0 18px;border-radius:17px;background:var(--send-accent);color:var(--send-ink);font-size:12.5px;font-weight:600}#send-connect:disabled{opacity:.5}
+@media (prefers-reduced-motion:reduce){#send *{transition:none!important}}
+/* Transfer method: LocalSend or Quick Share, a small segmented switch beside Scan. */
+#send-methods{display:flex;gap:0;padding:0;border-radius:14px;background:#ffffff0b}
+.sheet-head #send-methods button{height:28px;padding:0 12px;border-radius:14px;background:none;color:#a1a1aa}
+.sheet-head #send-methods button[aria-pressed=true]{background:#ffffff1f;color:#fff}
+.sheet-head #send-methods button:hover:not([aria-pressed=true]){background:#ffffff0d;color:#e4e4e7}
+
+/* A file dragged over Send: the From tile shows it will land here. */
+.notch.dragging[data-view=send] #send-source{background:#25252580;box-shadow:inset 0 0 0 1.5px #8fc1ffa0}
+/* Small previews in the file picker, like the Tray. */
+.batch-row .row-thumb{flex:none;width:24px;height:24px;border-radius:6px;background:#1d1d20;color:#a4a4ab;overflow:hidden}.batch-row .row-thumb svg{width:14px!important;height:14px!important}.batch-row .row-thumb img{width:100%;height:100%;object-fit:cover}
+/* While sending, the bar takes the row; the status shrinks to a short label beside it. */
+.send-foot:has(#send-meter:not([hidden])) #send-note{flex:none;width:86px;font-variant-numeric:tabular-nums}
+/* LocalSend / Quick Share sits in the middle of the sheet head, so Enter IP coming and going never moves it. */
+.sheet-head{position:relative}#send-methods{position:absolute;left:50%;top:1.5px;height:28px;transform:translateX(-50%);box-sizing:border-box}
+.sheet-head #send-remove:enabled{color:#8cc0ff}
+
+/* ---- Nearby devices: a radar around Sora's face ---- */
+#send-list.devices{display:block;position:relative;padding:0;overflow:hidden}
+.radar{position:absolute;inset:4px 0 0;overflow:hidden}
+.radar::before{content:'';position:absolute;inset:0;background:none;pointer-events:none}
+.radar .ring{position:absolute;left:50%;top:50%;border-radius:50%;box-shadow:inset 0 0 0 1px #8fc1ff1c;transform:translate(-50%,-50%);pointer-events:none}
+.ring.p1,.ring.p2,.ring.p3{width:66px;height:66px;opacity:0;box-shadow:inset 0 0 0 1.5px #8fc1ff70}
+.ring.p1,.ring.p2,.ring.p3{animation:radar-pulse 2.4s cubic-bezier(.2,.6,.3,1) infinite}
+.ring.p2{animation-delay:.8s}.ring.p3{animation-delay:1.6s}
+@keyframes radar-pulse{0%{width:66px;height:66px;opacity:.9}100%{width:520px;height:520px;opacity:0}}
+.radar-me{position:absolute;left:50%;top:50%;z-index:2;width:66px;height:66px;margin:-33px 0 0 -33px;border-radius:50%;background:#050506;box-shadow:0 0 0 1px #ffffff17,0 0 34px 7px #5ca5ff59,0 0 70px 20px #5ca5ff26;display:flex;align-items:center;justify-content:center;gap:11px}
+.radar-me i{width:9px;height:20px;border-radius:5px;background:#f4f4f5;transform:translate(var(--gx,0),var(--gy,0));transition:transform .55s cubic-bezier(.22,.8,.3,1);animation:radar-idle-blink 5s infinite}
+.radar-me i:nth-child(2){animation-delay:.03s}
+/* The idle blink uses the separate `scale` property, so it never fights the eyes' glide (transform). */
+@keyframes radar-idle-blink{0%,93%,100%{scale:1 1}96.5%{scale:1 .1}}
+.radar-me.blink i{animation:radar-blink .32s .25s}
+@keyframes radar-blink{50%{transform:translate(var(--gx,0),var(--gy,0)) scaleY(.15)}}
+#send-list .bubble{position:absolute;left:50%;top:50%;z-index:3;width:40px;height:40px;margin:-20px 0 0 -20px;padding:0;gap:0;border-radius:50%;background:#292929ee;box-shadow:inset 0 0 0 1px #ffffff21;display:grid;place-items:center;transform:translate(var(--x),var(--y));transition:transform .25s cubic-bezier(.3,1.4,.5,1),background .2s,box-shadow .2s}
+#send-list .bubble:hover{background:#373737;transform:translate(var(--x),var(--y)) scale(1.1)}
+#send-list .bubble .dev-ico{width:auto;height:auto;background:none;color:#e4e4e7}#send-list .bubble .dev-ico svg{width:19px!important;height:19px!important}
+.bubble-name{position:absolute;top:43px;left:50%;transform:translateX(-50%);max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10.5px;line-height:1.2;color:#b4b4bb;pointer-events:none}
+#send-list .bubble.picked{background:var(--send-accent);box-shadow:0 0 0 4px #8fc1ff33,0 0 18px #8fc1ff88}#send-list .bubble.picked .dev-ico{color:var(--send-ink)}.bubble.picked .bubble-name{color:var(--send-accent)}
+#send-list .bubble.new{animation:bubble-pop .5s cubic-bezier(.34,1.56,.5,1) var(--d,0ms) both}
+@keyframes bubble-pop{from{transform:translate(var(--x),var(--y)) scale(0);opacity:0}}
+
+/* ---- Files to send: a strip of thumbnail cards ---- */
+#send-list.files{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;align-items:flex-start;padding:8px 8px 0;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent)}
+#send-list.files::-webkit-scrollbar{display:none}
+#send-list .file-card{position:relative;flex:none;width:98px;height:auto;display:flex;flex-direction:column;align-items:stretch;gap:2px;padding:0;border-radius:14px;background:none;animation:card-in .42s cubic-bezier(.34,1.56,.5,1) calc(var(--i)*35ms) both}
+#send-list .file-card:hover{background:none}
+.file-card .row-thumb{width:98px;height:54px;margin-bottom:2px;border-radius:13px;background:#1b1a20;box-shadow:inset 0 0 0 1px #ffffff14;display:grid;place-items:center;transition:box-shadow .2s,filter .2s,transform .2s cubic-bezier(.3,1.4,.5,1)}
+.file-card .row-thumb svg{width:22px!important;height:22px!important}
+.file-card span{padding:0 3px;font-size:11.5px!important}.file-card small{padding:0 3px;font-size:10.5px}
+.file-card input{position:absolute!important;top:5px;right:5px;z-index:1;border-radius:50%!important;background:#0a0a0bc0!important;box-shadow:inset 0 0 0 1.5px #ffffff60!important}
+.file-card input:checked{background:var(--send-accent)!important;box-shadow:none!important}
+.file-card:has(input:not(:checked)) .row-thumb{filter:saturate(.45) brightness(.7)}
+.file-card:has(input:checked) .row-thumb{box-shadow:0 0 0 2px var(--send-accent),0 0 16px #8fc1ff55}
+.file-card:hover .row-thumb{transform:translateY(-2px)}
+@keyframes card-in{from{opacity:0;transform:scale(.86)}}
+#send-list.files .send-empty{flex:1}
+@media (prefers-reduced-motion:reduce){.radar *,#send-list .file-card{animation:none!important}.ring.p1{opacity:.5!important;width:120px!important;height:120px!important}}
+/* Hover: the bubble lifts with a violet ring and a black card beside it shows the device (on top, even on a crowded radar). */
+#send-list .bubble:hover,#send-list .bubble:focus-visible{z-index:9;background:#2d2d2d;box-shadow:0 0 0 2px #8fc1ff8c,0 0 18px #8fc1ff4d;transform:translate(var(--x),var(--y)) scale(1.08)}
+#send-list .bubble:hover .bubble-name,#send-list .bubble:focus-visible .bubble-name{opacity:0}
+.bubble-card{position:absolute;top:50%;z-index:10;min-width:118px;max-width:200px;padding:7px 12px 8px;border-radius:13px;background:#050506f5;box-shadow:0 0 0 1px #ffffff1f,0 10px 24px #000c;text-align:left;pointer-events:none;opacity:0;transform:translate(var(--cx),-50%) scale(.94);transition:opacity .15s ease,transform .24s cubic-bezier(.3,1.4,.5,1)}
+.bubble-card.right{left:50px;--cx:-6px}.bubble-card.left{right:50px;--cx:6px}
+#send-list .bubble:hover .bubble-card,#send-list .bubble:focus-visible .bubble-card{opacity:1;transform:translate(0,-50%) scale(1)}
+.bubble-card strong{display:block;font-size:12.5px;line-height:1.3;font-weight:600;color:#f4f4f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bubble-card small{display:block;position:relative;padding-left:12px;margin-top:1px;font-size:11px;line-height:1.3;color:#a6a6ad;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bubble-card small::before{content:'';position:absolute;left:0;top:50%;margin-top:-3px;width:6px;height:6px;border-radius:50%;background:var(--send-accent);box-shadow:0 0 6px var(--send-accent)}
+#send-list .bubble.extra .bubble-name{opacity:0}#send-list .bubble.extra:hover .bubble-name,#send-list .bubble.extra:focus-visible .bubble-name{opacity:1}
+#send-list .bubble.picked:hover,#send-list .bubble.picked:focus-visible{background:var(--send-accent)}
+
+
+/* ---- Front: two tall cards and, in a roomy gap between them, the round arrow that sends ----
+   Hierarchy per card: label (11.5) and chip on top; title (22) with its detail (12.5) at the bottom. */
+.send-split.swap{grid-template-columns:minmax(0,1fr) 96px minmax(0,1fr);gap:0;position:relative;align-items:stretch;flex:1}
+.send-split.swap .transfer-tile{flex-direction:column;align-items:stretch;justify-content:space-between;gap:10px;padding:14px 16px 15px;border-radius:20px;background:#141416;box-shadow:none}
+.send-split.swap .transfer-tile:hover:enabled{background:#19191c;box-shadow:none}
+.tile-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
+.send-split.swap .transfer-caption{color:#8f8f96;font-size:11.5px;font-weight:500;letter-spacing:.02em;text-transform:none;line-height:1}
+.tile-main{display:grid;gap:4px;min-width:0}
+.tile-main strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.2;color:#f4f4f5}
+.tile-main small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;line-height:1.3;color:#a6a6ad}
+.tile-chip{flex:none;display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 9px 0 3px;border-radius:14px;background:#050506;box-shadow:inset 0 0 0 1px #ffffff1c;font-size:12px;font-weight:600;color:#f4f4f5}
+.tile-chip>i:last-child svg{width:12px!important;height:12px!important;color:#a6a6ad}
+.tile-chip #send-art,.tile-chip .peer-icon{position:relative;width:22px;height:22px;flex:none;border-radius:50%;background:var(--send-accent);color:var(--send-ink);display:grid;place-items:center;overflow:hidden}
+.tile-chip .peer-icon svg,.tile-chip #send-art svg{width:13px!important;height:13px!important}
+.tile-chip #send-art>i{position:absolute;inset:0;border-radius:50%;background:none;box-shadow:none;transform:none!important;color:var(--send-ink)}
+.tile-chip #send-art>i:not(:last-child){display:none}
+.tile-chip #send-art img{object-fit:cover}
+/* the status line replaces the address in the To card while there is something to say */
+#send-note{display:none}#send.noted #send-note{display:block}#send.noted #send-address{display:none}
+#send-note.error{color:#8cc0ff!important}#send.done #send-note{color:var(--send-accent)}
+.send-split.swap #send-pin{position:absolute;right:16px;bottom:13px;z-index:3;width:84px;height:28px;font-size:12.5px;border-radius:9px}
+.send-split.swap #send-meter{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+/* the arrow: black until both sides are set, violet when ready, ringed while sending, a check when done */
+#send #send-go.send-link{align-self:center;justify-self:center;position:relative;width:46px;height:46px;padding:0;border-radius:50%;display:grid;place-items:center;background:#050506;color:#6f6f76;box-shadow:inset 0 0 0 1px #ffffff1f;filter:none;transition:background .25s,color .25s,box-shadow .25s,transform .2s cubic-bezier(.3,1.4,.5,1)}
+#send #send-go.send-link:disabled{cursor:default}
+#send.ready #send-go.send-link{background:var(--send-accent);color:var(--send-ink);box-shadow:none}
+#send.ready #send-go.send-link:hover{transform:scale(1.07)}
+#send.sending #send-go.send-link,#send.done #send-go.send-link{background:#1c1c1c;color:var(--send-accent);box-shadow:none}
+#send-go.send-link>i{position:absolute;inset:0;display:grid;place-items:center;transition:transform .35s cubic-bezier(.3,1.5,.5,1),opacity .2s}
+#send-go.send-link svg{width:18px!important;height:18px!important}
+#send-go .go-check{opacity:0;transform:scale(.3) rotate(-30deg)}
+#send.done #send-go .go-arrow{opacity:0;transform:scale(.3) rotate(30deg)}
+#send.done #send-go .go-check{opacity:1;transform:none}
+#send #send-go.send-link::before{content:'';position:absolute;inset:-6px;border-radius:50%;opacity:0;transition:opacity .2s;
+ background:conic-gradient(var(--send-accent) calc(var(--pct,0)*1%),#ffffff14 0);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2.5px))}
+#send.sending #send-go.send-link::before,#send.done #send-go.send-link::before{opacity:1}
+#send.done #send-go.send-link::before{background:var(--send-accent)}
+#send.sending:not([style*="--pct"]) #send-go.send-link::before{background:conic-gradient(var(--send-accent) 0 22%,#ffffff14 0);animation:go-spin 1s linear infinite}
+@keyframes go-spin{to{transform:rotate(1turn)}}
+@media (prefers-reduced-motion:reduce){#send-go.send-link>i,#send #send-go.send-link::before{transition:none;animation:none!important}}
+#send-go.send-link>i{width:auto;height:auto;background:none;box-shadow:none;border-radius:0;color:inherit}
+#send #send-go.send-link:disabled{opacity:1}
+/* The arrow sits on the seam between the cards; each card has a round bite out of it, a little wider than the arrow. */
+.send-split.swap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px;--bite:31px}
+#send #send-go.send-link{position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:2}
+.send-split.swap #send-source{-webkit-mask:radial-gradient(circle var(--bite) at calc(100% + 3px) 50%,transparent calc(100% - .5px),#000 100%);mask:radial-gradient(circle var(--bite) at calc(100% + 3px) 50%,transparent calc(100% - .5px),#000 100%)}
+.send-split.swap #send-peer{-webkit-mask:radial-gradient(circle var(--bite) at -3px 50%,transparent calc(100% - .5px),#000 100%);mask:radial-gradient(circle var(--bite) at -3px 50%,transparent calc(100% - .5px),#000 100%)}
+.send-split.swap #send-source{padding-right:40px}.send-split.swap #send-peer{padding-left:40px}
+/* The To card mirrors You send: text on the right, its chip next to the arrow. */
+.send-split.swap #send-peer .tile-top{flex-direction:row-reverse}.send-split.swap #send-peer .tile-main{justify-items:end;text-align:right}
+/* Files: a fan of up to three thumbnail cards beside the name (first file on top); it spreads a little on hover. */
+.tile-main.files-main{display:flex;align-items:center;gap:14px}
+.tile-text{display:grid;gap:4px;min-width:0}
+.files-main #send-art{position:relative;flex:none;width:64px;height:52px;background:none;border-radius:0}
+.files-main #send-art>i{position:absolute;left:50%;top:2px;width:38px;height:48px;margin-left:-19px;border-radius:9px;overflow:hidden;background:#232328;color:#a6a6ad;box-shadow:inset 0 0 0 1px #ffffff1f;transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.files-main #send-art>i img{width:100%;height:100%;object-fit:cover}
+.files-main #send-art>i svg{width:16px!important;height:16px!important}
+.files-main #send-art[data-count="3"] i:nth-child(1){transform:translateX(-13px) rotate(-12deg) scale(.92)}
+.files-main #send-art[data-count="3"] i:nth-child(2){transform:translateX(13px) rotate(12deg) scale(.92)}
+.files-main #send-art[data-count="2"] i:nth-child(1){transform:translateX(-9px) rotate(-10deg) scale(.94)}
+.files-main #send-art[data-count="2"] i:nth-child(2){transform:translateX(5px) rotate(4deg)}
+#send-source:hover:enabled .files-main #send-art[data-count="3"] i:nth-child(1){transform:translateX(-18px) rotate(-16deg) scale(.92)}
+#send-source:hover:enabled .files-main #send-art[data-count="3"] i:nth-child(2){transform:translateX(18px) rotate(16deg) scale(.92)}
+#send-source:hover:enabled .files-main #send-art[data-count="2"] i:nth-child(1){transform:translateX(-13px) rotate(-14deg) scale(.94)}
+/* nothing chosen: one empty dashed card */
+.files-main #send-art:not([data-count]),.files-main #send-art[data-count="0"]{display:grid;place-items:center;width:38px;height:48px;margin:2px 13px;border-radius:9px;box-shadow:inset 0 0 0 1.5px #ffffff2e;color:#8f8f96}
+.files-main #send-art[data-count="0"] svg{width:16px;height:16px}
+@media (prefers-reduced-motion:reduce){.files-main #send-art>i{transition:none}}
+/* Smooth ring: --pct is a typed number, so it eases between progress events instead of jumping. */
+@property --pct{syntax:'<number>';inherits:true;initial-value:0}
+#send{transition:--pct .35s linear}
+/* The fan sits on the right of the file text (text stays where it was); with no files there is no fan. */
+.tile-main.files-main{flex-direction:row-reverse;justify-content:space-between}
+.files-main .tile-text{flex:1}
+.files-main #send-art:not([data-count]),.files-main #send-art[data-count="0"]{display:none}
+/* The fan takes the free space right of the text and sits in its middle: away from the text and from the edge. */
+.files-main .tile-text{flex:0 1 auto}
+.files-main #send-art{flex:1 1 auto;min-width:70px;height:58px}
+.files-main #send-art>i{width:42px;height:54px;margin-left:-21px}
+.files-main #send-art{flex:1 0 64px;min-width:64px}.tile-main.files-main{gap:10px}
+.send-split.swap #send-peer .tile-main>*{width:100%;max-width:100%;justify-self:stretch}
+/* The fan has a fixed place on the right (it never moves with the name); the text stops short of it. */
+.tile-main.files-main{position:relative;display:block}
+.files-main #send-art{position:absolute;right:18px;bottom:-2px;width:70px;height:58px;min-width:0;flex:none}
+.files-main:has(#send-art[data-count]:not([data-count="0"])) .tile-text{padding-right:104px}
+
+/* QR Code: the QR, the code with what is happening to it, and who is connected. Flat black, one accent (Send's violet). */
+#send-share{flex:1;min-height:0;display:flex;align-items:center;gap:24px;padding:0 6px}
+#send-share[hidden]{display:none}
+#send #send-qr{flex:none;width:140px;height:140px;border-radius:14px;background:#fff;image-rendering:pixelated;transition:opacity .26s,transform .26s}
+#send #send-qr.swap{opacity:0;transform:scale(.94)}
+.share-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.share-title{font-size:12.5px;color:#ffffff80}
+#send-code{font-size:58px;line-height:1;font-weight:600;letter-spacing:.02em;font-variant-numeric:tabular-nums;color:#fff}
+.share-status{height:44px;margin-top:6px}
+.share-pane{display:none;height:100%;flex-direction:column;justify-content:center;gap:8px}
+#send-share[data-state=idle] [data-pane=idle],#send-share[data-state=receive] [data-pane=receive]{display:flex}
+#send-share[data-state=offer] [data-pane=offer]{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:12px}
+.share-clock{height:2px;border-radius:1px;background:#ffffff14;overflow:hidden}
+.share-clock b{display:block;height:100%;background:var(--send-accent);transform-origin:left;animation:share-clock var(--life,900s) linear forwards}
+@keyframes share-clock{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+.share-pane small{font-size:12.5px;color:#ffffff8c}
+.offer-text{display:flex;flex-direction:column;gap:1px;min-width:0}
+.offer-text b{overflow:hidden;font-size:14px;font-weight:600;text-overflow:ellipsis;white-space:nowrap}
+.offer-text small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.offer-actions{display:flex;gap:6px;flex:none}
+.offer-actions button{height:30px;padding:0 15px;border-radius:15px;background:#ffffff14;color:#fff;font-size:12.5px;font-weight:600;transition:background .15s}
+.offer-actions button:hover{background:#ffffff24}
+.offer-actions .primary{background:var(--send-accent);color:var(--send-ink)}.offer-actions .primary:hover{background:var(--send-accent-hover)}
+.recv-head{display:flex;justify-content:space-between;align-items:baseline}
+.recv-head small:last-child{font-variant-numeric:tabular-nums;color:#fff}
+.recv-track{height:4px;border-radius:2px;background:#ffffff14;overflow:hidden}
+.recv-track b{display:block;height:100%;border-radius:2px;background:var(--send-accent);transform-origin:left;transform:scaleX(0);transition:transform .2s linear}
+.share-side{flex:0 0 176px;align-self:stretch;display:flex;flex-direction:column;gap:8px;padding:34px 0 0}
+.share-devices{display:flex;flex-direction:column;gap:6px;flex:1;min-height:0;overflow:auto;scrollbar-width:none}
+.share-devices::-webkit-scrollbar{display:none}
+.share-device{flex:none;display:flex;align-items:center;gap:8px;height:28px;padding:0 12px;border-radius:14px;background:#ffffff12;font-size:12.5px;font-weight:500}
+.share-device i{flex:none;width:6px;height:6px;border-radius:50%;background:var(--send-accent)}
+.share-device b{overflow:hidden;font-weight:500;text-overflow:ellipsis;white-space:nowrap}
+.share-none{font-size:12.5px;color:#ffffff59}
+.share-reset{flex:none;align-self:flex-start;padding:0;background:none;font-size:12px;color:#ffffff80}.share-reset b{color:var(--send-accent);font-weight:600}
+.share-reset:hover b{color:var(--send-accent-hover)}
+@media (prefers-reduced-motion:reduce){.share-clock b{animation:none}#send #send-qr,.recv-track b{transition:none}}
+#send-sheet.sharing .sheet-head{display:none}#send-sheet.sharing{padding:12px 18px}
+/* The transfer method picker: one small pill that opens a menu, so it never crowds Enter IP / Scan. */
+#send-methods{position:relative;display:block;padding:0;background:none;border-radius:0}
+.sheet-head #send-methods #method-button{display:flex;align-items:center;gap:8px;height:28px;padding:0 13px;border-radius:14px;background:#ffffff14;color:#fff}
+.sheet-head #send-methods #method-button i{width:5px;height:5px;border-right:1.5px solid #ffffff99;border-bottom:1.5px solid #ffffff99;transform:translateY(-2px) rotate(45deg)}
+#method-menu{position:absolute;top:calc(100% + 6px);left:0;z-index:20;min-width:160px;padding:6px;border-radius:16px;background:#1b1b1f;box-shadow:0 12px 30px #000c}
+#method-menu[hidden]{display:none}
+.sheet-head #method-menu button{display:flex;align-items:center;gap:9px;width:100%;height:32px;padding:0 12px;border-radius:11px;background:none;color:#ffffffc7;text-align:left}
+.sheet-head #method-menu button:hover{background:#ffffff12;color:#fff}
+.sheet-head #method-menu button[aria-selected=true]{color:var(--send-accent)}
+.sheet-head{position:relative;z-index:6}
+
+/* ---- QR Code view, after the reference: no box behind it, white device pills, a purple bar with a knob, Disconnect in the header ---- */
+#send-sheet.sharing{background:none;box-shadow:none;border-radius:0;padding:6px 0 0}
+#send-share{--share-purple:#4f9eff;gap:26px;padding:0 4px}
+#send #send-qr{width:142px;height:142px}
+.share-title{font-size:13px;color:#ffffff8c}
+#send-code{font-size:56px;font-weight:700;letter-spacing:0}
+.share-clock b,.recv-track b{background:var(--share-purple)}
+.share-clock{background:#ffffff1a}
+.recv-track{position:relative;height:4px;overflow:visible;background:#ffffff1f}
+.recv-track b{position:relative;width:0;transform:none;transition:width .2s linear}
+.recv-track b::after{content:"";position:absolute;right:-5px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--share-purple)}
+.recv-head small{font-size:12px}
+.offer-actions .primary{background:#00408f;color:#fff}.offer-actions .primary:hover{background:#004ca8}
+.offer-actions button:not(.primary){background:#1c1c1f}
+.share-side{flex:0 0 168px;padding-top:0}
+.share-device{background:#fff;color:#0b0b0c;gap:7px;padding:0 13px 0 9px;height:28px;font-weight:600}
+.share-device svg{flex:none;width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+.share-device i{display:none}
+.share-reset{font-size:12px;color:#ffffff80}.share-reset b{color:#fff;font-weight:700}.share-reset:hover b{color:#fff;text-decoration:underline}
+.share-none{font-size:12.5px}
+/* Disconnect: a pill in the header beside Settings, shown only while a QR Code share is on screen. */
+.pill-button{flex:none;width:max-content!important;min-width:max-content;white-space:nowrap;height:30px;padding:0 16px;border:0;border-radius:15px;background:#1c1c1f;color:#fff;font-size:12.5px;font-weight:600;cursor:pointer;transition:background .15s,color .15s}
+.pill-button:hover{background:#52a0ff26;color:#8fc1ff}
+#notch[data-view]:not([data-view=send]) #share-disconnect{display:none}
+/* The method picker sits in the middle of the sheet's top row; its menu opens straight below, centred. */
+#send-methods{position:absolute;left:50%;top:calc(50% - 3px);transform:translate(-50%,-50%);z-index:7;display:block;padding:0;background:none;border-radius:0}
+#method-menu{left:50%;transform:translateX(-50%)}
+/* While the QR view is up, the cards under it are not drawn (nothing shows through where the box used to be). */
+#send.sharing-open>:not(#send-sheet){visibility:hidden}
+
+/* ---- QR Code view, round 3: spans from the Home icon to the Settings icon, texts centred on the QR, thick bar, pills sized to their names ---- */
+#send-share{padding:0 1px 0 9px;align-items:center}
+.share-main{height:142px;justify-content:center;gap:4px}
+.share-status{margin-top:8px}
+.share-side{height:142px;align-self:center}
+.share-device{align-self:flex-start;max-width:100%}
+.recv-track{height:8px;border-radius:4px}.recv-track b{border-radius:4px}
+.recv-track b::after{right:-8px;width:16px;height:16px;margin-top:-8px}
+.share-clock{height:3px}
+.pill-button{height:33px;font-size:13px}
+.share-devices{-webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}
+
+/* ---- QR Code view, round 4: from the end of the Home icon to the start of the Settings icon (measured: 49.1 and 680.3 notch px) ---- */
+#send-share{padding:0 16.7px 0 26.1px;gap:22px}
+#send #send-qr{width:142px;height:142px}
+.share-side{flex:0 0 156px}
+#send-code{font-size:58px;letter-spacing:.01em;white-space:pre}
+.share-clock{height:3px}
+.pill-button{height:33px;font-size:13px}
+.offer-actions button{padding:0 13px}
+.share-devices{-webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}
+/* QR Code: Sender / Receiver sit either side of Sora's face. */
+/* Enter IP: its own full view, the radar is hidden so nothing shifts. */
+#send-sheet.ip #send-list{display:none}#send-sheet.ip #send-scan{display:none}
+#send-ip-form[hidden]{display:none}
+#send-sheet.ip #send-ip-form{flex:1;margin:0;flex-wrap:wrap;align-content:center;justify-content:center;gap:10px}
+#send-sheet.ip #send-ip{flex:0 1 280px}
+#send-ip-error{flex:0 0 100%;min-height:15px;text-align:center;font-size:12px;color:#ff8f8f}
+
+/* (i) beside the chat history button, on the Send tab: what to do on the other device; the text shows on hover or keyboard focus. */
+.info-wrap{position:relative;display:flex}
+.info-wrap.hidden{display:none}
+#info-tip{position:absolute;right:-6px;top:38px;z-index:60;width:230px;padding:9px 11px;border-radius:12px;background:#1b1b1f;box-shadow:0 8px 22px #000c,inset 0 0 0 1px #ffffff14;color:#d4d4d8;font-size:11.5px;line-height:1.45;text-align:left;opacity:0;visibility:hidden;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none}
+.info-wrap:hover #info-tip,.info-wrap:focus-within #info-tip{opacity:1;visibility:visible;transform:none}
+#send-scan{min-width:88px}
+/* QR Code: the picture of a phone scanning the code fills the sheet's free height, centred. Four pictures stack in one box; the beam sways and the
+   laser runs up and down as transforms on their own layers (no repaint, so it costs the notch next to nothing). */
+.qr-art{position:absolute;inset:4px 0 10px;display:flex;align-items:center;justify-content:center}
+#send .qr-box{position:relative;height:100%;aspect-ratio:490/212;max-width:100%}
+#send .qr-box svg{position:absolute;inset:0;width:100%;height:100%;display:block;stroke:none;stroke-width:0}
+#send .qr-cone{transform-origin:72.65% 21.7%;will-change:transform;animation:qr-sway 1.8s ease-in-out infinite alternate}
+#send .qr-scan{transform-origin:82.4% 46.7%;transform:rotate(-7deg);will-change:transform;animation:qr-scan 1.8s ease-in-out infinite alternate}
+@keyframes qr-sway{from{transform:rotate(3.8deg)}to{transform:rotate(-3.8deg)}}
+@keyframes qr-scan{from{transform:rotate(-7deg) translateY(-9.9%)}to{transform:rotate(-7deg) translateY(9.9%)}}
+/* An open Files / Nearby devices sheet: the panel is EXTRA px taller (--sh-h from send.js), and the Send view takes all of it */
+.notch[data-view="send-sheet"]:not(.compact),body.panel-mode .notch[data-view="send-sheet"]{height:var(--sh-h,234px)!important}
+.notch[data-view="send-sheet"] #send.active{height:calc(var(--sh-h,234px) - 74px)}
+/* Files sheet in the taller panel: bigger cards, centred in the height they now have; an empty list is centred too */
+.notch[data-view="send-sheet"] #send-list.files{align-items:center;padding-top:0}
+.notch[data-view="send-sheet"] #send-list .file-card{width:124px}
+.notch[data-view="send-sheet"] .file-card .row-thumb{width:124px;height:92px;border-radius:15px}
+.notch[data-view="send-sheet"] .file-card .row-thumb svg{width:28px!important;height:28px!important}
+#send-list.files .send-empty{display:grid;place-items:center;align-self:stretch}
+/* Files sheet with nothing in it: nearly the whole sheet below the header is one rounded drop area (a few px of margin all round); a click opens
+   the picker, the hover tints all of that rounded box, and two lines of text sit in the middle */
+#send-list.files:has(.send-empty.big){padding:14px 0 8px;-webkit-mask-image:none;mask-image:none}
+#send-list .send-empty.big{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;height:100%;min-height:0;padding:0;margin:0;border-radius:14px;background:none;color:#e4e4e7;text-align:center;cursor:pointer;transition:background .2s}
+#send-list .send-empty.big:hover:enabled{background:#ffffff07}
+#send-list .send-empty.big:disabled{opacity:.5;cursor:default}
+#send-list .send-empty.big strong{font-size:18px;font-weight:500;letter-spacing:-.1px}
+#send-list .send-empty.big u{text-decoration:underline;text-underline-offset:3px;text-decoration-color:#ffffff55}
+#send-list .send-empty.big small{font-size:13.5px;color:#7d7d84}
+#send-list .send-empty.big:focus-visible{outline:2px solid #afc7e0;outline-offset:-2px}

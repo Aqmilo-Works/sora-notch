@@ -1,0 +1,5 @@
+{
+  "identifier": "main-capability",
+  "windows": ["main", "panel", "settings", "notice-*"],
+  "permissions": ["core:default", "core:window:allow-start-dragging"]
+}

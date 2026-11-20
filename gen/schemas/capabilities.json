@@ -1,0 +1,1 @@
+{"main-capability":{"identifier":"main-capability","description":"","local":true,"windows":["main","panel","settings","notice-*"],"permissions":["core:default","core:window:allow-start-dragging"]}}

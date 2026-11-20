@@ -1,0 +1,33 @@
+Additional icons: Simple Icons v11.0.0 (CC0 project). Brand trademarks belong to their owners.
+Apple Music: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/applemusic.svg
+Brave: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/brave.svg
+Opera: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/opera.svg
+Vivaldi: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/vivaldi.svg | {"type":"CC-BY-4.0"}
+YouTube Music: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/youtubemusic.svg
+Amazon Music: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/amazonmusic.svg
+TIDAL: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/tidal.svg
+SoundCloud: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/soundcloud.svg
+iTunes: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/itunes.svg
+Google Chrome: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/googlechrome.svgZoom: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/zoom.svg
+Webex: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/webex.svg
+Microsoft Teams: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/microsoftteams.svg
+Slack: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/slack.svg
+OpenAI: https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/openai.svg
+
+Steam (Home widget chip): https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/steam.svg
+
+Meeting app logos in their own colours (ui/logos/color), used to name the app a recording came from. Trademarks belong to their owners.
+Google Meet (2026): https://commons.wikimedia.org/wiki/File:Google_Meet_icon_(2026).svg (from workspace.google.com/products/meet)
+Microsoft Teams (2025): https://commons.wikimedia.org/wiki/File:Microsoft_Office_Teams_(2025%E2%80%93present).svg (from microsoft.com/microsoft-365)
+Slack (2019): https://commons.wikimedia.org/wiki/File:Slack_icon_2019.svg
+Zoom: the app icon of Zoom Workplace (Zoom.exe), 128 px.
+Webex: the symbol of https://commons.wikimedia.org/wiki/File:Cisco_Webex_logo_-_Brandlogos.net.svg (vector from brandlogos.net), cropped, 128 px.
+Lark: the icon larksuite.com serves (p16-hera-overseas.larksuitecdn.com), 128 px.
+Google Chrome (2022): https://commons.wikimedia.org/wiki/File:Google_Chrome_icon_(February_2022).svg (from google.com/chrome)
+Microsoft Edge: the app icon of msedge.exe, 128 px.
+Firefox (2019): https://commons.wikimedia.org/wiki/File:Firefox_logo,_2019.svg
+Brave (2024): the lion of https://commons.wikimedia.org/wiki/File:Brave_Logo_(2024).svg (viewBox cut to the icon)
+Opera: https://commons.wikimedia.org/wiki/File:Opera_2015_icon.svg
+Vivaldi: https://commons.wikimedia.org/wiki/File:Vivaldi_web_browser_logo.svg
+All meeting app logos above are trimmed and resized to the same optical size (painted area against their own outline, Opera x0.92, Chrome x1.04), 192 px PNG.
+Music players (same optical sizing): Spotify = the app icon of Spotify.exe; Apple Music: https://commons.wikimedia.org/wiki/File:Apple_Music_icon.svg; iTunes: https://commons.wikimedia.org/wiki/File:ITunes_logo.svg; YouTube Music (2024): https://commons.wikimedia.org/wiki/File:YouTube_Music_icon_2024.svg; Amazon Music: the app icon the owner supplied (2026-11-18), corners rounded 22.5% like Apple Music; TIDAL: https://commons.wikimedia.org/wiki/File:Tidal_(service)_logo_only.svg (white on transparent, as on its dark app icon); SoundCloud: the cloud of https://commons.wikimedia.org/wiki/File:Soundcloud_logo.svg; VLC: https://commons.wikimedia.org/wiki/File:VLC_Icon.svg

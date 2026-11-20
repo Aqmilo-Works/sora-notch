@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "bundle": {
+    "active": true,
+    "targets": [
+      "app",
+      "dmg"
+    ],
+    "icon": [
+      "icons/mac/16x16.png",
+      "icons/mac/32x32.png",
+      "icons/mac/64x64.png",
+      "icons/mac/128x128.png",
+      "icons/mac/256x256.png",
+      "icons/mac/512x512.png",
+      "icons/mac/512x512@2x.png"
+    ],
+    "macOS": {
+      "minimumSystemVersion": "12.0",
+      "signingIdentity": "-",
+      "dmg": {
+        "background": "icons/dmg-background.png",
+        "windowSize": {
+          "width": 660,
+          "height": 400
+        },
+        "appPosition": {
+          "x": 170,
+          "y": 200
+        },
+        "applicationFolderPosition": {
+          "x": 490,
+          "y": 200
+        }
+      }
+    }
+  }
+}
